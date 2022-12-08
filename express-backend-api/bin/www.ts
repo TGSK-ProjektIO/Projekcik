@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+import {UserRepository} from "../repository/user.repository";
+import {DB_NAME, mongo, USER_COLLECTION_NAME} from "../config/mongo.config";
+
 /**
  * Module dependencies.
  */
@@ -28,6 +31,44 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+// const repo = new UserRepository();
+// repo.connect().then(() => {
+//   repo.create({
+//     id: "123",
+//     username: "user1",
+//     password: null,
+//     email: "email@gmail.com",
+//     emailToken: "token",
+//     isAdministrator: false,
+//     isEmailVerified: false
+//   }).then(() => {
+//     console.log('user created successfully');
+//   }).catch(() => {
+//     console.log('Failed tgo create user');
+//   });
+// }).catch(() => {
+//   console.log('Failed to connect with database');
+// });
+// mongo.connect().then(client => {
+//   console.log('OK');
+//   const db = client.db(DB_NAME);
+//   const collection = db.collection(USER_COLLECTION_NAME);
+//   collection.insertOne({
+//       id: "123",
+//       username: "user1",
+//       password: null,
+//       email: "email@gmail.com",
+//       emailToken: "token",
+//       isAdministrator: false,
+//       isEmailVerified: false
+//     }).then(() => {
+//     console.log('OK2')
+//   }).catch((err) => {
+//     console.error("ERROR: " + err);
+//   })
+// }).catch(err => {
+//   console.error(err);
+// })
 
 /**
  * Normalize a port into a number, string, or false.
