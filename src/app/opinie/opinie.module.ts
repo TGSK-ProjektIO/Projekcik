@@ -17,7 +17,8 @@ import { OpinionRatingComponent } from './opinion-rating/opinion-rating.componen
   exports: [
     OpinionRatingComponent,
     RatingComponent,
-    ReviewComponent
+    ReviewComponent,
+    OpinieComponent
   ],
   imports: [
     CommonModule
