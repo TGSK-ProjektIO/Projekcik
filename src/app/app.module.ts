@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
+import { RatingModule, RatingConfig } from 'ngx-bootstrap/rating';
+
 import { AppComponent } from './app.component';
 import { LogowanieIRejestracjaComponent } from './logowanie-i-rejestracja/logowanie-i-rejestracja.component';
 // import { OpinieComponent } from './opinie/opinie.component';
@@ -24,9 +27,10 @@ import { OpinieModule } from "./opinie/opinie.module";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    OpinieModule
+    OpinieModule,
+    RatingModule.forRoot()
   ],
-  providers: [],
+  providers: [RatingConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
