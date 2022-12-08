@@ -1,1 +1,43 @@
-<p>wyszukiwanie works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2>Wyszukaj produkt:</h2>
+      <div class="row">
+        <div class="col">
+          <div class="form-floating">
+            <input type="text" class="form-control" id="phrase-product" placeholder="Nazwa produktu">
+            <label for="phrase-product">Fraza</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="select-category">
+              <option selected>Wszystkie kategorie</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+            <label for="select-category">Kategoria</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <h2>Wyszukaj profil użytkownika:</h2>
+      <div class="row">
+        <div class="form-floating">
+          <input type="text" class="form-control" id="phrase-user" placeholder="Nazwa użytkownika">
+          <label for="phrase-user">Nazwa użytkownika</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary float-end mt-2">Wyszukaj produkt</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary float-end mt-2">Wyszukaj profil użytkownika</button>
+    </div>
+  </div>
+</div>
