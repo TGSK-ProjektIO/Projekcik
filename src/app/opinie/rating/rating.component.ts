@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-rating',
@@ -7,9 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RatingComponent implements OnInit {
 
+  @Input() name: string = "";
+  rating: number = 0;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  GetRating(): number {
+    return this.rating;
+  }
+
+  GetName(): string {
+    return this.name;
+  }
+
+  SetRating(rating: number): void {
+    this.rating = rating;
   }
 
 }
