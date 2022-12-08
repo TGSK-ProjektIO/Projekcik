@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./review.component.css']
 })
 export class ReviewComponent implements OnInit {
+  text : string;
 
-  constructor() { }
+  constructor() {
+    this.text = "bardzo fajny produkt polecam cieplutko";
+  }
 
   ngOnInit(): void {
   }
+
+  GetReview() : string { return this.text; }
+
+  SetReview(newText : string) { this.text = newText; }
 
 }
