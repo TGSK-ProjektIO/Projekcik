@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Profile } from "./Profile";
+import {ProfileSearch} from "./ProfileSearch";
 
 @Component({
   selector: 'app-wyszukiwanie',
@@ -6,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wyszukiwanie.component.css']
 })
 export class WyszukiwanieComponent implements OnInit {
+  model = new Profile(0, "", 0, 0);
+  profileSearch = new ProfileSearch();
+  searchedProfiles: Profile[] = [];
+  constructor(
 
-  constructor() { }
+  ) {}
 
   ngOnInit(): void {
   }
 
+  searchProducts() {
+    this.searchedProfiles = this.profileSearch.getSearchResults(this.model.nickname);
+  }
 }

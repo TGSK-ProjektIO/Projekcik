@@ -18,6 +18,7 @@
               <option>3</option>
             </select>
             <label for="select-category">Kategoria</label>
+            <button type="button" class="btn btn-primary float-end mt-2">Wyszukaj produkt</button>
           </div>
         </div>
       </div>
@@ -25,19 +26,17 @@
     <div class="col">
       <h2>Wyszukaj profil użytkownika:</h2>
       <div class="row">
-        <div class="form-floating">
-          <input type="text" class="form-control" id="phrase-user" placeholder="Nazwa użytkownika">
+        <form (ngSubmit)="searchProducts()" #userForm="ngForm" class="form-floating">
+          <input type="text" class="form-control" id="phrase-user" placeholder="Nazwa użytkownika" [(ngModel)]="model.nickname" name="nickname" required>
+          TODO: remove this: {{model.nickname}}
           <label for="phrase-user">Nazwa użytkownika</label>
-        </div>
+          <button type="submit" class="btn btn-primary float-end mt-2"
+          [disabled]="!userForm.form.valid">Wyszukaj profil użytkownika</button>
+        </form>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <button type="button" class="btn btn-primary float-end mt-2">Wyszukaj produkt</button>
-    </div>
-    <div class="col">
-      <button type="button" class="btn btn-primary float-end mt-2">Wyszukaj profil użytkownika</button>
-    </div>
-  </div>
+  <ol class="list-group mt-2" *ngFor="let profile of searchedProfiles">
+    <li class="list-group-item">{{profile.nickname}}</li>
+  </ol>
 </div>
