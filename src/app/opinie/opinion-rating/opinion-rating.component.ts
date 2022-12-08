@@ -51,10 +51,10 @@ export class OpinionRatingComponent implements OnInit {
     }
   }
 
-  AddLike() : void { this.likes += 1;  }
-  AddDislike() : void { this.dislikes += 1; }
-  RemoveLike() : void { this.likes -= 1; }
-  RemoveDislike() : void { this.dislikes -= 1; }
+  private AddLike() : void { this.likes += 1;  }
+  private AddDislike() : void { this.dislikes += 1; }
+  private RemoveLike() : void { this.likes -= 1; }
+  private RemoveDislike() : void { this.dislikes -= 1; }
   GetRating() : string {
     return `This opinion has ${this.likes} likes and ${this.dislikes} dislikes.`
   }
