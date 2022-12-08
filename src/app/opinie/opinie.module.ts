@@ -4,8 +4,9 @@ import { OpinieComponent } from './opinie.component';
 import { ReviewComponent } from './review/review.component';
 import { RatingComponent } from './rating/rating.component';
 import { OpinionRatingComponent } from './opinion-rating/opinion-rating.component';
-import {RatingModule} from "ngx-bootstrap/rating";
-import {FormsModule} from "@angular/forms";
+import { RatingModule } from "ngx-bootstrap/rating";
+import { FormsModule } from "@angular/forms";
+import { CompleteOpinionComponent } from "./complete-opinion/complete-opinion.component";
 
 
 
@@ -14,13 +15,12 @@ import {FormsModule} from "@angular/forms";
     OpinieComponent,
     ReviewComponent,
     RatingComponent,
-    OpinionRatingComponent
+    OpinionRatingComponent,
+    CompleteOpinionComponent
   ],
   exports: [
-    OpinionRatingComponent,
-    RatingComponent,
-    ReviewComponent,
-    OpinieComponent
+    OpinieComponent,
+    CompleteOpinionComponent
   ],
   imports: [
     CommonModule,
