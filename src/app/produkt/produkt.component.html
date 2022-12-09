@@ -1,1 +1,30 @@
-<p>produkt works!</p>
+<html>
+  <head>
+    <title>Produkt</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="produkt.component.css">
+  </head>
+  <body>
+    <div class="product-panel">
+      <p>Produkt</p>
+      <div class="sub-panel">
+        <h1> {{getProductName()}}</h1>
+        <button (click)="onClick()">Modyfikuj</button>
+        <button (click)="onClick()">Usuń</button>
+        <button (click)="onClick()">Dodaj sugestie</button>
+        <div>
+            <img style="display: inline-block;" width="300" height="500" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDRP8tcr9c5vpLXUrOXgaXdEkAkn8ofI7otckeIR93HHHxD85QSgcNBLCiWKAwHxSpaTk&usqp=CAU" alt="Zdjęcie produktu"/>      
+        </div>
+      </div>
+      <div class="sub-panel">
+        <h3>Dane produktu:</h3>
+            <h1>Opis:</h1>
+            <div style="display: block">{{getProductDescription()}}</div>
+            <h1>Kategoria: </h1>
+            <div style="display: block">{{getProductCategory()}}</div>
+            <h1>Atrybuty:</h1>
+            <div style="display: block">{{getProductAttributes()}}</div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -5,11 +5,33 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './produkt.component.html',
   styleUrls: ['./produkt.component.css']
 })
+
 export class ProduktComponent implements OnInit {
 
-  constructor() { }
+  productId: string;
+  name: string;
+  description: string;
+  category: string;
+  attributes: string;
 
-  ngOnInit(): void {
-  }
+  
+  constructor() {
+      this.productId = "productID";
+      this.name = "name";
+      this.category = "category";
+      this.attributes = "attributes";
+      this.description = "lalala ksiazka ta";
+    }
 
+    ngOnInit(): void {
+    }
+
+    onClick() {
+      window.alert("Clicked")
+    }
+    
+    getProductName(): string {return this.name}
+    getProductDescription(): string {return this.description}
+    getProductCategory(): string {return this.category}
+    getProductAttributes(): string {return this.attributes}
 }
