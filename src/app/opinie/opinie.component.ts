@@ -31,12 +31,12 @@ export class OpinieComponent implements OnInit {
     for (let i = 0; i < 10; i++) {
       let opinion = new CompleteOpinionComponent();
       opinion.SetReview("AAAAAAAAAAAAAAAAAAAAAAA");
-      opinion.SetRating("fajno", 4);
-      opinion.SetRating("niefajno", 1);
-      opinion.SetRating("zajefajno", 5);
-      opinion.SetRating("wydajność", 1);
-      opinion.opinionRating.likes = 10;
-      opinion.opinionRating.dislikes = 2;
+      opinion.SetRating("fajno", Math.floor(Math.random() * (5 - 1 + 1)) + 1);
+      opinion.SetRating("niefajno", Math.floor(Math.random() * (5 - 1 + 1)) + 1);
+      opinion.SetRating("zajefajno", Math.floor(Math.random() * (5 - 1 + 1)) + 1);
+      opinion.SetRating("wydajność", Math.floor(Math.random() * (5 - 1 + 1)) + 1);
+      opinion.opinionRating.likes = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
+      opinion.opinionRating.dislikes = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
       opinions.push(opinion);
     }
     this.allOpinions = opinions;
@@ -77,6 +77,7 @@ export class OpinieComponent implements OnInit {
   }
 
   DeleteOpinion(ID: number): boolean {
+    //todo: remove from database
     return true;
   }
 }
