@@ -64,5 +64,29 @@ export class WyszukiwanieComponent implements AfterViewInit {
     this.dataSource.data = this.filteredData;
   }
 
+  applyTagFilter(event: Event) {
+    const filterValue= (event.target as HTMLInputElement).value.toLowerCase().trim();
+      this.filteredData = [];
+
+    for (let i = 0; i < this.searchedProducts.length; i++) {
+      for (let j = 0; j < 2; j++) {
+        if (this.searchedProducts[i].tags[j] == filterValue)
+        {
+          this.filteredData.push(this.searchedProducts[i]);
+        }
+      }
+    }
+    if (filterValue == "")
+    {
+      this.dataSource.data = this.searchedProducts;
+    }
+    else
+    {
+      this.dataSource.data = this.filteredData;
+    }
+
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
+
+  }
 
 }
