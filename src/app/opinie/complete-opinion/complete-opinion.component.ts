@@ -3,12 +3,17 @@ import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
 
+// TODO: get user type from session
+enum UserType { anon, logged, admin}
+
 @Component({
   selector: 'app-complete-opinion',
   templateUrl: './complete-opinion.component.html',
   styleUrls: ['./complete-opinion.component.css']
 })
 export class CompleteOpinionComponent implements OnInit {
+  userType : UserType = UserType.anon;
+  UserTypes = UserType;
   // Needed to pull [[ opinions ]] from database that are assigned to [[ product ]]
   @Input() productID : string = "";
   // Needed to identify singular [[ opinion ]]

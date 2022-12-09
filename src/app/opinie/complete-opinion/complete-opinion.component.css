@@ -68,3 +68,11 @@ th {
   display: block;
   font-size: 10px;
 }
+
+img {
+  width: 1.5em;
+  border-style: solid;
+  border-color: black;
+  border-width: thin;
+  border-radius: 30%;
+}

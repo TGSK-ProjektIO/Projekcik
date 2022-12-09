@@ -9,7 +9,7 @@ export class RatingComponent implements OnInit {
 
   @Input() name: string = "";
   @Input() rating: number = 0;
-  isReadonly = true;
+  @Input() isReadonly = true;
 
   constructor() { }
 

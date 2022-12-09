@@ -1,15 +1,11 @@
 import {
   Component,
-  ComponentFactory,
-  ComponentFactoryResolver,
   OnInit,
-  ViewChild,
-  ViewContainerRef
+  ViewChild
 } from '@angular/core';
 import {CompleteOpinionComponent} from "./complete-opinion/complete-opinion.component";
 import {RatingComponent} from "./rating/rating.component";
 import {OpinionHostDirective} from "./opinion-host.directive";
-import {OpinionRatingComponent} from "./opinion-rating/opinion-rating.component";
 
 @Component({
   selector: 'app-opinie',
@@ -17,16 +13,16 @@ import {OpinionRatingComponent} from "./opinion-rating/opinion-rating.component"
   styleUrls: ['./opinie.component.css']
 })
 export class OpinieComponent implements OnInit {
-
   allOpinions : CompleteOpinionComponent[] = [];
   @ViewChild(OpinionHostDirective, {static: true}) opinionHost!: OpinionHostDirective;
 
-  constructor() { }
+  constructor() {  }
 
   ngOnInit(): void {
     // =======================================
     //                 TEMP
     //  TODO: replace with getting data from database
+    //
     let opinions : CompleteOpinionComponent[] = [];
     for (let i = 0; i < 10; i++) {
       let opinion = new CompleteOpinionComponent();
@@ -42,7 +38,7 @@ export class OpinieComponent implements OnInit {
     this.allOpinions = opinions;
     // =======================================
 
-    this.GetAllOpinions();
+    this.ShowAllOpinions();
   }
 
   CreateOpinion(ID: number, attributes: string[]): void {
@@ -53,7 +49,7 @@ export class OpinieComponent implements OnInit {
     return new CompleteOpinionComponent();
   }
 
-  public GetAllOpinions(): void {
+  public ShowAllOpinions(): void {
     const viewContainerRef = this.opinionHost.viewContainerRef;
     viewContainerRef.clear();
 

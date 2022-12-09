@@ -1,12 +1,14 @@
 <div class="Opinion">
   <div class="Header">
-    Get Name Here Later
+    <img src="https://i.imgur.com/tYkCX47.jpg" /> Verified Customer
   </div>
   <div class="Ratings">
     <table>
       <tr>
         <th *ngFor="let setRating of ratings">
-          <app-rating name="{{setRating.name}}" [rating]=setRating.GetRating()></app-rating>
+          <app-rating name="{{setRating.name}}"
+                      [rating]=setRating.GetRating()
+                      isReadonly=userType!=UserTypes.logged></app-rating>
         </th>
       </tr>
     </table>
