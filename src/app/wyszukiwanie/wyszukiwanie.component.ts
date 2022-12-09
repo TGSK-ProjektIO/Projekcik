@@ -7,6 +7,8 @@ import {ProductSearch} from "./ProductSearch";
 import {MatPaginator} from "@angular/material/paginator";
 import {Kategoria} from "./Kategoria";
 import {KategoriaSearch} from "./KategoriaSearch";
+import {filter} from "rxjs";
+
 
 @Component({
   selector: 'app-wyszukiwanie',
@@ -18,6 +20,7 @@ export class WyszukiwanieComponent implements AfterViewInit {
   productModel = new Product(0,"", "",[],"",0);
   productSearch = new ProductSearch();
   searchedProducts: Product[] = [];
+  filteredData: Product[] = [];
   selected = 'all';
 
   categories: Kategoria[] = [
@@ -42,5 +45,24 @@ export class WyszukiwanieComponent implements AfterViewInit {
     this.searchedProducts = this.productSearch.getSearchResults(this.productModel.productName);
     this.dataSource.data = this.searchedProducts;
   }
+
+  applyCategory($event: any) {
+    this.filteredData =[];
+
+    for (let i = 0; i < this.searchedProducts.length; i++)
+    {
+      if (this.searchedProducts[i].categoryID == $event.value.toLowerCase())
+      {
+        this.filteredData.push(this.searchedProducts[i]);
+      }
+
+      if ($event.value.toLowerCase() == "all")
+      {
+        this.filteredData = this.searchedProducts;
+      }
+    }
+    this.dataSource.data = this.filteredData;
+  }
+
 
 }
