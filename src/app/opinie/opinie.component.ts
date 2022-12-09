@@ -36,11 +36,21 @@ export class OpinieComponent implements OnInit {
   }
 
   public GetAllOpinions(): void {
-    // temp
+    // =======================================
+    //                 TEMP
     let opinions : CompleteOpinionComponent[] = [];
     for (let i = 0; i < 10; i++) {
-      opinions.push(new CompleteOpinionComponent());
+      let opinion = new CompleteOpinionComponent();
+      opinion.SetReview("AAAAAAAAAAAAAAAAAAAAAAA");
+      opinion.SetRating("fajno", 4);
+      opinion.SetRating("niefajno", 1);
+      opinion.SetRating("zajefajno", 5);
+      opinion.SetRating("wydajność", 1);
+      opinion.opinionRating.likes = 10;
+      opinion.opinionRating.dislikes = 2;
+      opinions.push(opinion);
     }
+    // =======================================
 
     const viewContainerRef = this.opinionHost.viewContainerRef;
     viewContainerRef.clear();
@@ -48,13 +58,10 @@ export class OpinieComponent implements OnInit {
     //todo: save refs to some array maybe
     for (const opinion of opinions) {
       const componentRef = viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent).instance;
-      componentRef.SetReview("AAAAAAAAAAAAAAAAAAAAAAA");
-      componentRef.SetRating("fajno", 4);
-      componentRef.SetRating("niefajno", 1);
-      componentRef.SetRating("zajefajno", 5);
-      componentRef.SetRating("wydajność", 1);
-      componentRef.opinionRating.likes = 10;
-      componentRef.opinionRating.dislikes = 2;
+      componentRef.ID = opinion.ID;
+      componentRef.review = opinion.review;
+      componentRef.ratings = opinion.ratings;
+      componentRef.opinionRating = opinion.opinionRating;
     }
 
     this.allOpinions = opinions;
