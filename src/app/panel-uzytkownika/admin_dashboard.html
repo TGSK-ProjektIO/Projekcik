@@ -6,19 +6,31 @@
   <link rel="stylesheet" type="text/css" href="panel-uzytkownika.component.css">
 </head>
 <body>
+<div class="top-panel">Tu pewnie będzie jakiś pasek <button (click)="onClick()">Kliknij mnie</button></div>
   <div class="admin-dashboard-panel">
-    <h1>Panel admina</h1>
-    <h2>Zarządzanie produktami</h2>
-    <button>Dodaj nowy produkt</button>
-    <button>Zmień właściwości produktu</button>
-    <button>Ukryj produkt</button>
-    <button>Usuń produkt</button>
-    <h2>Zarządzanie sugestiami</h2>
-    <button>Wyświetl sugestie</button>
-    <button>Odpowiedz na sugestie</button>
-    <h2>Chińska cenzura</h2>
-    <button>Usuń opinię</button>
-    <button>Zablokuj użytkownika</button>
+    <div class="sub-panel">
+      <h2>Zarządzanie produktami</h2>
+      <button>Dodaj nowy produkt</button>
+      <br/><br/>
+      <button>Zmień właściwości produktu</button>
+      <br/><br/>
+      <button>Ukryj produkt</button>
+      <br/><br/>
+      <button>Usuń produkt</button>
+    </div>
+    <div class="sub-panel">
+      <h2>Zarządzanie sugestiami</h2>
+      <button>Wyświetl sugestie</button>
+      <br/><br/>
+      <button>Odpowiedz na sugestie</button>
+    </div>
+    <div class="sub-panel">
+      <h2>Chińska cenzura</h2>
+      <button>Usuń opinię</button>
+      <br/><br/>
+      <button>Zablokuj użytkownika</button>
+    </div>
   </div>
+  <div class="footer">Projekt OpinionCollector na przedmiot Inżynieria Oprogramowania 2022/23</div>
 </body>
 </html>
