@@ -17,35 +17,39 @@ export class CompleteOpinionComponent implements OnInit {
   @Input() userID : string = "";
   // Attributes that are used to create singular [[ ratings ]]
   @Input() attributes : string[] = [];
-  #opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
-  #review : ReviewComponent = new ReviewComponent;
-  #ratings : Array<RatingComponent> = [];
+  opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
+  review : ReviewComponent = new ReviewComponent;
+  ratings : Array<RatingComponent> = [];
 
-  constructor() { }
+  constructor() {
+    for (let i = 0; i < 15; i++) {
+      this.SetRating("rating"+i, 3);
+    }
+  }
 
   ngOnInit(): void {
   }
 
   GetID() : number { return this.ID; }
-  GetReview() : string { return this.#review.GetReview(); }
+  GetReview() : string { return this.review.GetReview(); }
   GetMeanRating() : number {
     let result: number = 0;
-    for (const rating of this.#ratings) {
+    for (const rating of this.ratings) {
       result += rating.GetRating();
     }
     return result;
   }
   GetDetailedRatings() : Array<RatingComponent> {
-    return this.#ratings;
+    return this.ratings;
   }
-  AddLike() : void { this.#opinionRating.ClickedLike(); }
-  AddDislike() : void { this.#opinionRating.ClickedDislike(); }
-  SetReview(text : string) : void { this.#review.SetReview(text); }
+  AddLike() : void { this.opinionRating.ClickedLike(); }
+  AddDislike() : void { this.opinionRating.ClickedDislike(); }
+  SetReview(text : string) : void { this.review.SetReview(text); }
   SetRating(name : string, value : number) : void {
     let newRating: RatingComponent = new RatingComponent;
     newRating.name = name;
     newRating.rating = value;
-    this.#ratings.push(newRating);
+    this.ratings.push(newRating);
   }
   // Add new rating in case attribute changed
   UpdateRatings(name : string)  {

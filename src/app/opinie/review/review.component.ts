@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-review',
@@ -6,13 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./review.component.css']
 })
 export class ReviewComponent implements OnInit {
-  text : string;
+  @Input() text : string = "";
+
 
   constructor() {
-    this.text = "bardzo fajny produkt polecam cieplutko i blabla bla bla bla blabla bla bla bla blabla bla bla bla" +
-      "blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla" +
-      "blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla" +
-      " blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla blablabla bla bla bla";
   }
 
   ngOnInit(): void {

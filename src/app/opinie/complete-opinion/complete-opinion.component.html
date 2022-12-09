@@ -5,27 +5,22 @@
   <div class="Ratings">
     <table>
       <tr>
-        <th><app-rating name="rating1"></app-rating></th>
-        <th><app-rating name="rating2"></app-rating></th>
-        <th><app-rating name="rating3"></app-rating></th>
-        <th><app-rating name="rating4"></app-rating></th>
-        <th><app-rating name="rating5"></app-rating></th>
-        <th><app-rating name="rating6"></app-rating></th>
-        <th><app-rating name="rating7"></app-rating></th>
-        <th><app-rating name="rating8"></app-rating></th>
-        <th><app-rating name="rating9"></app-rating></th>
-        <th><app-rating name="rating10"></app-rating></th>
-        <th><app-rating name="rating11"></app-rating></th>
-        <th><app-rating name="rating12"></app-rating></th>
-        <th><app-rating name="rating13"></app-rating></th>
-        <th><app-rating name="rating14"></app-rating></th>
-        <th><app-rating name="rating15"></app-rating></th>
-        <th><app-rating name="rating16"></app-rating></th>
+        <th *ngFor="let setRating of ratings">
+          <app-rating name="{{setRating.name}}" [rating]=setRating.GetRating()></app-rating>
+        </th>
       </tr>
     </table>
   </div>
   <div class="Review">
-    <app-review></app-review>
+    <app-review text="bardzo fajny produkt polecam cieplutkoooooooo o o o
+    ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo
+    oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo
+    ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo
+    oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo
+    ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo
+    oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo
+    ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo
+    oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo"></app-review>
   </div>
   <div class="OpinionRating">
     <app-opinion-rating></app-opinion-rating>

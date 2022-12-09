@@ -40,6 +40,10 @@
 
 table {
   border-collapse: separate;
+  overflow-x: scroll;
+}
+
+tr {
 }
 
 th {

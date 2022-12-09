@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class RatingComponent implements OnInit {
 
   @Input() name: string = "";
-  rating: number = 0;
+  @Input() rating: number = 0;
   isReadonly = true;
 
   constructor() { }
