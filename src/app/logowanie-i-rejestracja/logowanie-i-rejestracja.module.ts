@@ -6,6 +6,7 @@ import { PotwierdzenieComponent } from './potwierdzenie/potwierdzenie.component'
 import { ResetowanieComponent } from './resetowanie/resetowanie.component';
 import { LogowanieIRejestracjaRoutingModule } from './logowanie-i-rejestracja-routing.module';
 import {BrowserModule} from "@angular/platform-browser";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -22,10 +23,11 @@ import {BrowserModule} from "@angular/platform-browser";
     ResetowanieComponent,
     LogowanieComponent
   ],
-    imports: [
-        CommonModule,
-        BrowserModule,
-        LogowanieIRejestracjaRoutingModule
-    ]
+  imports: [
+    CommonModule,
+    BrowserModule,
+    LogowanieIRejestracjaRoutingModule,
+    FormsModule
+  ]
 })
 export class LogowanieIRejestracjaModule { }

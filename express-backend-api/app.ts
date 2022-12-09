@@ -2,6 +2,7 @@ import {container} from "./config/container.config";
 import {TYPES} from "./config/types.config";
 import {UserRouter} from "./router/user.router";
 import {SessionRouter} from "./router/session.router";
+import cors = require('cors');
 
 var express = require('express');
 var path = require('path');
@@ -16,6 +17,7 @@ var sugestieIZgloszenia = require('./routes/sugestie-i-zgloszenia');
 var wyszukiwanie = require('./routes/wyszukiwanie');
 
 var app = express();
+app.use(cors())
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

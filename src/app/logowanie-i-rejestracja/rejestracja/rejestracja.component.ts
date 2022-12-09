@@ -12,4 +12,5 @@ export class RejestracjaComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
 }
