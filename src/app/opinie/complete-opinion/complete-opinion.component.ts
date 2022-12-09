@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Type} from '@angular/core';
 import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component";
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
@@ -15,16 +15,25 @@ export class CompleteOpinionComponent implements OnInit {
   @Input() ID : number = 0;
   // Needed to assign [[ user ]] to [[ opinion ]]
   @Input() userID : string = "";
-  // Attributes that are used to create singular [[ ratings ]]
-  @Input() attributes : string[] = [];
+
+
   opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
   review : ReviewComponent = new ReviewComponent;
   ratings : Array<RatingComponent> = [];
 
   constructor() {
-    for (let i = 0; i < 15; i++) {
-      this.SetRating("rating"+i, 3);
-    }
+    // for (let i = 0; i < 15; i++) {
+    //   this.SetRating("rating"+i, 3);
+    // }
+    // this.SetReview("bardzo fajny produkt polecam cieplutkoooooooo o o o\
+    //   ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo\
+    //   oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo\
+    //   ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo\
+    //   oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo\
+    //   ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo\
+    //   oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo\
+    //   ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo\
+    //   oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo");
   }
 
   ngOnInit(): void {
@@ -39,21 +48,14 @@ export class CompleteOpinionComponent implements OnInit {
     }
     return result;
   }
-  GetDetailedRatings() : Array<RatingComponent> {
-    return this.ratings;
+  SetReview(text : string) : void {
+    this.review.SetReview(text);
+    this.review.ngOnInit();
   }
-  AddLike() : void { this.opinionRating.ClickedLike(); }
-  AddDislike() : void { this.opinionRating.ClickedDislike(); }
-  SetReview(text : string) : void { this.review.SetReview(text); }
   SetRating(name : string, value : number) : void {
     let newRating: RatingComponent = new RatingComponent;
     newRating.name = name;
     newRating.rating = value;
     this.ratings.push(newRating);
-  }
-  // Add new rating in case attribute changed
-  UpdateRatings(name : string)  {
-    this.attributes.push(name);
-    this.SetRating(name, 0);
   }
 }

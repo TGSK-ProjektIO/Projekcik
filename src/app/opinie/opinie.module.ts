@@ -7,6 +7,7 @@ import { OpinionRatingComponent } from './opinion-rating/opinion-rating.componen
 import { RatingModule } from "ngx-bootstrap/rating";
 import { FormsModule } from "@angular/forms";
 import { CompleteOpinionComponent } from "./complete-opinion/complete-opinion.component";
+import { OpinionHostDirective } from './opinion-host.directive';
 
 
 
@@ -16,7 +17,8 @@ import { CompleteOpinionComponent } from "./complete-opinion/complete-opinion.co
     ReviewComponent,
     RatingComponent,
     OpinionRatingComponent,
-    CompleteOpinionComponent
+    CompleteOpinionComponent,
+    OpinionHostDirective
   ],
   exports: [
     OpinieComponent,

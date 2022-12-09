@@ -12,18 +12,10 @@
     </table>
   </div>
   <div class="Review">
-    <app-review text="bardzo fajny produkt polecam cieplutkoooooooo o o o
-    ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo
-    oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo
-    ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo
-    oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo
-    ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo
-    oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo
-    ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo
-    oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo"></app-review>
+    <app-review text="{{review.GetReview()}}"></app-review>
   </div>
   <div class="OpinionRating">
-    <app-opinion-rating></app-opinion-rating>
+    <app-opinion-rating [likes]=opinionRating.likes [dislikes]=opinionRating.dislikes></app-opinion-rating>
   </div>
 </div>
 
