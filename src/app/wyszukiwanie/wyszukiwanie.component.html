@@ -12,41 +12,48 @@
           </form>
         </div>
         <div class="col">
-          <div class="form-floating">
-            <select class="form-select" id="select-category">
-              <option selected>Wszystkie kategorie</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-            </select>
-            <label for="select-category">Kategoria</label>
-          </div>
+          <mat-form-field appearance="fill">
+            <mat-label>Select category</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option value="all">Wszystkie kategorie</mat-option>
+              <mat-option value="elektronika">elektronika</mat-option>
+              <mat-option value="jedzenie">jedzenie</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
       </div>
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort matSortDisableClear>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort *ngIf="selected==='all'">
         <ng-container matColumnDef="productID">
           <th mat-header-cell *matHeaderCellDef> ID </th>
           <td mat-cell *matCellDef="let element"> {{element.productId}}</td>
         </ng-container>
         <ng-container matColumnDef="productName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Nazwa </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
           <td mat-cell *matCellDef="let element"> {{element.productName}}</td>
         </ng-container>
         <ng-container matColumnDef="productTag">
           <th mat-header-cell *matHeaderCellDef> Tagi </th>
           <td mat-cell *matCellDef="let element"> {{element.tags}}</td>
         </ng-container>
-        <ng-container matColumnDef="productOpinions" >
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilosc opinii </th>
-          <td mat-cell *matCellDef="let element"> {{element.numberOfOpinions}}</td>
-        </ng-container>
         <ng-container matColumnDef="productDescription">
           <th mat-header-cell *matHeaderCellDef> Opis </th>
           <td mat-cell *matCellDef="let element"> {{element.description}}</td>
         </ng-container>
+        <ng-container matColumnDef="categoryID">
+          <th mat-header-cell *matHeaderCellDef> ID kategorii </th>
+          <td mat-cell *matCellDef="let element" > {{element.categoryID}} </td>
+        </ng-container>
+        <ng-container matColumnDef="productOpinions" >
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilosc opinii </th>
+          <td mat-cell *matCellDef="let element"> {{element.numberOfOpinions}}</td>
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      <mat-paginator #paginator
+                     [pageSizeOptions]="[5, 10, 20]"
+                     showFirstLastButtons>
+      </mat-paginator>
     </div>
     <div class="col">
       <h2>Wyszukaj profil użytkownika:</h2>
