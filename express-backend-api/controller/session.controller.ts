@@ -10,27 +10,30 @@ export class SessionController {
   }
 
   public login() {
-    // return async (request: any, response: any) => {
-    //   const username = request.body.username;
-    //   const password = request.body.password;
-    //
-    //   if (!username) {
-    //     return response.status(400).send({
-    //       message: "Request is missing required 'username' parameter"
-    //     });
-    //   } if (!password) {
-    //     return response.status(400).send({
-    //       message: "Request is missing required 'password' parameter"
-    //     });
-    //   }
-    //
-    //   try {
-    //     const user = this.userService.getUser()
-    //     await this.sessionService.createSession()
-    //   } catch (error) {
-    //
-    //   }
-    // }
+    return async (request: any, response: any) => {
+      const email = request.body.email;
+      const password = request.body.password;
+
+      if (!email) {
+        return response.status(400).send({
+          message: "Request is missing required 'username' parameter"
+        });
+      } if (!password) {
+        return response.status(400).send({
+          message: "Request is missing required 'password' parameter"
+        });
+      }
+
+      try {
+        const user = await this.userService.getUserByEmail(email);
+        const session = await this.sessionService.createSession(user);
+        return response.status(201).send(session);
+      } catch (error) {
+        return response.status(404).send({
+          message: "User not found"
+        });
+      }
+    }
   }
 
   // public loginWithGithub() {

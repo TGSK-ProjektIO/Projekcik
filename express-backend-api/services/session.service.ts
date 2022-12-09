@@ -3,6 +3,7 @@ import {SessionRepository} from "../repository/session.repository";
 import {TYPES} from "../config/types.config";
 import {Session} from "../model/session";
 import {User} from "../model/user";
+import moment from "moment";
 
 @injectable()
 export class SessionService {
@@ -15,9 +16,10 @@ export class SessionService {
   }
 
   public createSession(user: User) : Promise<Session> {
+    const currentDate = new Date();
     let newSession = {
-      startDate: new Date("2019-01-16"),
-      expireDate: new Date("2019-01-17"),
+      startDate: currentDate,
+      expireDate: moment(currentDate).add(30, 'm').toDate(),
       invalidated: false,
       // @ts-ignore
       userId: user._id

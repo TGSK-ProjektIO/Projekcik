@@ -8,6 +8,7 @@ import {UserController} from "../controller/user.controller";
 import {UserRouter} from "../router/user.router";
 import {SessionController} from "../controller/session.controller";
 import {SessionRouter} from "../router/session.router";
+import {SessionService} from "../services/session.service";
 
 export const container = new Container();
 
@@ -34,4 +35,7 @@ container.bind<SessionRouter>(TYPES.SessionRouter)
 
 container.bind<UserService>(TYPES.UserService)
   .to(UserService)
+  .inSingletonScope();
+container.bind<SessionService>(TYPES.SessionService)
+  .to(SessionService)
   .inSingletonScope();

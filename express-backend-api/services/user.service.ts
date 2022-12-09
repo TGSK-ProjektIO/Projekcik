@@ -60,6 +60,10 @@ export class UserService {
     return this.userRepository.read(userId);
   }
 
+  public getUserByEmail(email: string): Promise<User> {
+    return this.userRepository.readByEmail(email);
+  }
+
   private isGithubAccount(id: string): Promise<boolean> {
     return new Promise<boolean>(async (resolve, reject) => {
       try {
