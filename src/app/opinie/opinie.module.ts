@@ -28,4 +28,6 @@ import { CompleteOpinionComponent } from "./complete-opinion/complete-opinion.co
     FormsModule
   ]
 })
-export class OpinieModule { }
+export class OpinieModule {
+
+}

@@ -1,6 +1,6 @@
 .Rating {
   width: 150px;
-  border: darkslategrey 1px outset;
+  border: #334465 1px outset;
   border-radius: 5px;
   justify-content: center;
 }
