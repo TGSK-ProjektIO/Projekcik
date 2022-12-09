@@ -24,20 +24,9 @@ export class OpinieComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.GetAllOpinions();
-  }
-
-  CreateOpinion(ID: number, attributes: string[]): void {
-
-  }
-
-  GetOpinion(ID: number): CompleteOpinionComponent {
-    return new CompleteOpinionComponent();
-  }
-
-  public GetAllOpinions(): void {
     // =======================================
     //                 TEMP
+    //  TODO: replace with getting data from database
     let opinions : CompleteOpinionComponent[] = [];
     for (let i = 0; i < 10; i++) {
       let opinion = new CompleteOpinionComponent();
@@ -53,6 +42,18 @@ export class OpinieComponent implements OnInit {
     this.allOpinions = opinions;
     // =======================================
 
+    this.GetAllOpinions();
+  }
+
+  CreateOpinion(ID: number, attributes: string[]): void {
+
+  }
+
+  GetOpinion(ID: number): CompleteOpinionComponent {
+    return new CompleteOpinionComponent();
+  }
+
+  public GetAllOpinions(): void {
     const viewContainerRef = this.opinionHost.viewContainerRef;
     viewContainerRef.clear();
 
