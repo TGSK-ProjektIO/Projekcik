@@ -10,6 +10,8 @@ import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i
 import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from "@angular/forms";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import {FormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
