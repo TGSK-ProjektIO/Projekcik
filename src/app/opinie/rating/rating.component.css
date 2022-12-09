@@ -1,10 +1,12 @@
-.ratingDiv {
-  border: black outset 2px;
+.Rating {
+  width: 150px;
+  border: darkslategrey 1px outset;
   border-radius: 5px;
+  justify-content: center;
 }
 
-div {
+.Content {
   display: inline-block;
-  margin-inline: 20px;
+  padding: 5px;
   text-align: center;
 }

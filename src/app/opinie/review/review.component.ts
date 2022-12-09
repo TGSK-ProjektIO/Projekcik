@@ -9,7 +9,10 @@ export class ReviewComponent implements OnInit {
   text : string;
 
   constructor() {
-    this.text = "bardzo fajny produkt polecam cieplutko";
+    this.text = "bardzo fajny produkt polecam cieplutko i blabla bla bla bla blabla bla bla bla blabla bla bla bla" +
+      "blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla" +
+      "blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla" +
+      " blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla bla blabla bla bla blablabla bla bla bla";
   }
 
   ngOnInit(): void {

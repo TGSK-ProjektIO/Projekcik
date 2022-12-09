@@ -1,3 +1,7 @@
-<h4><i>{{ GetRating() }}</i></h4>
-<button class="btn btn-success me-1" (click)="ClickedLike()">like</button>
-<button class="btn btn-danger" (click)="ClickedDislike()">dislike</button>
+<div>{{ GetRating() }}</div>
+<button class="btn btn-default" (click)="ClickedLike()">
+  <img src="https://i.imgur.com/jhnnH71.png" width="20" /> like
+</button>
+<button class="btn btn-default" (click)="ClickedDislike()">
+  <img src="https://i.imgur.com/3PRkszC.png" width="20" /> dislike
+</button>

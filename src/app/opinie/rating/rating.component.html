@@ -1,4 +1,4 @@
-<div class="ratingDiv">
-  <div>{{GetName()}}</div>
-  <div><rating [(ngModel)]="rating" [max]="5" [readonly]="false"></rating></div>
+<div class="Rating">
+  <div class="Content">{{GetName()}}</div>
+  <div class="Content"><rating [(ngModel)]="rating" [max]="5" [readonly]="isReadonly"></rating></div>
 </div>

@@ -1,0 +1,5 @@
+button {
+  border: darkslategrey 2px outset;
+  border-radius: 5px;
+  width: 100px;
+}
