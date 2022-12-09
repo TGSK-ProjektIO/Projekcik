@@ -6,7 +6,6 @@ import {Product} from "./Product";
 import {ProductSearch} from "./ProductSearch";
 import {MatPaginator} from "@angular/material/paginator";
 import {Kategoria} from "./Kategoria";
-import {KategoriaSearch} from "./KategoriaSearch";
 import {filter} from "rxjs";
 
 

@@ -9,7 +9,12 @@ export class ProductSearch {
     {productId:5, productName:'Lodowka Amica',     tags: ["lodowka", "frost"] ,    description: "Genialna lodowka",   categoryID: "elektronika",   numberOfOpinions: 5},
     {productId:6, productName:'Hamburger',         tags: ["gluten", "mieso"] ,     description: "Pyszny hamburger",   categoryID: "jedzenie",      numberOfOpinions: 30},
     {productId:7, productName:'Chleb',             tags: ["bez glutenu", "mieso"] ,description: "Pyszny chleb",       categoryID: "jedzenie",      numberOfOpinions: 20},
-    {productId:8, productName:'Sok jablkowy',      tags: ["cukier", "sok"]               ,description: "Pyszny sok",         categoryID: "napoje",      numberOfOpinions: 60}
+    {productId:8, productName:'Sok jablkowy',      tags: ["cukier", "sok"]               ,description: "Pyszny sok",         categoryID: "napoje",      numberOfOpinions: 60},
+    {productId:9, productName:'Tortilla',           tags: ["bez glutenu"]               ,description: "Pyszna tortilla",         categoryID: "jedzenie",      numberOfOpinions: 28},
+    {productId:10, productName:'Czekolada',           tags: ["cukier", "orzechy"]               ,description: "Pyszna czekolada",         categoryID: "jedzenie",      numberOfOpinions: 144},
+    {productId:10, productName:'Woda',           tags: ["mineralna", "magnez"]               ,description: "Pyszna woda",         categoryID: "napoje",      numberOfOpinions: 88},
+    {productId:12, productName:'Ice tea',           tags: ["cukier", "herbata"]               ,description: "Pyszna herbata",         categoryID: "napoje",      numberOfOpinions: 23},
+
   ];
 
 
