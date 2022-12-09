@@ -8,7 +8,8 @@ export class ProductSearch {
     {productId:4, productName:'Mikrofala OK',      tags: ["mikrofala", "800w"] ,   description: "Genialna mikrofala", categoryID: "elektronika",   numberOfOpinions: 1},
     {productId:5, productName:'Lodowka Amica',     tags: ["lodowka", "frost"] ,    description: "Genialna lodowka",   categoryID: "elektronika",   numberOfOpinions: 5},
     {productId:6, productName:'Hamburger',         tags: ["gluten", "mieso"] ,     description: "Pyszny hamburger",   categoryID: "jedzenie",      numberOfOpinions: 30},
-    {productId:7, productName:'Chleb',             tags: ["bez glutenu", "mieso"] ,description: "Pyszny chleb",       categoryID: "jedzenie",      numberOfOpinions: 20}
+    {productId:7, productName:'Chleb',             tags: ["bez glutenu", "mieso"] ,description: "Pyszny chleb",       categoryID: "jedzenie",      numberOfOpinions: 20},
+    {productId:8, productName:'Sok jablkowy',      tags: ["cukier", "sok"]               ,description: "Pyszny sok",         categoryID: "napoje",      numberOfOpinions: 60}
   ];
 
 

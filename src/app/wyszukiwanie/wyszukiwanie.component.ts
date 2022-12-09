@@ -5,6 +5,8 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {Product} from "./Product";
 import {ProductSearch} from "./ProductSearch";
 import {MatPaginator} from "@angular/material/paginator";
+import {Kategoria} from "./Kategoria";
+import {KategoriaSearch} from "./KategoriaSearch";
 
 @Component({
   selector: 'app-wyszukiwanie',
@@ -18,6 +20,11 @@ export class WyszukiwanieComponent implements AfterViewInit {
   searchedProducts: Product[] = [];
   selected = 'all';
 
+  categories: Kategoria[] = [
+    {categoryId: 1, categoryName: 'elektronika', attributes: [] },
+    {categoryId: 2, categoryName: 'jedzenie', attributes: [] },
+    {categoryId: 3, categoryName: 'napoje', attributes: [] }
+  ]
   displayedColumns: string[] = ['productId', 'productName', 'productTag', 'productDescription', 'categoryID', 'numberOfOpinions' ];
   dataSource : MatTableDataSource<Product> = new MatTableDataSource<Product>(this.searchedProducts);
 
