@@ -18,7 +18,7 @@ export class WyszukiwanieComponent implements AfterViewInit {
   searchedProducts: Product[] = [];
   selected = 'all';
 
-  displayedColumns: string[] = ['productID', 'productName', 'productTag', 'productDescription', 'categoryID', 'productOpinions' ];
+  displayedColumns: string[] = ['productId', 'productName', 'productTag', 'productDescription', 'categoryID', 'numberOfOpinions' ];
   dataSource : MatTableDataSource<Product> = new MatTableDataSource<Product>(this.searchedProducts);
 
   constructor() {}

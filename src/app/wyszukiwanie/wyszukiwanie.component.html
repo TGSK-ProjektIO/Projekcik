@@ -22,8 +22,8 @@
           </mat-form-field>
         </div>
       </div>
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort *ngIf="selected==='all'">
-        <ng-container matColumnDef="productID">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="productId">
           <th mat-header-cell *matHeaderCellDef> ID </th>
           <td mat-cell *matCellDef="let element"> {{element.productId}}</td>
         </ng-container>
@@ -43,7 +43,7 @@
           <th mat-header-cell *matHeaderCellDef> ID kategorii </th>
           <td mat-cell *matCellDef="let element" > {{element.categoryID}} </td>
         </ng-container>
-        <ng-container matColumnDef="productOpinions" >
+        <ng-container matColumnDef="numberOfOpinions" >
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilosc opinii </th>
           <td mat-cell *matCellDef="let element"> {{element.numberOfOpinions}}</td>
         </ng-container>
