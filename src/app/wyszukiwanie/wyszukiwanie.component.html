@@ -26,7 +26,7 @@
     <div class="col">
       <h2>Wyszukaj profil użytkownika:</h2>
       <div class="row">
-        <form (ngSubmit)="searchProducts()" #userForm="ngForm" class="form-floating">
+        <form (ngSubmit)="searchProfiles()" #userForm="ngForm" class="form-floating">
           <input type="text" class="form-control" id="phrase-user" placeholder="Nazwa użytkownika" [(ngModel)]="model.nickname" name="nickname" required>
           TODO: remove this: {{model.nickname}}
           <label for="phrase-user">Nazwa użytkownika</label>
@@ -36,7 +36,30 @@
       </div>
     </div>
   </div>
-  <ol class="list-group mt-2" *ngFor="let profile of searchedProfiles">
-    <li class="list-group-item">{{profile.nickname}}</li>
-  </ol>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element">{{element.userId}}</td>
+      </ng-container>
+      <ng-container matColumnDef="nickname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa użytkownika </th>
+        <td mat-cell *matCellDef="let element">{{element.nickname}}</td>
+      </ng-container>
+      <ng-container matColumnDef="numberOfOpinions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilość opinii </th>
+        <td mat-cell *matCellDef="let element">{{element.numberOfOpinions}}</td>
+      </ng-container>
+      <ng-container matColumnDef="score">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Wynik </th>
+        <td mat-cell *matCellDef="let element">{{element.score}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+    </table>
+    <mat-paginator #paginator
+                   [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons>
+    </mat-paginator>
+  </div>
 </div>
