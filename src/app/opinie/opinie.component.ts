@@ -50,21 +50,20 @@ export class OpinieComponent implements OnInit {
       opinion.opinionRating.dislikes = 2;
       opinions.push(opinion);
     }
+    this.allOpinions = opinions;
     // =======================================
 
     const viewContainerRef = this.opinionHost.viewContainerRef;
     viewContainerRef.clear();
 
     //todo: save refs to some array maybe
-    for (const opinion of opinions) {
+    for (const opinion of this.allOpinions) {
       const componentRef = viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent).instance;
       componentRef.ID = opinion.ID;
       componentRef.review = opinion.review;
       componentRef.ratings = opinion.ratings;
       componentRef.opinionRating = opinion.opinionRating;
     }
-
-    this.allOpinions = opinions;
   }
 
   ModifyOpinion(ID: number, ratings: RatingComponent[], text: string): void {
