@@ -1,3 +1,8 @@
+import {container} from "./config/container.config";
+import {TYPES} from "./config/types.config";
+import {UserRouter} from "./router/user.router";
+import {SessionRouter} from "./router/session.router";
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -22,5 +27,11 @@ app.use('/api/v1/panel-uzytkownika', panelUzytkownika);
 app.use('/api/v1/produkt', produkt);
 app.use('/api/v1/sugestie-i-zgloszenia', sugestieIZgloszenia);
 app.use('/api/v1/wyszukiwanie', wyszukiwanie);
+
+const userRouter = container.get<UserRouter>(TYPES.UserRouter);
+const sessionRouter = container.get<SessionRouter>(TYPES.SessionRouter);
+
+userRouter.addRoutes(app);
+sessionRouter.addRoutes(app);
 
 module.exports = app;

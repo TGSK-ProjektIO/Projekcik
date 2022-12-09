@@ -81,11 +81,12 @@ export class UserRepository {
         const db = client.db(DB_NAME);
         const collection = db.collection(USER_COLLECTION_NAME);
         let response = await collection.findOne<User>({
-          _id: _id
+          _id: new ObjectId(_id)
         });
         if (response !== null) {
           resolve(response);
         } else {
+          console.log("NOT FOUND")
           reject();
         }
       } catch (exception) {
