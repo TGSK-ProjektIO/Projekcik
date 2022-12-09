@@ -11,6 +11,7 @@ export class OpinionRatingComponent implements OnInit {
   @Input() likes : number = 0;
   @Input() dislikes : number = 0;
   @Input() ratingState : OpinionRatingState = OpinionRatingState.None;
+  @Input() isReadonly = true;
 
   constructor() {}
   ngOnInit(): void {}

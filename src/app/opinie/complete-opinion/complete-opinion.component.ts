@@ -1,7 +1,8 @@
-import {Component, Input, OnInit, Type} from '@angular/core';
+import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component";
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
+import {OpinieComponent} from "../opinie.component";
 
 // TODO: get user type from session
 enum UserType { anon, logged, admin}
@@ -14,6 +15,7 @@ enum UserType { anon, logged, admin}
 export class CompleteOpinionComponent implements OnInit {
   userType : UserType = UserType.anon;
   UserTypes = UserType;
+
   // Needed to pull [[ opinions ]] from database that are assigned to [[ product ]]
   @Input() productID : string = "";
   // Needed to identify singular [[ opinion ]]
@@ -21,28 +23,17 @@ export class CompleteOpinionComponent implements OnInit {
   // Needed to assign [[ user ]] to [[ opinion ]]
   @Input() userID : string = "";
 
-
   opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
   review : ReviewComponent = new ReviewComponent;
   ratings : Array<RatingComponent> = [];
 
-  constructor() {
-    // for (let i = 0; i < 15; i++) {
-    //   this.SetRating("rating"+i, 3);
-    // }
-    // this.SetReview("bardzo fajny produkt polecam cieplutkoooooooo o o o\
-    //   ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo\
-    //   oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo\
-    //   ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo\
-    //   oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo\
-    //   ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo\
-    //   oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo\
-    //   ooooooo oooooooooo ooooooo oooooooo oooooooo oooooooooooooo ooooo oooooooooo ooooo oo\
-    //   oooo ooo ooo ooooo ooooo ooooo ooo ooo oooooooooo ooo ooo oo");
-  }
+  //temp
+  opinieParent : OpinieComponent = new OpinieComponent();
+  SetParent(newParent : OpinieComponent) { this.opinieParent = newParent}
 
-  ngOnInit(): void {
-  }
+  constructor() {}
+
+  ngOnInit(): void {}
 
   GetID() : number { return this.ID; }
   GetReview() : string { return this.review.GetReview(); }
@@ -62,5 +53,12 @@ export class CompleteOpinionComponent implements OnInit {
     newRating.name = name;
     newRating.rating = value;
     this.ratings.push(newRating);
+  }
+  isUserType(type : UserType) : boolean {
+    return this.userType == type;
+  }
+
+  ngOnDestroy() : void {
+    this.opinieParent.DeleteOpinion(this.ID);
   }
 }

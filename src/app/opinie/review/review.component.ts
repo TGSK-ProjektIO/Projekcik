@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ReviewComponent implements OnInit {
   @Input() text : string = "";
-
+  @Input() isReadonly = true;
 
   constructor() {
   }
