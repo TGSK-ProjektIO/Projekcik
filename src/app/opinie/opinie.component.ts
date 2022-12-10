@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {CompleteOpinionComponent} from "./complete-opinion/complete-opinion.component";
 import {RatingComponent} from "./rating/rating.component";
 import {OpinionHostDirective} from "./opinion-host.directive";
+import {OpinionCreatorComponent} from "./opinion-creator/opinion-creator.component";
 
 @Component({
   selector: 'app-opinie',
@@ -11,6 +12,7 @@ import {OpinionHostDirective} from "./opinion-host.directive";
 export class OpinieComponent implements OnInit {
   allOpinions : CompleteOpinionComponent[] = [];
   allOpinionsRefs : CompleteOpinionComponent[] = [];
+  opinionCreator : OpinionCreatorComponent = new OpinionCreatorComponent(this);
   @ViewChild(OpinionHostDirective, {static: true}) opinionHost!: OpinionHostDirective;
 
   constructor() {  }
@@ -37,12 +39,16 @@ export class OpinieComponent implements OnInit {
     }
     this.allOpinions = opinions;
     // =======================================
+    const componentRef = this.opinionHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent).instance;
+    componentRef.parent = this;
 
     this.ShowAllOpinions();
   }
 
-  CreateOpinion(ID: number, attributes: string[]): void {
-
+  CreateOpinion(newOpinion : CompleteOpinionComponent): void {
+    // TODO: add opinion to database
+    this.allOpinions.push(newOpinion);
+    this.ShowOpinion(newOpinion);
   }
 
   GetOpinion(ID: number): CompleteOpinionComponent {
@@ -58,18 +64,20 @@ export class OpinieComponent implements OnInit {
   }
 
   public ShowAllOpinions(): void {
-    const viewContainerRef = this.opinionHost.viewContainerRef;
-    viewContainerRef.clear();
-
+    //viewContainerRef.clear();
     for (const opinion of this.allOpinions) {
-      const componentRef = viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent).instance;
-      componentRef.SetParent(this);
-      componentRef.ID = opinion.ID;
-      componentRef.review = opinion.review;
-      componentRef.ratings = opinion.ratings;
-      componentRef.opinionRating = opinion.opinionRating;
-      this.allOpinionsRefs.push(componentRef);
+      this.ShowOpinion(opinion);
     }
+  }
+
+  private ShowOpinion(opinion : CompleteOpinionComponent) {
+    const componentRef = this.opinionHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent).instance;
+    componentRef.SetParent(this);
+    componentRef.ID = opinion.ID;
+    componentRef.review = opinion.review;
+    componentRef.ratings = opinion.ratings;
+    componentRef.opinionRating = opinion.opinionRating;
+    this.allOpinionsRefs.push(componentRef);
   }
 
   ModifyOpinion(ID: number, ratings: RatingComponent[], text: string): void {
@@ -84,7 +92,7 @@ export class OpinieComponent implements OnInit {
   DeleteOpinion(ID: number): boolean {
     //todo: remove from database
     for (let i = 0; i < this.allOpinions.length; i++) {
-      // TODO: may be problemastic if sorting gets implemented
+      // TODO: may be problematic if sorting gets implemented
       if(this.allOpinions[i].ID == ID) {
         this.allOpinions.splice(i, 1);
         this.opinionHost.viewContainerRef.get(i)?.destroy();

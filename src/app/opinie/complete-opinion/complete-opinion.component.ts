@@ -12,7 +12,7 @@ enum UserType { anon, logged, admin}
   templateUrl: './complete-opinion.component.html',
   styleUrls: ['./complete-opinion.component.css']
 })
-export class CompleteOpinionComponent implements OnInit {
+export class CompleteOpinionComponent implements OnInit, OnDestroy {
   userType : UserType = UserType.anon;
   UserTypes = UserType;
 
