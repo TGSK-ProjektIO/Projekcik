@@ -22,7 +22,7 @@ export class PanelProfiluComponent implements OnInit {
     {
       product: 'Kremówka',
       img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fszkolawtelno.edu.pl%2Fwp-content%2Fuploads%2F2018%2F10%2Fa-768x768.jpg&f=1&nofb=1&ipt=56a5b1ed96c22491f21d4f2adbc959bf3010f4af89eecba5bce4a9b31cb7abaa&ipo=images',
-      text: 'Odkurzacz bardzo fajny, polecam. Podoba mi się jego zielonkawy kolor'
+      text: 'Kremówka za 21,37zł? Zdzierstwo!'
     },
     {
       product: 'Monsoon',
