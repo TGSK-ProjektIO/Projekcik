@@ -12,6 +12,7 @@ export class ProduktModyfikacjaComponent implements OnInit {
   description: string = '';
   name: string = '';
   category: string = '';
+
   constructor() {
     }
 
@@ -30,6 +31,7 @@ export class ProduktModyfikacjaComponent implements OnInit {
     blurEventDescription(event: any) {
 
       this.description = event.target.value;
+
     }
 
     blurEventCategory(event: any) {
