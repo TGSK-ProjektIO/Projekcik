@@ -37,12 +37,16 @@ export class WyszukiwanieComponent implements AfterViewInit {
 
   constructor() { }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('productPaginatorPaginator') productPaginator: MatPaginator;
+  @ViewChild('profilePaginator') profilePaginator: MatPaginator;
+  @ViewChild('productMatSort') productSort: MatSort;
+  @ViewChild('profileMatSort') profileSort: MatSort;
 
   ngAfterViewInit()  {
-    this.productsDataSource.paginator = this.paginator;
-    this.productsDataSource.sort = this.sort;
+    this.productsDataSource.paginator = this.productPaginator;
+    this.profilesDataSource.paginator = this.profilePaginator;
+    this.productsDataSource.sort = this.productSort;
+    this.profilesDataSource.sort = this.profileSort;
   }
 
   searchProducts() {
@@ -92,7 +96,7 @@ export class WyszukiwanieComponent implements AfterViewInit {
   }
 
   searchProfiles() {
-    this.searchedProfiles = this.profileSearch.getSearchResults(this.model.nickname);
+    this.searchedProfiles = this.profileSearch.getSearchResults(this.profileModel.nickname);
     this.profilesDataSource.data = this.searchedProfiles;
   }
 }
