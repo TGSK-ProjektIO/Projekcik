@@ -23,7 +23,6 @@ export class OpinionCreatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.review = this.ratingsHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
-    this.review.SetReview("Type your review here...");
     this.review.isReadonly = false;
   }
 
@@ -37,7 +36,7 @@ export class OpinionCreatorComponent implements OnInit {
 
   CreateOpinion() : void {
     let newOpinion = new CompleteOpinionComponent();
-
+    newOpinion.review.text = this.review.GetReview();
     this.parent.CreateOpinion(newOpinion);
   }
 }

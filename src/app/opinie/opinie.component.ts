@@ -39,8 +39,12 @@ export class OpinieComponent implements OnInit {
     }
     this.allOpinions = opinions;
     // =======================================
-    const componentRef = this.opinionHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent).instance;
-    componentRef.parent = this;
+
+    // Create opinion creator
+    this.opinionCreator = this.opinionHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent).instance;
+    this.opinionCreator.parent = this;
+    // TODO: get attributes from product
+    this.opinionCreator.AddRatings(["fajno", "niefajno", "zajefajno", "wydajność"]);
 
     this.ShowAllOpinions();
   }
