@@ -20,6 +20,9 @@ export class WyszukiwanieComponent implements AfterViewInit {
   searchedProducts: Product[] = [];
   filteredData: Product[] = [];
   selected = 'all';
+
+  productTags: string[] = [];   //zawiera tagi dla kategorii i wyszukiwania
+  productTagsAll: string[] = [];  //zawiera tagi z wyszukiwania
   categories: Kategoria[] = [
     {categoryId: 1, categoryName: 'elektronika', attributes: [] },
     {categoryId: 2, categoryName: 'jedzenie', attributes: [] },
@@ -52,24 +55,39 @@ export class WyszukiwanieComponent implements AfterViewInit {
   searchProducts() {
     this.searchedProducts = this.productSearch.getSearchResults(this.productModel.productName);
     this.productsDataSource.data = this.searchedProducts;
+
+    this.productTags = [];
+    this.productTagsAll = [];
+    for (let i = 0; i < this.searchedProducts.length; i++) {
+      for (let j = 0; j < this.searchedProducts[i].tags.length; j++) {
+        this.productTags.push(this.searchedProducts[i].tags[j]);
+        this.productTagsAll.push(this.searchedProducts[i].tags[j]);
+      }
+    }
   }
 
   applyCategory($event: any) {
-    this.filteredData =[];
+    this.filteredData = [];
+    this.productTags = [];
 
-    for (let i = 0; i < this.searchedProducts.length; i++)
-    {
-      if (this.searchedProducts[i].categoryID == $event.value.toLowerCase())
-      {
+    for (let i = 0; i < this.searchedProducts.length; i++) {
+
+      if (this.searchedProducts[i].categoryID == $event.value.toLowerCase()) {
         this.filteredData.push(this.searchedProducts[i]);
+
+        for (let j = 0; j < this.searchedProducts[i].tags.length; j++) {
+          this.productTags.push(this.searchedProducts[i].tags[j]);
+        }
       }
 
-      if ($event.value.toLowerCase() == "all")
-      {
+      if ($event.value.toLowerCase() == "all") {
         this.filteredData = this.searchedProducts;
+        this.productTags = this.productTagsAll;
       }
     }
     this.productsDataSource.data = this.filteredData;
+
+
   }
 
   applyTagFilter(event: Event) {
