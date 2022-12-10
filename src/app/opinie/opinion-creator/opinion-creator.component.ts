@@ -37,7 +37,8 @@ export class OpinionCreatorComponent implements OnInit {
 
   CreateOpinion() : void {
     let newOpinion = new CompleteOpinionComponent();
-    newOpinion.review.text = this.review.GetReview();
+    newOpinion.review.text = this.review.text;
+    console.log(newOpinion.review.text)
     newOpinion.ratings = this.ratings;
     this.parent.CreateOpinion(newOpinion);
   }

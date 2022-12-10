@@ -40,19 +40,19 @@ export class OpinieComponent implements OnInit {
     this.allOpinions = opinions;
     // =======================================
 
+    this.ShowAllOpinions();
+
     // Create opinion creator
-    this.opinionCreator = this.opinionHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent).instance;
+    this.opinionCreator = this.opinionHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent, {index: 0}).instance;
     this.opinionCreator.parent = this;
     // TODO: get attributes from product
     this.opinionCreator.AddRatings(["fajno", "niefajno", "zajefajno", "wydajność"]);
-
-    this.ShowAllOpinions();
   }
 
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {
     // TODO: add opinion to database
     this.allOpinions.push(newOpinion);
-    this.ShowOpinion(newOpinion);
+    this.ShowOpinion(newOpinion, 1);
   }
 
   GetOpinion(ID: number): CompleteOpinionComponent {
@@ -74,8 +74,8 @@ export class OpinieComponent implements OnInit {
     }
   }
 
-  private ShowOpinion(opinion : CompleteOpinionComponent) {
-    const componentRef = this.opinionHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent).instance;
+  private ShowOpinion(opinion : CompleteOpinionComponent, index: number = 0) {
+    const componentRef = this.opinionHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent, {index: index}).instance;
     componentRef.SetParent(this);
     componentRef.ID = opinion.ID;
     componentRef.review = opinion.review;

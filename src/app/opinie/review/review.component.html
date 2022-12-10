@@ -2,6 +2,9 @@
   {{ GetReview() }}
 </div>
 <div *ngIf="!isReadonly" class="input-group">
-  <textarea class="form-control" value="{{ GetReview() }}" placeholder="Enter review"></textarea>
+  <textarea class="form-control"
+            placeholder="Enter review"
+            #inputText name="inputText"
+            (input)="SetReview(inputText.value)"></textarea>
 </div>
 
