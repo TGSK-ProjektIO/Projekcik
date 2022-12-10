@@ -30,6 +30,7 @@ export class OpinionCreatorComponent implements OnInit {
     for (const ratingName of ratingsList) {
       const componentRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
       componentRef.name = ratingName;
+      componentRef.isReadonly = false;
       this.ratings.push(componentRef);
     }
   }
