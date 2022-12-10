@@ -12,7 +12,4 @@ export class PanelUzytkownikaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClick() {
-    window.alert("Hejo!")
-  }
 }

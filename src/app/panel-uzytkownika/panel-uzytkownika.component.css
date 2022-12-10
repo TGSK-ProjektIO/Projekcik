@@ -24,7 +24,7 @@ body {
 }
 
 .profile-panel {
-  margin: 6em 3em 3em 3em;
+  margin: 3em 3em 3em 3em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
   border-radius: 1em;
@@ -33,12 +33,21 @@ body {
 }
 
 .admin-dashboard-panel {
-  margin: 6em 3em 3em 3em;
+  margin: 3em 3em 3em 3em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
   border-radius: 1em;
   background-color: #442222;
   box-shadow: 0 5px #341212;
+}
+
+.edit-panel {
+  margin: 3em 3em 3em 3em;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  border-radius: 1em;
+  background-color: #223355;
+  box-shadow: 0 5px #223444;
 }
 
 .sub-panel {
@@ -87,6 +96,7 @@ h3 {
 
 button {
   padding: 0.3em;
+  margin: 0 4px;
   background-color: #ffffff33;
   border-radius: 5px 5px 7px 7px;
   border-color: #00000000;
