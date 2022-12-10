@@ -1,8 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {CompleteOpinionComponent} from "./complete-opinion/complete-opinion.component";
 import {RatingComponent} from "./rating/rating.component";
 import {OpinionHostDirective} from "./opinion-host.directive";
 import {OpinionCreatorComponent} from "./opinion-creator/opinion-creator.component";
+
+// TODO: get user type from session
+export enum UserType { anon, logged, admin}
 
 @Component({
   selector: 'app-opinie',
@@ -10,6 +13,12 @@ import {OpinionCreatorComponent} from "./opinion-creator/opinion-creator.compone
   styleUrls: ['./opinie.component.css']
 })
 export class OpinieComponent implements OnInit {
+  // TODO: get user type from session
+  userType : UserType = UserType.admin;
+  isUserType(type : UserType) : boolean {
+    return this.userType == type;
+  }
+
   allOpinions : CompleteOpinionComponent[] = [];
   allOpinionsRefs : CompleteOpinionComponent[] = [];
   opinionCreator : OpinionCreatorComponent = new OpinionCreatorComponent(this);
@@ -43,10 +52,12 @@ export class OpinieComponent implements OnInit {
     this.ShowAllOpinions();
 
     // Create opinion creator
-    this.opinionCreator = this.opinionHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent, {index: 0}).instance;
-    this.opinionCreator.parent = this;
-    // TODO: get attributes from product
-    this.opinionCreator.AddRatings(["fajno", "niefajno", "zajefajno", "wydajność"]);
+    if(this.userType == UserType.logged) {
+      this.opinionCreator = this.opinionHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent, {index: 0}).instance;
+      this.opinionCreator.parent = this;
+      // TODO: get attributes from product
+      this.opinionCreator.AddRatings(["fajno", "niefajno", "zajefajno", "wydajność"]);
+    }
   }
 
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {

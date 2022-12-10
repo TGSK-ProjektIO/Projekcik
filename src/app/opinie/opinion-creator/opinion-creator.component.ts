@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ReviewComponent} from "../review/review.component";
 import {OpinieComponent} from "../opinie.component";
 import {RatingComponent} from "../rating/rating.component";
@@ -10,7 +10,8 @@ import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.com
   templateUrl: './opinion-creator.component.html',
   styleUrls: ['./opinion-creator.component.css']
 })
-export class OpinionCreatorComponent implements OnInit {
+export class OpinionCreatorComponent implements AfterViewInit {
+
   ratings : RatingComponent[] = [];
   review : ReviewComponent = new ReviewComponent();
 
@@ -21,7 +22,7 @@ export class OpinionCreatorComponent implements OnInit {
     this.parent = parent;
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.review = this.ratingsHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
     this.review.isReadonly = false;
   }

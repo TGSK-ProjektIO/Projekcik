@@ -2,10 +2,7 @@ import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component";
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
-import {OpinieComponent} from "../opinie.component";
-
-// TODO: get user type from session
-enum UserType { anon, logged, admin}
+import {OpinieComponent, UserType} from "../opinie.component";
 
 @Component({
   selector: 'app-complete-opinion',
@@ -13,7 +10,7 @@ enum UserType { anon, logged, admin}
   styleUrls: ['./complete-opinion.component.css']
 })
 export class CompleteOpinionComponent implements OnInit, OnDestroy {
-  userType : UserType = UserType.anon;
+  // TODO: get user type from session
   UserTypes = UserType;
 
   // Needed to pull [[ opinions ]] from database that are assigned to [[ product ]]
@@ -53,9 +50,6 @@ export class CompleteOpinionComponent implements OnInit, OnDestroy {
     newRating.name = name;
     newRating.rating = value;
     this.ratings.push(newRating);
-  }
-  isUserType(type : UserType) : boolean {
-    return this.userType == type;
   }
 
   ngOnDestroy() : void {
