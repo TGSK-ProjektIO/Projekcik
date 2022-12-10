@@ -24,7 +24,9 @@ body {
 }
 
 .profile-panel {
-  margin: 3em 3em 3em 3em;
+  margin: 6em auto;
+  width: 80%;
+  max-width: 80em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
   border-radius: 1em;
@@ -33,7 +35,9 @@ body {
 }
 
 .admin-dashboard-panel {
-  margin: 3em 3em 3em 3em;
+  margin: 6em auto;
+  width: 80%;
+  max-width: 80em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
   border-radius: 1em;
@@ -42,7 +46,9 @@ body {
 }
 
 .edit-panel {
-  margin: 3em 3em 3em 3em;
+  margin: 6em auto;
+  width: 80%;
+  max-width: 80em;
   padding-top: 0.1em;
   padding-bottom: 0.1em;
   border-radius: 1em;
@@ -59,24 +65,24 @@ body {
 }
 
 .scroller-sub-panel {
-  height: 500px;
+  height: 450px;
   overflow-y: scroll;
-  scrollbar-color: white;
+  scrollbar-color: #ffffff77 #ffffff11;
   scrollbar-width: thin;
 
   margin: 1em 0;
   padding: 0.5em;
   border-radius: 0.5em;
-  background-color: #30304f;
-  box-shadow: 0 5px #30304f;
+  background-color: #00000000;
+  box-shadow: 0 5px #00000000;
 }
 
 .sub-sub-panel {
   margin: 1em;
   padding: 1em;
   border-radius: 0.5em;
-  background-color: #60607f;
-  box-shadow: 0 5px #40405f;
+  background-color: #ffffff33;
+  box-shadow: 0 5px #00000055;
 }
 
 p {
@@ -91,7 +97,7 @@ h1 {
 }
 
 h3 {
-  margin: 0px;
+  margin: 0;
 }
 
 button, input::file-selector-button{

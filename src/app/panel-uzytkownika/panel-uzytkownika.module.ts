@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 
-import { PanelUzytkownikaComponent } from './panel-uzytkownika.component';
 import { PanelProfiluComponent } from './panel-profilu/panel-profilu.component';
 import { PanelAdministratoraComponent } from './panel-administratora/panel-administratora.component';
 import { PanelEdycjiComponent } from './panel-edycji/panel-edycji.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 
 const appRoute: Routes = [
@@ -26,9 +26,10 @@ const appRoute: Routes = [
     PanelAdministratoraComponent,
     PanelEdycjiComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(appRoute)
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forRoot(appRoute, { paramsInheritanceStrategy: 'always' }),
+        MatTabsModule
+    ]
 })
 export class PanelUzytkownikaModule { }

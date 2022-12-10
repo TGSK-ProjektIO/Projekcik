@@ -1,15 +1,20 @@
 <div class="profile-panel">
   <div class="sub-panel">
-    <img width="200" height="200" style="border-radius: 100%" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.istockphoto.com%2Fvectors%2Fdefault-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392%3Fk%3D6%26m%3D1223671392%26s%3D612x612%26w%3D0%26h%3DNGxdexflb9EyQchqjQP0m6wYucJBYLfu46KCLNMHZYM%3D&f=1&nofb=1&ipt=ba4480b3b1596ccfd8c23ca2cd3372454f5b76cf43b6a23a9b414f29ff320406&ipo=images" alt="Zdjęcie profilowe"/>
-    <h1>Pseudonim użytkownika</h1>
+    <img width="200" height="200" style="border-radius: 100%" src="{{mock_user.profile_picture}}" alt="Zdjęcie profilowe"/>
+    <h1 style="font-size: 40px"> {{mock_user.name}} </h1>
+    <h1>
+      <div [hidden]="!mock_user.isBanned" style="color: red">
+        [KONTO ZABLOKOWANE]
+      </div>
+    </h1>
     <br/>
     <div style="display: inline-block; margin-bottom: 1em">
-      <h3>O mnie</h3>
-      Tutaj jest opis użytkownika. Lubię pociągi. AAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAA
+      <h3><i>O mnie</i></h3>
+      {{mock_user.description}}
     </div>
     <br/>
-    <button [routerLink]="['/panel-edycji']">Edytuj profil</button>
-    <button [routerLink]="['/panel-administratora']">Panel administratora</button>
+    <button [hidden]="!isCurrent" [routerLink]="['/panel-edycji']">Edytuj profil</button>
+    <button [hidden]="!mock_user.isAdmin || !isCurrent" [routerLink]="['/panel-administratora']">Panel administratora</button>
   </div>
   <div class="sub-panel">
     <h3>Ocenione produkty</h3>
@@ -20,6 +25,8 @@
         <div style="display: block">{{opinion.text}}</div>
         <br/>
         <button>Przejdź do produktu</button>
+        <button>Like: {{opinion.likes}} </button>
+        <button>Dislike: {{opinion.dislikes}}</button>
       </div>
     </div>
   </div>
