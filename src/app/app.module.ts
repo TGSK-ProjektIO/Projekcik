@@ -12,6 +12,7 @@ import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProduktDodanieComponent } from './produkt/produkt-dodanie/produkt-dodanie.component';
 import { ProduktModyfikacjaComponent } from './produkt/produkt-modyfikacja/produkt-modyfikacja.component';
+import { ProduktWidokComponent } from './produkt/produkt-widok/produkt-widok.component';
 
 
 @NgModule({
@@ -22,8 +23,9 @@ import { ProduktModyfikacjaComponent } from './produkt/produkt-modyfikacja/produ
     PanelUzytkownikaComponent,
     ProduktComponent,
     ProduktDodanieComponent,
+    ProduktWidokComponent,
     WyszukiwanieComponent,
-    SugestieIZgloszeniaComponent
+    SugestieIZgloszeniaComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,7 @@ import { ProduktModyfikacjaComponent } from './produkt/produkt-modyfikacja/produ
     RouterModule.forRoot([
       {path: 'produkt-dodanie', component: ProduktDodanieComponent},
       {path: 'produkt-modyfikacja', component: ProduktModyfikacjaComponent},
+      {path: 'produkt-widok', component: ProduktWidokComponent},
     ])
   ],
   providers: [],

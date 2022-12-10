@@ -7,39 +7,34 @@
   <body>
     <div class="product-panel">
       <p>Produkt</p>
-      <div class="sub-panel">
-        <h1> {{getProductName()}}</h1>
       <div>
-      <div>
-        <button>
-          <a href="produkt-modyfikacja">
+        <div>
+          <button>
+          <a href="produkt-dodanie">
             <div class="link">
-              Modyfikuj
+              Dodaj produkt
             </div>
           </a>
           </button>
-        <button (click)="onClick()">Usuń</button>
-        <button (click)="onClick()">Dodaj sugestie</button>
-        <button>
-        <a href="produkt-dodanie">
-          <div class="link">
-            Dodaj produkt
-          </div>
-        </a>
-        </button>
-      </div>
-            <img style="display: inline-block;" width="300" height="500" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDRP8tcr9c5vpLXUrOXgaXdEkAkn8ofI7otckeIR93HHHxD85QSgcNBLCiWKAwHxSpaTk&usqp=CAU" alt="Zdjęcie produktu"/>      
+          <button>
+            <a href="produkt-widok">
+              <div class="link">
+                Produkt
+              </div>
+            </a>
+          </button>
+          <button>
+            <a href="">
+              <div class="link">
+                Powrót
+              </div>
+            </a>
+          </button>
         </div>
       </div>
-      <div class="sub-panel">
-        <h3>Dane produktu:</h3>
-            <h1>Opis:</h1>
-            <div style="display: block">{{getProductDescription()}}</div>
-            <h1>Kategoria: </h1>
-            <div style="display: block">{{getProductCategory()}}</div>
-            <h1>Atrybuty:</h1>
-            <div style="display: block">{{getProductAttributes()}}</div>
-      </div>
+    </div>
+    <div>
+      <router-outlet></router-outlet>
     </div>
   </body>
 </html>
