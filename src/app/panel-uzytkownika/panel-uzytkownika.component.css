@@ -94,9 +94,9 @@ h3 {
   margin: 0px;
 }
 
-button {
+button, input::file-selector-button{
   padding: 0.3em;
-  margin: 0 4px;
+  margin: 8px 4px 8px 0;
   background-color: #ffffff33;
   border-radius: 5px 5px 7px 7px;
   border-color: #00000000;
@@ -105,14 +105,14 @@ button {
   transition-duration: 0.3s;
 }
 
-button:hover {
+button:hover, input::file-selector-button:hover {
   background-color: #ffffff44;
   transform: translateY(-1px);
   box-shadow: 0 6px #22222255;
   transition-duration: 0.1s;
 }
 
-button:active {
+button:active, input::file-selector-button:active {
   background-color: #ffffff11;
   transform: translateY(2px);
   box-shadow: 0 3px #00000088;
