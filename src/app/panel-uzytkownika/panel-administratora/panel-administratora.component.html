@@ -44,7 +44,7 @@
     <input type="text" style="width: 20em;" placeholder="Pseudonim"> <br/> <br/>
     Powód blokady <br/>
     <textarea style="width: 25em;" placeholder="Powód"></textarea> <br/>
-    <button>Zablokuj użytkownika</button>
+    <button (click)="banUser()">Zablokuj użytkownika</button>
   </div>
   <button [routerLink]="['/']" style="margin: 0 0 1em 1em">Wróć</button>
 </div>

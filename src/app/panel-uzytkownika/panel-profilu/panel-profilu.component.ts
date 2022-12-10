@@ -13,8 +13,8 @@ export class PanelProfiluComponent implements OnInit {
 
   }
 
+  // Placeholder (don't sue us)
   isCurrent = true
-
   mock_user = {
     name: 'MaciekIO116',
     profile_picture: 'https://i.etsystatic.com/34732889/r/il/b08942/3768265623/il_794xN.3768265623_sji1.jpg',
@@ -50,9 +50,5 @@ export class PanelProfiluComponent implements OnInit {
       dislikes: 34
     }
   ]
-
-  onClick() {
-    window.alert("Hejo!")
-  }
 
 }

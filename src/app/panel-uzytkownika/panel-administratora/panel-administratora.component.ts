@@ -81,4 +81,8 @@ export class PanelAdministratoraComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  banUser(): void {
+    window.alert("Nie znaleziono użytkownika o takim pseudonimie.")
+  }
+
 }
