@@ -14,7 +14,7 @@ export enum UserType { anon, logged, admin}
 })
 export class OpinieComponent implements OnInit {
   // TODO: get user type from session
-  userType : UserType = UserType.admin;
+  userType : UserType = UserType.logged;
   userLoggedID = "2000";
   isUserType(type : UserType) : boolean {
     return this.userType == type;

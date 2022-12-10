@@ -1,22 +1,25 @@
-input {
+form {
   display: block;
-  margin-right: 0;
-  margin-left: auto;
+  text-align: right;
 }
 
 .creator {
+  display: block;
   padding: 1%;
   margin: 1%;
+  background-color: #293752;
   border: #334465 2px outset;
   border-radius: 5px;
 }
 
-app-review {
+.creator > app-review {
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-app-rating {
+.creator > app-rating {
   display: inline-block;
+  margin-right: 2px;
+  margin-left: 2px;
 }
