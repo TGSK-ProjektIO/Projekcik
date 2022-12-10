@@ -12,6 +12,7 @@ export class ProduktModyfikacjaComponent implements OnInit {
   description: string = '';
   name: string = '';
   category: string = '';
+  image: string = '';
 
   constructor() {
     }
@@ -39,4 +40,9 @@ export class ProduktModyfikacjaComponent implements OnInit {
       this.category= event.target.value;
     }
     
+    blurEventImage(event: any) {
+
+      this.image = event.target.value;
+
+    }
 }

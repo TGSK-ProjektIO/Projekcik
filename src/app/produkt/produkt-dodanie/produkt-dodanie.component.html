@@ -8,10 +8,15 @@
     <div class="product-panel">
       <p>Dodaj produkt</p>
       <div class="sub-panel">
+        <h1>Nazwa produktu:</h1>
+        <div style="display: block">
         <input type="text" (blur)="blurEventName($event)">
-        <h1>{{name}}</h1>
-        <div>
-          <img style="display: inline-block;" width="300" height="500" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDRP8tcr9c5vpLXUrOXgaXdEkAkn8ofI7otckeIR93HHHxD85QSgcNBLCiWKAwHxSpaTk&usqp=CAU" alt="Zdjęcie produktu"/>      
+        <h3>{{name}}</h3>
+        </div>
+        <h1>Link do zdjęcia produktu:</h1>
+        <div style="display: block">
+        <input type="text" (blur)="blurEventImage($event)">
+        <h3>{{image}}</h3>
         </div>
       </div>
       <div class="sub-panel">

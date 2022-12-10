@@ -18,10 +18,10 @@ export class ProduktWidokComponent implements OnInit {
   
   constructor() {
       this.productId = "productID";
-      this.name = "name";
-      this.category = "category";
-      this.attributes = "attributes";
-      this.description = "lalala ksiazka ta";
+      this.name = "biurko";
+      this.category = "meble";
+      this.attributes = "wymiar: 160x80cm, materiał: drewno";
+      this.description = "drewniane biurko";
     }
 
     ngOnInit(): void {

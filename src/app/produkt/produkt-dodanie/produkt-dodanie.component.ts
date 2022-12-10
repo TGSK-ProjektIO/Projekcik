@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {ProduktComponent} from '../produkt.component';
 
 @Component({
   selector: 'app-produkt-dodanie',
@@ -12,6 +12,7 @@ export class ProduktDodanieComponent implements OnInit {
   description: string = '';
   name: string = '';
   category: string = '';
+  image: string = '';
   constructor() {
     }
 
@@ -37,4 +38,9 @@ export class ProduktDodanieComponent implements OnInit {
       this.category= event.target.value;
     }
     
+    blurEventImage(event: any) {
+
+      this.image = event.target.value;
+
+    }
 }
