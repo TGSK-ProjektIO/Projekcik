@@ -1,17 +1,22 @@
 input {
   display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 90%;
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .creator {
+  padding: 1%;
   margin: 1%;
   border: #334465 2px outset;
   border-radius: 5px;
 }
 
-h1 {
-  color: #adadad;
-  font-family: "Helvetica";
+app-review {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+app-rating {
+  display: inline-block;
 }

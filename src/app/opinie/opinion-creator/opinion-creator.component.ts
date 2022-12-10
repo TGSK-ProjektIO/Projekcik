@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ReviewComponent} from "../review/review.component";
 import {OpinieComponent} from "../opinie.component";
 import {RatingComponent} from "../rating/rating.component";
@@ -8,7 +8,8 @@ import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.com
 @Component({
   selector: 'app-opinion-creator',
   templateUrl: './opinion-creator.component.html',
-  styleUrls: ['./opinion-creator.component.css']
+  styleUrls: ['./opinion-creator.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class OpinionCreatorComponent implements OnInit {
   ratings : RatingComponent[] = [];
