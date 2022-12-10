@@ -1,14 +1,24 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Injectable, NgModule, OnInit, ViewChild} from '@angular/core';
 import {MatSort, Sort} from "@angular/material/sort";
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {Product} from "./Product";
 import {ProductSearch} from "./ProductSearch";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {Kategoria} from "./Kategoria";
 import { Profile } from "./Profile";
 import {ProfileSearch} from "./ProfileSearch";
 
-
+@Injectable()
+export class PolishPaginatorIntl extends MatPaginatorIntl{
+  constructor(){
+    super();
+    this.nextPageLabel = 'Następna strona';
+    this.previousPageLabel = 'Poprzednia strona';
+    this.itemsPerPageLabel = 'Produkty na stronie';
+    this.lastPageLabel = 'Ostatnia strona';
+    this.firstPageLabel = 'Pierwsza strona';
+  }
+}
 @Component({
   selector: 'app-wyszukiwanie',
   templateUrl: './wyszukiwanie.component.html',
@@ -40,8 +50,8 @@ export class WyszukiwanieComponent implements AfterViewInit {
 
   constructor() { }
 
-  @ViewChild('productPaginatorPaginator') productPaginator: MatPaginator;
-  @ViewChild('profilePaginator') profilePaginator: MatPaginator;
+  @ViewChild('productPaginator', {static : true}) productPaginator: MatPaginator;
+  @ViewChild('profilePaginator', {static : true}) profilePaginator: MatPaginator;
   @ViewChild('productMatSort') productSort: MatSort;
   @ViewChild('profileMatSort') profileSort: MatSort;
 
@@ -55,6 +65,7 @@ export class WyszukiwanieComponent implements AfterViewInit {
   searchProducts() {
     this.searchedProducts = this.productSearch.getSearchResults(this.productModel.productName);
     this.productsDataSource.data = this.searchedProducts;
+    this.profilesDataSource.data.splice(0);
 
     this.productTags = [];
     this.productTagsAll = [];
@@ -116,5 +127,6 @@ export class WyszukiwanieComponent implements AfterViewInit {
   searchProfiles() {
     this.searchedProfiles = this.profileSearch.getSearchResults(this.profileModel.nickname);
     this.profilesDataSource.data = this.searchedProfiles;
+    this.productsDataSource.data.splice(0);
   }
 }

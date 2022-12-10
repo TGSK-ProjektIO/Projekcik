@@ -8,14 +8,14 @@ import { OpinieComponent } from './opinie/opinie.component';
 import { PanelUzytkownikaComponent } from './panel-uzytkownika/panel-uzytkownika.component';
 import { ProduktComponent } from './produkt/produkt.component';
 import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i-zgloszenia.component';
-import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
+import {PolishPaginatorIntl, WyszukiwanieComponent} from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
@@ -40,7 +40,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatPaginatorModule,
         MatCheckboxModule
     ],
-  providers: [],
+  providers: [{provide: MatPaginatorIntl, useClass: PolishPaginatorIntl}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
