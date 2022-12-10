@@ -39,9 +39,16 @@ export class OpinionCreatorComponent implements AfterViewInit {
 
   CreateOpinion() : void {
     let newOpinion = new CompleteOpinionComponent();
+    newOpinion.userID = this.parent.userLoggedID;
     newOpinion.review.text = this.review.text;
     console.log(newOpinion.review.text)
     newOpinion.ratings = this.ratings;
     this.parent.CreateOpinion(newOpinion);
+
+    // clear fields
+    this.review.SetReview("");
+    for (const rating of this.ratings) {
+      rating.rating = 0;
+    }
   }
 }

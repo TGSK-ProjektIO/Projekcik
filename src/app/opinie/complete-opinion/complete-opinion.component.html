@@ -1,9 +1,9 @@
 <div class="Opinion">
   <div class="Header">
-    <img src="https://i.imgur.com/tYkCX47.jpg" /> Verified Customer
+    <img src="https://i.imgur.com/tYkCX47.jpg" /> Verified Customer <span class="badge badge-dark">@{{GetUserID()}}</span>
     <button *ngIf="opinieParent.isUserType(UserTypes.admin)"
             class="btn btn-default"
-            (click)="ngOnDestroy()">
+            (click)="DestroyOpinion()">
               <img style="width: 2em; border: none;" src="https://i.imgur.com/peujZRW.png" />
     </button>
   </div>
@@ -13,17 +13,17 @@
         <th *ngFor="let setRating of ratings">
           <app-rating name="{{setRating.name}}"
                       [rating]=setRating.GetRating()
-                      [isReadonly]=!opinieParent.isUserType(UserTypes.logged)></app-rating>
+                      [isReadonly]=!CanEdit()></app-rating>
         </th>
       </tr>
     </table>
   </div>
   <div class="Review">
     <app-review text="{{review.GetReview()}}"
-                [isReadonly]=!opinieParent.isUserType(UserTypes.logged)></app-review>
+                [isReadonly]=!CanEdit()></app-review>
   </div>
   <div class="OpinionRating">
-    <app-opinion-rating [isReadonly]=!opinieParent.isUserType(UserTypes.logged)
+    <app-opinion-rating [isReadonly]=CanEdit()
                         [likes]=opinionRating.likes
                         [dislikes]=opinionRating.dislikes></app-opinion-rating>
   </div>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {Component, Input, OnInit } from '@angular/core';
 import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component";
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
@@ -9,9 +9,10 @@ import {OpinieComponent, UserType} from "../opinie.component";
   templateUrl: './complete-opinion.component.html',
   styleUrls: ['./complete-opinion.component.css']
 })
-export class CompleteOpinionComponent implements OnInit, OnDestroy {
+export class CompleteOpinionComponent implements OnInit {
   // TODO: get user type from session
   UserTypes = UserType;
+  canEdit : boolean = false;
 
   // Needed to pull [[ opinions ]] from database that are assigned to [[ product ]]
   @Input() productID : string = "";
@@ -33,6 +34,7 @@ export class CompleteOpinionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   GetID() : number { return this.ID; }
+  GetUserID() : string { return this.userID; }
   GetReview() : string { return this.review.GetReview(); }
   GetMeanRating() : number {
     let result: number = 0;
@@ -52,7 +54,13 @@ export class CompleteOpinionComponent implements OnInit, OnDestroy {
     this.ratings.push(newRating);
   }
 
-  ngOnDestroy() : void {
+  DestroyOpinion() : void {
     this.opinieParent.DeleteOpinion(this.ID);
+  }
+
+  protected CanEdit() : boolean {
+    // return (this.opinieParent.isUserType(UserType.logged) &&
+    //   this.userID == this.opinieParent.userLoggedID);
+    return this.canEdit;
   }
 }
