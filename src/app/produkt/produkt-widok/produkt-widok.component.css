@@ -33,6 +33,7 @@ input[type=text] {
   background-color: #48cae4;
   box-sizing: border-box;
 }
+
 input[type=text]:focus {
   padding: 12px 20px;
   margin: 8px 0;
