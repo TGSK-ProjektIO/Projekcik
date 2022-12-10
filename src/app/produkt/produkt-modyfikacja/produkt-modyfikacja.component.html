@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>Produkt</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="produkt-modyfikacja.component.css">
+  </head>
+  <body>
+    <div class="product-panel">
+      <p>Produkt</p>
+      <div class="sub-panel">
+        <input type="text" (blur)="blurEventName($event)">
+        <h1>{{name}}</h1>
+      <div>
+            <img style="display: inline-block;" width="300" height="500" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDRP8tcr9c5vpLXUrOXgaXdEkAkn8ofI7otckeIR93HHHxD85QSgcNBLCiWKAwHxSpaTk&usqp=CAU" alt="Zdjęcie produktu"/>      
+        </div>
+      </div>
+      <div class="sub-panel">
+        <h3>Dane produktu:</h3>
+            <h1>Opis:</h1>
+            <div style="display: block">
+              <input type="text" (blur)="blurEventDescription($event)">
+            <h1>{{description}}</h1>
+            </div>
+            <h1>Kategoria: </h1>
+            <div style="display: block">
+              <input type="text" (blur)="blurEventCategory($event)">
+            <h1>{{category}}</h1>
+            </div>
+            <div>
+              <button>
+                <a href="">
+                  <div class="link">
+                    Zapisz
+                  </div>
+                </a>
+                </button>
+            </div>
+      </div>
+    </div>
+  </body>
+</html>

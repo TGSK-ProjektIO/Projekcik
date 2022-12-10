@@ -34,4 +34,8 @@ export class ProduktComponent implements OnInit {
     getProductDescription(): string {return this.description}
     getProductCategory(): string {return this.category}
     getProductAttributes(): string {return this.attributes}
+    setProductName(name: string) {this.name = name}
+    setProductDescription(description: string) {this.description = description}
+    setProductCategory(category: string) {this.category = category}
+    
 }
