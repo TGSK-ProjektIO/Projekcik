@@ -27,6 +27,19 @@ body {
    background-color: none;
 }
 
+input[type=text] {
+  padding: 12px 20px;
+  margin: 8px 0;
+  background-color: #48cae4;
+  box-sizing: border-box;
+}
+input[type=text]:focus {
+  padding: 12px 20px;
+  margin: 8px 0;
+  background-color: #0077b6;
+  box-sizing: border-box;
+}
+
 p {
   margin: 1em;
   font-family: "Verdana", Sans-serif;
