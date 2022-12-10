@@ -1,0 +1,17 @@
+input {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 90%;
+}
+
+.creator {
+  margin: 1%;
+  border: #334465 2px outset;
+  border-radius: 5px;
+}
+
+h1 {
+  color: #adadad;
+  font-family: "Helvetica";
+}
