@@ -4,21 +4,22 @@
       <h2>Wyszukaj produkt:</h2>
       <div class="row">
         <div class="col">
-          <div class="form-floating">
-            <input type="text" class="form-control" id="phrase-product" placeholder="Nazwa produktu">
+          <form (ngSubmit)="searchProducts()" #productForm="ngForm" class="form-floating">
+            <input type="text" class="form-control" id="phrase-product" placeholder="Nazwa produktu" [(ngModel)]="productModel.productName" name="productName" required>
             <label for="phrase-product">Fraza</label>
-          </div>
+            <button type="submit" class="btn btn-primary float-end mt-2"
+                    [disabled]="!productForm.form.valid">Wyszukaj produkt</button>
+          </form>
         </div>
         <div class="col">
           <div class="form-floating">
-            <select class="form-select" id="select-category">
-              <option selected>Wszystkie kategorie</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-            </select>
-            <label for="select-category">Kategoria</label>
-            <button type="button" class="btn btn-primary float-end mt-2">Wyszukaj produkt</button>
+            <mat-form-field appearance="fill">
+              <mat-label>Wybierz kategorie</mat-label>
+              <mat-select [(ngModel)]="selected" name="categoryID" (selectionChange)="applyCategory($event)">
+                <mat-option value="all">Wszystkie kategorie</mat-option>
+                <mat-option *ngFor="let category of categories" [value]="category.categoryName">{{category.categoryName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
         </div>
       </div>
@@ -31,10 +32,63 @@
           TODO: remove this: {{model.nickname}}
           <label for="phrase-user">Nazwa użytkownika</label>
           <button type="submit" class="btn btn-primary float-end mt-2"
-          [disabled]="!userForm.form.valid">Wyszukaj profil użytkownika</button>
+                  [disabled]="!userForm.form.valid">Wyszukaj profil użytkownika</button>
         </form>
       </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary float-end mt-2">Wyszukaj produkt</button>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary float-end mt-2">Wyszukaj profil użytkownika</button>
+    </div>
+  </div>
+  <div class="mat-elevation-z8">
+    <mat-form-field>
+      <mat-label>Tag filter</mat-label>
+      <input matInput (keyup)="applyTagFilter($event)" placeholder="Enter tag" #input>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort >
+      <ng-container matColumnDef="productId">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.productId}}</td>
+      </ng-container>
+      <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.productName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="productTag">
+        <th mat-header-cell *matHeaderCellDef> Tagi </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.tags}}</td>
+      </ng-container>
+      <ng-container matColumnDef="productDescription">
+        <th mat-header-cell *matHeaderCellDef> Opis </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.description}}</td>
+      </ng-container>
+      <ng-container matColumnDef="categoryID">
+        <th mat-header-cell *matHeaderCellDef> ID kategorii </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.categoryID}}  </td>
+      </ng-container>
+      <ng-container matColumnDef="numberOfOpinions" >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilosc opinii </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.numberOfOpinions}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator
+                   [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons>
+    </mat-paginator>
   </div>
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
