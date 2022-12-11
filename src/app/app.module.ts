@@ -9,6 +9,8 @@ import { ProduktComponent } from './produkt/produkt.component';
 import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i-zgloszenia.component';
 import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
+import {RouterOutlet} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PanelUzytkownikaModule,
+    RouterOutlet
   ],
   providers: [],
   bootstrap: [AppComponent]
