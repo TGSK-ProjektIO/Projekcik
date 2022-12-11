@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LogowanieIRejestracjaComponent } from './logowanie-i-rejestracja/logowanie-i-rejestracja.component';
@@ -9,6 +10,8 @@ import { ProduktComponent } from './produkt/produkt.component';
 import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i-zgloszenia.component';
 import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ProduktModule} from "./produkt/produkt.module";
+
 
 @NgModule({
   declarations: [
@@ -17,12 +20,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     OpinieComponent,
     PanelUzytkownikaComponent,
     ProduktComponent,
+    WyszukiwanieComponent,
     SugestieIZgloszeniaComponent,
-    WyszukiwanieComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ProduktModule,
+    RouterOutlet
   ],
   providers: [],
   bootstrap: [AppComponent]

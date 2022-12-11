@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Produkt</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="produkt-modyfikacja.component.css">
+  </head>
+  <body>
+    <div class="product-panel">
+      <p>Modyfikuj produkt</p>
+      <div class="sub-panel">
+        <h3>Nazwa:</h3>
+        <input type="text" (blur)="blurEventName($event)">
+        <h1>{{name}}</h1>
+        <h3>Zdjęcie:</h3>
+        <input type="text" (blur)="blurEventImage($event)">
+        <h1>{{image}}</h1>
+        <div>
+          <img style="display: inline-block;" width="300" height="500" src="https://www.ikea.com/pl/pl/images/products/utespelare-biurko-gamingowe-jasnoszary__0998214_pe822969_s5.jpg?f=s" alt="Zdjęcie produktu"/>      
+        </div>
+      </div>
+      <div class="sub-panel">
+        <h1>Dane produktu:</h1>
+        <h3>Opis:</h3>
+        <div style="display: block">
+          <input type="text" (blur)="blurEventDescription($event)">
+          <h3>{{description}}</h3>
+        </div>
+        <h3>Kategoria: </h3>
+        <div style="display: block">
+          <input type="text" (blur)="blurEventCategory($event)">
+          <h3>{{category}}</h3>
+        </div>
+        <div>
+          <button>
+            <a href="produkt-widok-admin">
+              <div class="link">
+                Zapisz
+              </div>
+            </a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
