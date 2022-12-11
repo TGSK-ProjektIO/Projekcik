@@ -1,1 +1,33 @@
-<p>produkt works!</p>
+<html>
+  <head>
+    <title>Produkt</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="produkt.component.css">
+  </head>
+  <body>
+    <div class="product-panel">
+      <p>Produkt</p>
+      <div>
+        <div>
+          <button>
+            <a href="./produkt-widok">
+              <div class="link">
+                User
+              </div>
+            </a>
+          </button>
+          <button>
+            <a href="./produkt-widok-admin">
+              <div class="link">
+                Admin
+              </div>
+            </a>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </body>
+</html>
