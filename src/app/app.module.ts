@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 
 import { RatingModule, RatingConfig } from 'ngx-bootstrap/rating';
@@ -11,6 +12,7 @@ import { ProduktComponent } from './produkt/produkt.component';
 import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i-zgloszenia.component';
 import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ProduktModule} from "./produkt/produkt.module";
 import { OpinieModule } from "./opinie/opinie.module";
 
 import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i-rejestracja.module";
@@ -26,12 +28,13 @@ import {RouterOutlet} from "@angular/router";
     // OpinieComponent,
     PanelUzytkownikaComponent,
     ProduktComponent,
+    WyszukiwanieComponent,
     SugestieIZgloszeniaComponent,
-    WyszukiwanieComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ProduktModule,
     OpinieModule,
     RatingModule.forRoot(),
     PanelUzytkownikaModule,
