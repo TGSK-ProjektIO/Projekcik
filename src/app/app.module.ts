@@ -14,6 +14,12 @@ import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OpinieModule } from "./opinie/opinie.module";
 
+import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i-rejestracja.module";
+import { AppRoutingModule } from './app-routing.module';
+import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
+import {RouterOutlet} from "@angular/router";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +35,10 @@ import { OpinieModule } from "./opinie/opinie.module";
     BrowserAnimationsModule,
     OpinieModule,
     RatingModule.forRoot()
+    PanelUzytkownikaModule,
+    RouterOutlet
+    LogowanieIRejestracjaModule,
+    AppRoutingModule
   ],
   providers: [RatingConfig],
   bootstrap: [AppComponent]
