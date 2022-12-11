@@ -3,12 +3,12 @@ import {ProduktModyfikacjaComponent} from '../produkt-modyfikacja/produkt-modyfi
 import { Product } from '../Product';
 
 @Component({
-  selector: 'app-produkt-widok',
-  templateUrl: './produkt-widok.component.html',
-  styleUrls: ['./produkt-widok.component.css']
+  selector: 'app-produkt-widok-admin',
+  templateUrl: './produkt-widok-admin.component.html',
+  styleUrls: ['./produkt-widok-admin.component.css']
 })
 
-export class ProduktWidokComponent implements OnInit {
+export class ProduktWidokAdminComponent implements OnInit {
 
   productId: string;
   name: string;

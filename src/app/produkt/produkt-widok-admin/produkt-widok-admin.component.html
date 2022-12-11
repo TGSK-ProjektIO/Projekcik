@@ -2,14 +2,21 @@
   <head>
     <title>Produkt</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="produkt-widok.component.css">
+    <link rel="stylesheet" type="text/css" href="produkt-widok-admin.component.css">
   </head>
   <body>
     <div class="product-panel">
       <p>{{getProductName()}}</p>
       <div class="sub-panel">
       <div>
-        <button (click)="onClick()">Dodaj sugestie</button>
+        <button>
+          <a href="produkt-modyfikacja">
+            <div class="link">
+              Modyfikuj
+            </div>
+          </a>
+          </button>
+        <button (click)="onClick()">Usuń</button>
       </div>
             <img style="display: inline-block;" width="300" height="500" src="https://www.ikea.com/pl/pl/images/products/utespelare-biurko-gamingowe-jasnoszary__0998214_pe822969_s5.jpg?f=s" alt="Zdjęcie produktu"/>      
       </div>
