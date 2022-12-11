@@ -1,0 +1,11 @@
+<div *ngIf="isReadonly" style="width: 100%; border-left: solid 0.1em; padding: 1em;">
+  {{ GetReview() }}
+</div>
+<div *ngIf="!isReadonly" class="input-group">
+  <textarea class="form-control"
+            placeholder="Enter review"
+            [value]="GetReview()"
+            #inputText name="inputText"
+            (input)="SetReview(inputText.value)"></textarea>
+</div>
+
