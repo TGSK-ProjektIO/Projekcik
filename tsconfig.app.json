@@ -7,9 +7,7 @@
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts",
-    "src/app/sugestie-i-zgloszenia/TypeOfReport.ts",
-    "src/app/sugestie-i-zgloszenia/ConfirmationStatus.ts"
+    "src/polyfills.ts"
   ],
   "include": [
     "src/**/*.d.ts"
