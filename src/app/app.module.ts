@@ -6,6 +6,7 @@ import { RatingModule, RatingConfig } from 'ngx-bootstrap/rating';
 
 import { AppComponent } from './app.component';
 import { LogowanieIRejestracjaComponent } from './logowanie-i-rejestracja/logowanie-i-rejestracja.component';
+// import { OpinieComponent } from './opinie/opinie.component';
 import { PanelUzytkownikaComponent } from './panel-uzytkownika/panel-uzytkownika.component';
 import { ProduktComponent } from './produkt/produkt.component';
 import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i-zgloszenia.component';
@@ -33,10 +34,10 @@ import {RouterOutlet} from "@angular/router";
     BrowserModule,
     BrowserAnimationsModule,
     OpinieModule,
-    RatingModule.forRoot(),
+    RatingModule.forRoot()
     PanelUzytkownikaModule,
-    RouterOutlet,
-    // LogowanieIRejestracjaModule,
+    RouterOutlet
+    LogowanieIRejestracjaModule,
     AppRoutingModule
   ],
   providers: [RatingConfig],
