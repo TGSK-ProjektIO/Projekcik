@@ -16,14 +16,18 @@
                 <h2 class="fw-bold mb-2 text-uppercase">Sign In</h2>
                 <p class="text-white-50 mb-5">Please enter your e-mail and password!</p>
 
+                <p class="text-danger" [hidden]="!doesAccountExist()">Wrong credentials!</p>
+
                 <div class="form-outline mb-4">
-                  <input type="email" id="typeEmailLogin" class="form-control form-control-lg" />
+                  <input type="email" id="typeEmailLogin" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="email"/>
                   <label class="form-label" for="typeEmailLogin">E-mail</label>
+                  <p class="text-danger" [hidden]="isEmailValid()">Invalid username</p>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input type="password" id="typePasswordLogin" class="form-control form-control-lg" [value]="password"/>
+                  <input type="password" id="typePasswordLogin" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="password"/>
                   <label class="form-label" for="typePasswordLogin">Password</label>
+                  <p class="text-danger" [hidden]="isPasswordValid()">Invalid password</p>
                 </div>
 
                 <p class="small mb-3 pb-lg-2"><a class="text-white" href="/reset-password" (click)="redirectToResetPasswordPage()">Forgot password?</a></p>
@@ -41,7 +45,7 @@
               </div>
 
               <div>
-                <p class="mt-2"><a href="#" class="text-white fw-bold">Go back to the main page</a></p>
+                <p class="mt-2"><a href="" class="text-white fw-bold" (click)="redirectToMainPage()">Go back to the main page</a></p>
               </div>
 
             </div>
