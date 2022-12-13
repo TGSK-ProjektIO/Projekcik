@@ -30,7 +30,7 @@ import {RouterOutlet} from "@angular/router";
     BrowserModule,
     BrowserAnimationsModule,
     PanelUzytkownikaModule,
-    RouterOutlet
+    RouterOutlet,
     LogowanieIRejestracjaModule,
     AppRoutingModule
   ],
