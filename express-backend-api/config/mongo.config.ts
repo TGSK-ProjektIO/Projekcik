@@ -2,3 +2,4 @@ export const DATABASE_URi = `mongodb+srv://dbUser12345:1tUA6SRk7CzvwO5h@bazkidla
 export const DB_NAME = 'TEST';
 export const USER_COLLECTION_NAME = 'USERS';
 export const SESSION_COLLECTION_NAME = 'SESSIONS';
+export const PROFILE_COLLECTION_NAME = 'PROFILE';
