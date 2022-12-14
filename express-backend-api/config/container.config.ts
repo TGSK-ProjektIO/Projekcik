@@ -9,6 +9,7 @@ import {UserRouter} from "../router/user.router";
 import {SessionController} from "../controller/session.controller";
 import {SessionRouter} from "../router/session.router";
 import {SessionService} from "../services/session.service";
+import {OpinionRepository} from "../repository/opinion.repository";
 
 export const container = new Container();
 
@@ -24,6 +25,9 @@ container.bind<UserRepository>(TYPES.UserRepository)
   .inSingletonScope();
 container.bind<SessionRepository>(TYPES.SessionRepository)
   .to(SessionRepository)
+  .inSingletonScope();
+container.bind<OpinionRepository>(TYPES.OpinionRepository)
+  .to(OpinionRepository)
   .inSingletonScope();
 
 container.bind<UserRouter>(TYPES.UserRouter)

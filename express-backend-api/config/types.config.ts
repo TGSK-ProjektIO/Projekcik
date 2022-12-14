@@ -6,6 +6,7 @@ const TYPES = {
 
   UserRepository: Symbol.for('UserRepository'),
   SessionRepository: Symbol.for('SessionRepository'),
+  OpinionRepository: Symbol.for('OpinionRepository'),
 
   UserRouter: Symbol.for('UserRouter'),
   SessionRouter: Symbol.for('SessionRouter'),
