@@ -1,8 +1,7 @@
 import {ObjectId} from "mongodb";
 
-
 export interface Session {
-  _id?: ObjectId;
+  _id: ObjectId;
   startDate: Date;
   expireDate: Date;
   invalidated: boolean;
