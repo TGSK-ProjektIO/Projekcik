@@ -56,7 +56,7 @@ describe('login', () => {
     const res = await request(app)
       .post(API_URI_LIR + '/session/login')
       .send({email: user.email,
-      password: user.password})
+      password: validUserPartial.password})
 
     expect(res.status).toEqual(201);
   });

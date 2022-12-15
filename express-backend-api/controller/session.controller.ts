@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
 import {SessionService} from "../services/session.service";
+import {createHash} from "crypto";
 
 @injectable()
 export class SessionController {
@@ -26,7 +27,7 @@ export class SessionController {
 
       try {
         const user = await this.userService.getUserByEmail(email);
-        if(user.password == password) {
+        if(user.password == createHash('sha256').update(password).digest('hex')) {
           const session = await this.sessionService.createSession(user);
           return response.status(201).send(session);
         } else {
