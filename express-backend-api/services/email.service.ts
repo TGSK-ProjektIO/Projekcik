@@ -25,7 +25,7 @@ export class EmailService {
       from: '"OpinionCollector" <opinioncontroller@gmail.com>', // sender address
       to: "opinioncontroller@gmail.com", // list of receivers
       subject: "Email confirmation", // Subject line
-      html: '<p>Click <a href="http://localhost:4200/confirm/' + user._id + "/" + user.emailToken + '"> here</a> to verify your account.</p>', // html body
+      html: '<p>Click <a href="http://localhost:4200/confirm/' + user._id.toString() + "/" + user.emailToken + '"> here</a> to verify your account.</p>', // html body
     });
   }
 
@@ -35,7 +35,7 @@ export class EmailService {
       from: '"OpinionCollector" <opinioncontroller@gmail.com>', // sender address
       to: "opinioncontroller@gmail.com", // list of receivers
       subject: "Reset password", // Subject line
-      html: '<p>Click <a href="http://localhost:4200/reset/' + user._id + "/" + user.emailToken + '"> here</a> to verify your account.</p>', // html body
+      html: '<p>Click <a href="http://localhost:4200/reset/' + user._id.toString() + "/" + user.emailToken + '"> here</a> to verify your account.</p>', // html body
     });
   }
 }
