@@ -213,9 +213,7 @@ export class OpinieComponent implements OnInit {
       }
     }).then(async response => {
       if (response.status === 200) {
-        let opinionArray1 = await response.json();
-        opinionArray = opinionArray1.toArray();
-        console.log(opinionArray);
+        opinionArray = await response.json();
       }
       if (response.status === 400) {
 
