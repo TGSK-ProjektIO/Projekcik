@@ -11,8 +11,8 @@ export class SessionController {
 
   public login() {
     return async (request: any, response: any) => {
-      const email = request.body.email;
-      const password = request.body.password;
+      const email = request.body?.email;
+      const password = request.body?.password;
 
       if (!email) {
         return response.status(400).send({
@@ -24,6 +24,7 @@ export class SessionController {
         });
       }
 
+      //todo sprawdzac czy haslo pasuje do znalezionego uzytkownika
       try {
         const user = await this.userService.getUserByEmail(email);
         const session = await this.sessionService.createSession(user);
@@ -45,12 +46,6 @@ export class SessionController {
   public logout() {
     return async (request: any, response: any) => {
       const sessionId = request.params.id;
-      if (!sessionId) {
-        return response.status(400).send({
-          message: "Request is missing required 'id' parameter"
-        });
-      }
-
       try {
         await this.sessionService.invalidateSession(sessionId);
         return response.status(200).send({
