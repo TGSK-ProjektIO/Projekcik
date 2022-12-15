@@ -36,4 +36,4 @@ const sessionRouter = container.get<SessionRouter>(TYPES.SessionRouter);
 userRouter.addRoutes(app);
 sessionRouter.addRoutes(app);
 
-module.exports = app;
+export default app;

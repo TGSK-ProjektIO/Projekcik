@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import {UserRepository} from "../repository/user.repository";
 import {TYPES} from "../config/types.config";
 import {User} from "../model/user";
+import {UserPartial} from "../model/user.partial";
 
 @injectable()
 export class UserService {
@@ -9,7 +10,7 @@ export class UserService {
 
   }
 
-  public registerUser(user: User): Promise<User> {
+  public registerUser(user: UserPartial): Promise<User> {
     return this.userRepository.create(user);
   }
 

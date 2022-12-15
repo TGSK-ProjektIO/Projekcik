@@ -9,12 +9,8 @@ import { ProduktComponent } from './produkt/produkt.component';
 import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i-zgloszenia.component';
 import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i-rejestracja.module";
 import { AppRoutingModule } from './app-routing.module';
-import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
-import {RouterOutlet} from "@angular/router";
-
 
 @NgModule({
   declarations: [
@@ -26,14 +22,12 @@ import {RouterOutlet} from "@angular/router";
     SugestieIZgloszeniaComponent,
     WyszukiwanieComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    PanelUzytkownikaModule,
-    RouterOutlet,
-    LogowanieIRejestracjaModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        LogowanieIRejestracjaModule,
+        AppRoutingModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

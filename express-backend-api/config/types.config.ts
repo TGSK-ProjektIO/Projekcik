@@ -11,7 +11,8 @@ const TYPES = {
   SessionRouter: Symbol.for('SessionRouter'),
 
   UserService: Symbol.for('UserService'),
-  SessionService: Symbol.for('SessionService')
+  SessionService: Symbol.for('SessionService'),
+  EmailService: Symbol.for('EmailService')
 };
 
 export { TYPES };
