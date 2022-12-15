@@ -32,133 +32,130 @@ beforeEach(async () => {
   };
 });
 
-test('Create Session positive test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-
-  expect(createdSession._id).not.toBeNaN();
-  expect(createdSession.startDate).toEqual(validSessionParams.startDate);
-  expect(createdSession.expireDate).not.toBeNaN();
-  expect(createdSession.expireDate)
-    .toEqual(moment(createdSession.startDate)
-      .add(SESSION_DURATION, 'm').toDate())
-  expect(createdSession.invalidated).toBeFalsy();
-  expect(createdSession.userId).toEqual(validSessionParams.userId);
+describe('Create session', () => {
+  it('Properly creates an session', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    expect(createdSession._id).not.toBeNaN();
+    expect(createdSession.startDate).toEqual(validSessionParams.startDate);
+    expect(createdSession.expireDate).not.toBeNaN();
+    expect(createdSession.expireDate)
+      .toEqual(moment(createdSession.startDate)
+        .add(SESSION_DURATION, 'm').toDate())
+    expect(createdSession.invalidated).toBeFalsy();
+    expect(createdSession.userId).toEqual(validSessionParams.userId);
+  });
+  it('Tries to create session with not existing user', async () => {
+    validSessionParams.userId = new ObjectId();
+    await expect(sessionRepository.create(validSessionParams)).rejects.toBeUndefined();
+  });
 });
 
-test('Create session non existing user negative test', async () => {
-  validSessionParams.userId = new ObjectId();
-  await expect(sessionRepository.create(validSessionParams)).rejects.toBeUndefined();
+describe('Read session', () => {
+  it('Properly reads session', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    const readSession = await sessionRepository.read(createdSession._id.toString());
+    expect(readSession).toEqual(createdSession);
+  });
+  it('Tries to read non existing session', async () => {
+    await expect(sessionRepository.read('')).rejects.toBeUndefined();
+    await expect(sessionRepository.read('123123')).rejects.toBeUndefined();
+    await expect(sessionRepository.read('03473432')).rejects.toBeUndefined();
+    await expect(sessionRepository.read('378412374293')).rejects.toBeUndefined();
+    await expect(sessionRepository.read(new ObjectId().toString())).rejects.toBeUndefined();
+  });
 });
 
-test('Read Session positive test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  const readSession = await sessionRepository.read(createdSession._id.toString());
+describe('Update session', () => {
+  it('Properly updates session', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    const updatedSession: any = {
+      _id: createdSession._id,
+      startDate: moment(createdSession.startDate).add(-1, 'm').toDate(),
+      expireDate: moment(createdSession.expireDate).add(1, 'm').toDate(),
+      invalidated: true
+    };
+    await expect(sessionRepository.update(updatedSession)).resolves.toBeUndefined();
+    const readSession = await sessionRepository.read(updatedSession._id.toString());
+    updatedSession.userId = readSession.userId;
 
-  expect(readSession).toEqual(createdSession);
+    expect(readSession).toEqual(updatedSession);
+  });
+  it('Properly updates startDate', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    const newDate = moment(createdSession.startDate).add(-1, 'm').toDate();
+    await expect(sessionRepository.update({
+      _id: createdSession._id,
+      startDate: newDate
+    })).resolves.toBeUndefined();
+    createdSession.startDate = newDate;
+
+    await expect(sessionRepository.read(createdSession._id.toString())).resolves.toEqual(createdSession);
+  });
+  it('Properly updates expireDate', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    const newExpireDate = new Date();
+    await expect(sessionRepository.update({
+      _id: createdSession._id,
+      expireDate: newExpireDate
+    })).resolves.toBeUndefined();
+    createdSession.expireDate = newExpireDate;
+
+    await expect(sessionRepository.read(createdSession._id.toString())).resolves.toEqual(createdSession);
+  });
+  it('Properly updates invalidated field', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    await expect(sessionRepository.update({
+      _id: createdSession._id,
+      invalidated: true
+    })).resolves.toBeUndefined();
+    createdSession.invalidated = true;
+
+    await expect(sessionRepository.read(createdSession._id.toString())).resolves.toEqual(createdSession);
+
+    await expect(sessionRepository.update({
+      _id: createdSession._id,
+      invalidated: false
+    })).resolves.toBeUndefined();
+    createdSession.invalidated = false;
+
+    await expect(sessionRepository.read(createdSession._id.toString())).resolves.toEqual(createdSession);
+  });
+  it('Tries to set start date after expire date', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    await expect(sessionRepository.update({
+      _id: createdSession._id,
+      startDate: moment(createdSession.expireDate).add(1, 'm').toDate()
+    })).rejects.toBeUndefined();
+  });
+  it('Tries to set expire date before start date', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    await expect(sessionRepository.update({
+      _id: createdSession._id,
+      expireDate: moment(createdSession.startDate).add(-1, 'm').toDate()
+    })).rejects.toBeUndefined();
+  });
+  it('Tries to set userId', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    await expect(sessionRepository.update({
+      _id: createdSession._id,
+      userId: createdSession.userId
+    })).rejects.toBeUndefined();
+  });
 });
 
-test('Read Session non existing id negative test', async () => {
-  await expect(sessionRepository.read('')).rejects.toBeUndefined();
-  await expect(sessionRepository.read('123123')).rejects.toBeUndefined();
-  await expect(sessionRepository.read('03473432')).rejects.toBeUndefined();
-  await expect(sessionRepository.read('378412374293')).rejects.toBeUndefined();
-  await expect(sessionRepository.read(new ObjectId().toString())).rejects.toBeUndefined();
+describe('Delete session', () => {
+  it('Properly deletes session', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    await expect(sessionRepository.delete(createdSession._id.toString())).resolves.toBeUndefined();
+    await expect(sessionRepository.read(createdSession._id.toString())).rejects.toBeUndefined();
+  });
+  it('Tries to delete session using wrong id', async () => {
+    await expect(sessionRepository.delete(new ObjectId().toString())).rejects.toBeUndefined();
+  });
+  it('Tries to delete session using wrong id', async () => {
+    const createdSession = await sessionRepository.create(validSessionParams);
+    await expect(sessionRepository.delete(createdSession._id.toString())).resolves.toBeUndefined();
+    await expect(sessionRepository.delete(createdSession._id.toString())).rejects.toBeUndefined();
+  });
 });
 
-test('Update session positive test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  const updatedSession: any = {
-    _id: createdSession._id,
-    startDate: moment(createdSession.startDate).add(-1, 'm').toDate(),
-    expireDate: moment(createdSession.expireDate).add(1, 'm').toDate(),
-    invalidated: true
-  };
-  await expect(sessionRepository.update(updatedSession)).resolves.toBeUndefined();
-  const readSession = await sessionRepository.read(updatedSession._id.toString());
-  updatedSession.userId = readSession.userId;
-
-  expect(readSession).toEqual(updatedSession);
-});
-
-test('Update session startDate positive test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  const newDate = moment(createdSession.startDate).add(-1, 'm').toDate();
-  await expect(sessionRepository.update({
-    _id: createdSession._id,
-    startDate: newDate
-  })).resolves.toBeUndefined();
-  createdSession.startDate = newDate;
-
-  await expect(sessionRepository.read(createdSession._id.toString())).resolves.toEqual(createdSession);
-});
-
-test('Update session expireDate positive test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  const newExpireDate = new Date();
-  await expect(sessionRepository.update({
-    _id: createdSession._id,
-    expireDate: newExpireDate
-  })).resolves.toBeUndefined();
-  createdSession.expireDate = newExpireDate;
-
-  await expect(sessionRepository.read(createdSession._id.toString())).resolves.toEqual(createdSession);
-});
-
-test('Update session invalidated positive test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  await expect(sessionRepository.update({
-    _id: createdSession._id,
-    invalidated: true
-  })).resolves.toBeUndefined();
-  createdSession.invalidated = true;
-
-  await expect(sessionRepository.read(createdSession._id.toString())).resolves.toEqual(createdSession);
-
-  await expect(sessionRepository.update({
-    _id: createdSession._id,
-    invalidated: false
-  })).resolves.toBeUndefined();
-  createdSession.invalidated = false;
-
-  await expect(sessionRepository.read(createdSession._id.toString())).resolves.toEqual(createdSession);
-});
-
-test('Update session start date after expire date negative test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  await expect(sessionRepository.update({
-    _id: createdSession._id,
-    startDate: moment(createdSession.expireDate).add(1, 'm').toDate()
-  })).rejects.toBeUndefined();
-});
-
-test('Update session expire date before start date negative test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  await expect(sessionRepository.update({
-    _id: createdSession._id,
-    expireDate: moment(createdSession.startDate).add(-1, 'm').toDate()
-  })).rejects.toBeUndefined();
-});
-
-test('Update session userId negative test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  await expect(sessionRepository.update({
-    _id: createdSession._id,
-    userId: createdSession.userId
-  })).rejects.toBeUndefined();
-});
-
-test('Delete session positive test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  await expect(sessionRepository.delete(createdSession._id.toString())).resolves.toBeUndefined();
-  await expect(sessionRepository.read(createdSession._id.toString())).rejects.toBeUndefined();
-});
-
-test('Delete session non existing id negative test', async () => {
-  await expect(sessionRepository.delete(new ObjectId().toString())).rejects.toBeUndefined();
-});
-
-test('Delete session already deleted record negative test', async () => {
-  const createdSession = await sessionRepository.create(validSessionParams);
-  await expect(sessionRepository.delete(createdSession._id.toString())).resolves.toBeUndefined();
-  await expect(sessionRepository.delete(createdSession._id.toString())).rejects.toBeUndefined();
-});
