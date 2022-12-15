@@ -1,10 +1,10 @@
 import {inject, injectable} from "inversify";
-import {ProductController} from "../controller/category.controller";
+import {CategoryController} from "../controller/category.controller";
 import {TYPES} from "../config/types.config";
 import {Express} from "express";
 
 @injectable()
-export class ProductRouter {
+export class CategoryRouter {
   constructor(@inject(TYPES.CategoryController) private categoryController: CategoryController) {
 
   }
