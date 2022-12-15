@@ -111,6 +111,7 @@ export class OpinionRepository {
         let response = await collection.findOne<Opinion>({
           _id: new ObjectId(_id)
         });
+        console.log(response);
         if (response !== null) {
           resolve(response);
         } else {

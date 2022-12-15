@@ -48,6 +48,7 @@ export class OpinieComponent implements OnInit {
 
   GetProductOpinions() {
     let opinionArray : Array<Opinion> = this.DB_GetOpinionsByProduct(this.productID);
+    console.log(opinionArray);
     for (const opinion of opinionArray) {
       this.allOpinions.push(this.OpinionDBToComponent(opinion));
     }
