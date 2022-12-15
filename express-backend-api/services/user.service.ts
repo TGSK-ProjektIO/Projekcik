@@ -19,8 +19,10 @@ export class UserService {
       try {
         const user = await this.userRepository.read(userId);
         if (user.emailToken === emailToken) {
-          user.isEmailVerified = true;
-          await this.userRepository.update(user);
+          await this.userRepository.update({
+            _id: user._id,
+            isEmailVerified: true
+          });
           resolve(true);
         } else {
           resolve(false);

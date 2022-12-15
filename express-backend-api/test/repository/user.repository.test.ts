@@ -29,6 +29,27 @@ describe('Create user', () => {
     const createdUser = await userRepository.create(validUserPartial);
     expect(createdUser._id).not.toBeNaN();
   });
+  it('Tries to create user with missing username parameter', async () => {
+    // @ts-ignore
+    await expect(userRepository.create({
+      password: faker.internet.password(),
+      email: faker.internet.email()
+    })).rejects.toBeUndefined();
+  });
+  it('Tries to create user with missing password parameter', async () => {
+    // @ts-ignore
+    await expect(userRepository.create({
+      username: faker.internet.userName(),
+      email: faker.internet.email()
+    })).rejects.toBeUndefined();
+  });
+  it('Tries to create user with missing email parameter', async () => {
+    // @ts-ignore
+    await expect(userRepository.create({
+      username: faker.internet.userName(),
+      password: faker.internet.password()
+    })).rejects.toBeUndefined();
+  });
   it('Tries to create user with already existing email', async () => {
     await userRepository.create(validUserPartial);
     await expect(userRepository.create(validUserPartial)).rejects.toBeUndefined();

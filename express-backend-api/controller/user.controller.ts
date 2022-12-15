@@ -18,7 +18,7 @@ export class UserController {
        await this.emailService.sendEmailConfirmationMail(registeredUser);
        response.status(201).send({
          message: "created",
-         id: registeredUser._id
+         _id: registeredUser._id
        });
      } catch (error) {
        response.status(400).send({
@@ -58,7 +58,7 @@ export class UserController {
        const result = await this.userService.confirmEmail(userId ,emailToken);
        if (result) {
          return response.status(200).send({
-           message: "email verified successfuly"
+           message: "email verified successfully"
          });
        } else {
          return response.status(400).send({
@@ -76,11 +76,6 @@ export class UserController {
  public getUser() {
    return async (request: any, response: any) => {
      let userId = request.params.id;
-     if (!userId) {
-       return response.status(400).send({
-         message: "Request is missing required 'userId' parameter"
-       });
-     }
 
      try {
        const user = await this.userService.getUser(userId);

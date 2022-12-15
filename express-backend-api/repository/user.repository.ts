@@ -33,6 +33,9 @@ export class UserRepository {
 
   public async create(userParams: UserPartial): Promise<User> {
     return new Promise<User>(async (resolve, reject) => {
+      if (!userParams.username || !userParams.email || !userParams.password) {
+        return reject();
+      }
       const client = this.createClient();
       try {
         const db = client.db(DB_NAME);
@@ -93,7 +96,6 @@ export class UserRepository {
         if (response !== null) {
           resolve(response);
         } else {
-          console.log("NOT FOUND")
           reject();
         }
       } catch (exception) {
