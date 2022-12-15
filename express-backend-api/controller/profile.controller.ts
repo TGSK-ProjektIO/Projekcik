@@ -8,6 +8,8 @@ export class ProfileController {
   constructor(@inject(TYPES.ProfileService) private profileService: ProfileService) {
   }
 
+  // ---------- PUT REQUESTS ----------
+
   public createProfile() {
     return async (request: any, response: any) => {
       let profile = request.body;
@@ -25,45 +27,7 @@ export class ProfileController {
     }
   }
 
-  public getProfileById() {
-    return async (request: any, response: any) => {
-      let userId = request.params.id;
-      if (!userId) {
-        return response.status(400).send({
-          message: "Request is missing required 'userId' parameter"
-        });
-      }
-
-      try {
-        const profile = await this.profileService.getProfile(userId);
-        return response.status(200).send(profile);
-      } catch (error) {
-        return response.status(404).send({
-          message: "Profile not found"
-        });
-      }
-    }
-  }
-
-  public getProfileByNickname() {
-    return async (request: any, response: any) => {
-      let nickname = request.params.nickname;
-      if (!nickname) {
-        return response.status(400).send({
-          message: "Request is missing required 'nickname' parameter"
-        });
-      }
-
-      try {
-        const profile = await this.profileService.getProfileByNickname(nickname);
-        return response.status(200).send(profile);
-      } catch (error) {
-        return response.status(404).send({
-          message: "Profile not found"
-        });
-      }
-    }
-  }
+  // ---------- POST REQUESTS ----------
 
   public changeNickname() {
     return async (request: any, response: any) => {
@@ -195,4 +159,45 @@ export class ProfileController {
     }
   }
 
+  // ---------- GET REQUESTS ----------
+
+  public getProfileById() {
+    return async (request: any, response: any) => {
+      let userId = request.params.id;
+      if (!userId) {
+        return response.status(400).send({
+          message: "Request is missing required 'userId' parameter"
+        });
+      }
+
+      try {
+        const profile = await this.profileService.getProfile(userId);
+        return response.status(200).send(profile);
+      } catch (error) {
+        return response.status(404).send({
+          message: "Profile not found"
+        });
+      }
+    }
+  }
+
+  public getProfileByNickname() {
+    return async (request: any, response: any) => {
+      let nickname = request.params.nickname;
+      if (!nickname) {
+        return response.status(400).send({
+          message: "Request is missing required 'nickname' parameter"
+        });
+      }
+
+      try {
+        const profile = await this.profileService.getProfileByNickname(nickname);
+        return response.status(200).send(profile);
+      } catch (error) {
+        return response.status(404).send({
+          message: "Profile not found"
+        });
+      }
+    }
+  }
 }
