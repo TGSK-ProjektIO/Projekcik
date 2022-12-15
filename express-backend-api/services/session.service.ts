@@ -29,12 +29,15 @@ export class SessionService {
     return this.sessionRepository.create(newSession);
   }
 
-  public invalidateSession(id: string): Promise<boolean> {
-    return new Promise<boolean>(async (resolve) => {
+  public invalidateSession(_id: string): Promise<boolean> {
+    return new Promise<boolean>(async (resolve, reject) => {
       try {
-        const session = await this.sessionRepository.read(id);
+        const session = await this.sessionRepository.read(_id);
+        if (session.invalidated) {
+          return reject();
+        }
         await this.sessionRepository.update({
-          _id: new ObjectId(id),
+          _id: session._id,
           invalidated: true
         });
         resolve(true);

@@ -52,13 +52,19 @@ export class SessionController {
     return async (request: any, response: any) => {
       const sessionId = request.params.id;
       try {
-        await this.sessionService.invalidateSession(sessionId);
-        return response.status(200).send({
-          message: "Logged out successfully"
-        });
+        const ok = await this.sessionService.invalidateSession(sessionId);
+        if (ok) {
+          return response.status(200).send({
+            message: "Logged out successfully"
+          });
+        } else {
+          return response.status(404).send({
+            error: "Session not found"
+          });
+        }
       } catch (error) {
-        return response.status(404).send({
-          message: "Session not found"
+        return response.status(400).send({
+          error: "Session is already invalidated"
         });
       }
     }
