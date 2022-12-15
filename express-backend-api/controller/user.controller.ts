@@ -15,7 +15,7 @@ export class UserController {
      let user = request.body;
      try {
        const registeredUser = await this.userService.registerUser(user);
-       await this.emailService.sendEmailConfirmationMail(user);
+       await this.emailService.sendEmailConfirmationMail(registeredUser);
        response.status(201).send({
          message: "created",
          id: registeredUser._id

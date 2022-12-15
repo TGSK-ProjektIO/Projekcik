@@ -10,10 +10,23 @@ export class WeryfikacjaPotwierdzenieComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    let id = this.route.snapshot.paramMap.get('id')
+    let token = this.route.snapshot.paramMap.get('emailToken')
+    fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/user/confirm-email', {
+      method: 'PUT',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "userId": id,
+        "emailToken": token
+      })
+    })
   }
 
   redirectToMainPage() {

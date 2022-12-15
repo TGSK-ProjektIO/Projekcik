@@ -34,7 +34,7 @@ const routes: Routes = [
         component: ResetowaniePotwierdzenieComponent
       },
       {
-        path: 'confirm/:emailToken',
+        path: 'confirm/:id/:emailToken',
         component: WeryfikacjaPotwierdzenieComponent
       }
     ]
