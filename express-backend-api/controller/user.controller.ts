@@ -1,11 +1,13 @@
 import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
+import {EmailService} from "../services/email.service";
 
 
 @injectable()
 export class UserController {
- constructor(@inject(TYPES.UserService) private userService: UserService) {
+ constructor(@inject(TYPES.UserService) private userService: UserService,
+             @inject(TYPES.EmailService) private emailService : EmailService) {
  }
 
  public registerUser() {
@@ -13,6 +15,7 @@ export class UserController {
      let user = request.body;
      try {
        const registeredUser = await this.userService.registerUser(user);
+       await this.emailService.sendEmailConfirmationMail(user);
        response.status(201).send({
          message: "created",
          id: registeredUser._id
