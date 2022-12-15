@@ -56,9 +56,17 @@ describe('login', () => {
     const res = await request(app)
       .post(API_URI_LIR + '/session/login')
       .send({email: user.email,
-      password: user.password})
+      password: validUserPartial.password})
 
     expect(res.status).toEqual(201);
+  });
+  it('should return status 401, wrong password', async () => {
+    const res = await request(app)
+      .post(API_URI_LIR + '/session/login')
+      .send({email: user.email,
+        password: faker.internet.password()})
+
+    expect(res.status).toEqual(401);
   });
   it('should return status 404, user with given email does not exist', async () => {
     const res = await request(app)
