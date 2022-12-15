@@ -120,6 +120,11 @@ describe('Confirm email', () => {
         emailToken: unconfirmedUser.emailToken
       });
     expect(response.status).toEqual(200);
+
+    const secondResponse = await request(app)
+      .get(`${API_URI_LIR}/user/` + unconfirmedUser._id);
+    expect(secondResponse.status).toEqual(200);
+    expect(secondResponse.body.isEmailVerified).toBeTruthy();
   });
   it('Tries to confirm email for non existing user', async () => {
     const response = await request(app)
