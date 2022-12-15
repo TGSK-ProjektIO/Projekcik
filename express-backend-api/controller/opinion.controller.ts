@@ -143,7 +143,6 @@ export class OpinionController {
   public getOpinionsByProduct() {
     return async (request: any, response: any) => {
       let productID = request.params.id;
-      console.log(productID);
       try {
         let opinions = await this.opinionService.getOpinionsByProduct(productID);
         response.status(200).send(opinions);

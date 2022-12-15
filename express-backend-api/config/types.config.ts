@@ -13,7 +13,7 @@ const TYPES = {
 
   UserRouter: Symbol.for('UserRouter'),
   SessionRouter: Symbol.for('SessionRouter'),
-  ProfileRepository: Symbol.for('ProfileRepository'),
+  ProfileRouter: Symbol.for('ProfileRouter'),
   OpinionRouter: Symbol.for('OpinionRouter'),
 
   UserService: Symbol.for('UserService'),

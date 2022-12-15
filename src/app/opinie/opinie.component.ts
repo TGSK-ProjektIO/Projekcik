@@ -218,7 +218,7 @@ export class OpinieComponent implements OnInit {
         console.log(opinionArray);
       }
       if (response.status === 400) {
-        console.error("dupsko");
+
       }
     }).catch(err => {
       console.error(err);
