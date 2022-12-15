@@ -55,6 +55,7 @@ export class OpinieComponent implements OnInit {
 
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {
     newOpinion.userID = this.userLoggedID;
+    newOpinion.productID = this.productID;
 
     this.DB_CreateOpinion(this.OpinionComponentToDB(newOpinion));
 
