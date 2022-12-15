@@ -14,6 +14,14 @@ import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i
 import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
 import {RouterOutlet} from "@angular/router";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatOptionModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -26,14 +34,23 @@ import {RouterOutlet} from "@angular/router";
     SugestieIZgloszeniaComponent,
     WyszukiwanieComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    PanelUzytkownikaModule,
-    RouterOutlet,
-    LogowanieIRejestracjaModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        PanelUzytkownikaModule,
+        RouterOutlet,
+        LogowanieIRejestracjaModule,
+        AppRoutingModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatSortModule,
+        FormsModule,
+        MatOptionModule,
+        MatInputModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
