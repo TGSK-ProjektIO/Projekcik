@@ -70,18 +70,32 @@ describe('login', () => {
   });
 });
 
-describe('logout', () => {
-  it('should return status 200, correct id given', async () => {
+describe('Logout', () => {
+  it('Properly invalidate session', async () => {
     const res = await request(app)
-      .post(API_URI_LIR + 'session/' + session._id + '/logout')
+      .get(API_URI_LIR + '/session/' + session._id.toString() + '/logout')
 
-    expect(res.status).toEqual(400);
+    expect(res.status).toEqual(200);
+
+    const secondResponse = await request(app)
+      .get(`${API_URI_LIR}/session/` + session._id.toString());
+    expect(secondResponse.status).toEqual(200);
+    expect(secondResponse.body.invalidated).toBeTruthy();
   });
-  it('should return status 404, incorrect id given', async () => {
+  it('Tries to logout from non existing session', async () => {
     const res = await request(app)
-      .post(API_URI_LIR + 'session/nieistnieje/logout')
+      .get(API_URI_LIR + '/session/nieistnieje/logout')
 
     expect(res.status).toEqual(404);
+  });
+  it('Tries to logout from already invalidated session', async () => {
+    const response = await request(app)
+      .get(API_URI_LIR + '/session/' + session._id.toString() + '/logout')
+    expect(response.status).toEqual(200);
+
+    const secondResponse = await request(app)
+      .get(API_URI_LIR + '/session/' + session._id.toString() + '/logout')
+    expect(secondResponse.status).toEqual(400);
   });
 });
 
