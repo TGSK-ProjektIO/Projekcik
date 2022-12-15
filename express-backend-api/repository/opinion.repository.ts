@@ -45,7 +45,7 @@ export class OpinionRepository {
             return reject();
           }
         }
-        const response = await collection.insertOne(opinion);
+        const response = await collection.insertOne(<Opinion>opinion);
         opinion._id = response.insertedId;
         resolve(opinion);
       } catch (exception) {
