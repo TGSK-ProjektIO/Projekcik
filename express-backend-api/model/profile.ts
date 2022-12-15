@@ -4,6 +4,6 @@ export interface Profile {
   _id?: ObjectId;
   nickname: string;
   profilePicture: string;
-  description: string;
+  description: string | null;
   isBanned: boolean;
 }
