@@ -104,7 +104,7 @@ export class UserRepository {
     });
   }
 
-  public async update(user: User): Promise<void> {
+  public async update(user: Partial<User>): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       if (!user._id) {
         return reject();
@@ -116,14 +116,7 @@ export class UserRepository {
         const response = await collection.updateOne(
           {_id: user._id},
           {
-            $set: {
-              username: user.username,
-              password: user.password,
-              email: user.email,
-              emailToken: user.emailToken,
-              isAdministrator: user.isAdministrator,
-              isEmailVerified: user.isEmailVerified
-            }
+            $set: user
           },
           { upsert: false }
         )
