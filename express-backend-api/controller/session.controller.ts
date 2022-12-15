@@ -24,11 +24,16 @@ export class SessionController {
         });
       }
 
-      //todo sprawdzac czy haslo pasuje do znalezionego uzytkownika
       try {
         const user = await this.userService.getUserByEmail(email);
-        const session = await this.sessionService.createSession(user);
-        return response.status(201).send(session);
+        if(user.password == password) {
+          const session = await this.sessionService.createSession(user);
+          return response.status(201).send(session);
+        } else {
+          return response.status(401).send({
+            message: "Wrong password"
+          });
+        }
       } catch (error) {
         return response.status(404).send({
           message: "User not found"
