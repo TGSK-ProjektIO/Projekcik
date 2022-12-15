@@ -7,6 +7,8 @@ import {ObjectId} from "mongodb";
 const opinionRepository = container.get<OpinionRepository>(TYPES.OpinionRepository);
 
 let validOpinion: Opinion;
+let validOpinionRating: Opinion;
+let validOpinionRating2: Opinion;
 let validOpinionToDelete: Opinion;
 let invalidOpinion: Opinion;
 
@@ -20,6 +22,22 @@ beforeEach(async () => {
     productId: "2",
     opinionRatings: [{userID: "122", like: 1, dislike: 0}, {userID: "121", like: 1, dislike: 0},
       {userID: "120", like: 1, dislike: 0}, {userID: "121", like: 0, dislike: 1}, {userID: "121", like: 0, dislike: 1}],
+    review: {userID: "122", text: "skrrt skiri papa tutu"},
+    ratings: [{userID: "152", name: "skrrt", rating: 5}, {userID: "1253", name: "skrrt", rating: 5}]
+  };
+
+  validOpinionRating = {
+    userId: "128",
+    productId: "2",
+    opinionRatings: [{userID: "121", like: 0, dislike: 1}],
+    review: {userID: "122", text: "skrrt skiri papa tutu"},
+    ratings: [{userID: "152", name: "skrrt", rating: 5}, {userID: "1253", name: "skrrt", rating: 5}]
+  };
+
+  validOpinionRating2 = {
+    userId: "128",
+    productId: "2",
+    opinionRatings: [{userID: "121", like: 0, dislike: 1}, {userID: "128", like: 1, dislike: 0}],
     review: {userID: "122", text: "skrrt skiri papa tutu"},
     ratings: [{userID: "152", name: "skrrt", rating: 5}, {userID: "1253", name: "skrrt", rating: 5}]
   };
@@ -58,4 +76,13 @@ test('Delete Opinion positive test', async () => {
   await expect(opinionRepository.delete(opinionRep._id)).resolves.toBeUndefined();
   // @ts-ignore
   await expect(opinionRepository.read(opinionRep._id)).rejects.toBeUndefined();
+});
+
+test('Update opinion positive test', async () => {
+  let opinionRep = await opinionRepository.create(validOpinionRating);
+  opinionRep.opinionRatings.push({userID: "128", like: 1, dislike: 0});
+  // @ts-ignore
+  await expect(opinionRepository.update(opinionRep)).resolves.toBeUndefined();
+  // @ts-ignore
+  await expect(opinionRepository.read(opinionRep._id)).resolves.toEqual(opinionRep);
 });

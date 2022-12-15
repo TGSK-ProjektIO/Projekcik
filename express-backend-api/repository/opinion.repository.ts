@@ -51,7 +51,7 @@ export class OpinionRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -74,7 +74,7 @@ export class OpinionRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     })
   }
@@ -97,7 +97,7 @@ export class OpinionRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     })
   }
@@ -120,7 +120,7 @@ export class OpinionRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -153,7 +153,7 @@ export class OpinionRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -175,7 +175,7 @@ export class OpinionRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
