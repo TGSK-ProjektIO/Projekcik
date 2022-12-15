@@ -10,6 +10,7 @@ import {User} from "../../model/user";
 import {SessionPartial} from "../../model/session.partial";
 import {Session} from "../../model/session";
 import {SessionRepository} from "../../repository/session.repository";
+import {expect} from "@jest/globals";
 
 const userRepository = container.get<UserRepository>(TYPES.UserRepository);
 const sessionRepository = container.get<SessionRepository>(TYPES.SessionRepository);
@@ -107,3 +108,15 @@ describe('Logout', () => {
   });
 });
 
+describe('getSession', () => {
+  it('should return status 400, invalid id', async () => {
+    const res = await request(app)
+      .get(API_URI_LIR + '/session/invalid_id')
+    expect(res.status).toEqual(404);
+  });
+  it('should return status 200, session returned successfully', async () => {
+    const res = await request(app)
+      .get(API_URI_LIR + '/session/' + session._id.toString())
+    expect(res.status).toEqual(200);
+  });
+});

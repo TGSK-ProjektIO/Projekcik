@@ -121,11 +121,6 @@ export class SessionController {
   public getSession() {
     return async (request: any, response: any) => {
       const sessionId = request.params.id;
-      if (!sessionId) {
-        return response.status(400).send({
-          message: "Request is missing required 'id' parameter"
-        });
-      }
 
       try {
         const session = await this.sessionService.getSession(sessionId);
