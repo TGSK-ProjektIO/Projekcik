@@ -212,6 +212,7 @@ export class OpinieComponent implements OnInit {
         'Content-Type': 'application/json'
       }
     }).then(async response => {
+      console.log(response)
       if (response.status === 200) {
         opinionArray = await response.json();
       }

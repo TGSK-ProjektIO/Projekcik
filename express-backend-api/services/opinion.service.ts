@@ -102,7 +102,6 @@ export class OpinionService {
     return new Promise<Array<Opinion>>(async (resolve, reject) => {
       try {
         const opinions = await this.opinionRepository.readByProduct(productID);
-        console.log(opinions);
         resolve(opinions);
       } catch (error) {
         reject();

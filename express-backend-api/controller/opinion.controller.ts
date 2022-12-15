@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {OpinionService} from "../services/opinion.service";
 import {SessionService} from "../services/session.service";
+import {Opinion} from "../model/opinion";
 
 @injectable()
 export class OpinionController {
@@ -144,7 +145,7 @@ export class OpinionController {
     return async (request: any, response: any) => {
       let productID : string = request.params.id;
       try {
-        let opinions = await this.opinionService.getOpinionsByProduct(productID);
+        let opinions : Array<Opinion> = await this.opinionService.getOpinionsByProduct(productID);
         response.status(200).send(opinions);
       } catch (error) {
         response.status(400).send({
