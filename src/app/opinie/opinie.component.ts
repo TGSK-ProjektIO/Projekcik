@@ -48,7 +48,6 @@ export class OpinieComponent implements OnInit {
 
   GetProductOpinions() {
     let opinionArray : Array<Opinion> = this.DB_GetOpinionsByProduct(this.productID);
-    console.log(opinionArray);
     for (const opinion of opinionArray) {
       this.allOpinions.push(this.OpinionDBToComponent(opinion));
     }
@@ -188,7 +187,7 @@ export class OpinieComponent implements OnInit {
     });
   }
   private DB_DeleteOpinion(opinion : Opinion) {
-    fetch(`http://localhost:3000/api/v1/opinie/add`, {
+    fetch(`http://localhost:3000/api/v1/opinie/delete`, {
       method: 'POST',
       headers: {
         'Accept': '*/*',
@@ -207,17 +206,20 @@ export class OpinieComponent implements OnInit {
   private DB_GetOpinionsByProduct(productID: string) {
     let opinionArray : Array<Opinion> = new Array<Opinion>();
     fetch(`http://localhost:3000/api/v1/opinie/getByProduct/${productID}`, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({})
+      }
     }).then(async response => {
       if (response.status === 200) {
-        opinionArray = await response.json();
+        let opinionArray1 = await response.json();
+        opinionArray = opinionArray1.toArray();
+        console.log(opinionArray);
       }
-      if (response.status === 400) {}
+      if (response.status === 400) {
+        console.error("dupsko");
+      }
     }).catch(err => {
       console.error(err);
     });
@@ -227,7 +229,7 @@ export class OpinieComponent implements OnInit {
   private DB_GetOpinionByID(id: string): Opinion | undefined {
     let opinion: Opinion | undefined;
     fetch(`http://localhost:3000/api/v1/opinie/getByProduct/${id}`, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'

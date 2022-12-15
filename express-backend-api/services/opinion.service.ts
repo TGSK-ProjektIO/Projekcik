@@ -2,9 +2,6 @@ import {inject, injectable} from "inversify";
 import {OpinionRepository} from "../repository/opinion.repository";
 import {TYPES} from "../config/types.config";
 import {Opinion} from "../model/opinion";
-import {DB_NAME, OPINION_COLLECTION_NAME} from "../config/mongo.config";
-import {ObjectId} from "mongodb";
-import {OpinionRating} from "../model/opinion.rating";
 
 @injectable()
 export class OpinionService {
@@ -105,6 +102,7 @@ export class OpinionService {
     return new Promise<Array<Opinion>>(async (resolve, reject) => {
       try {
         const opinions = await this.opinionRepository.readByProduct(productID);
+        console.log(opinions);
         resolve(opinions);
       } catch (error) {
         reject();
