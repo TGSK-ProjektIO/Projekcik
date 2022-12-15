@@ -80,7 +80,7 @@ export class OpinionController {
   public addLike() {
     return async (request: any, response: any) => {
       let opinion = request.body;
-      let userID = request.params.id;
+      let userID : string = request.params.id;
       try {
         await this.opinionService.addLike(opinion.id, userID);
         response.status(201).send({
@@ -103,7 +103,7 @@ export class OpinionController {
   public addDislike() {
     return async (request: any, response: any) => {
       let opinion = request.body;
-      let userID = request.params.id;
+      let userID : string = request.params.id;
       try {
         await this.opinionService.addDislike(opinion.id, userID);
         response.status(201).send({
@@ -124,7 +124,7 @@ export class OpinionController {
    */
   public getOpinion() {
     return async (request: any, response: any) => {
-      let opinionID = request.params.id;
+      let opinionID : string = request.params.id;
       try {
         let opinion = await this.opinionService.getOpinion(opinionID);
         response.status(200).send(opinion);
@@ -142,7 +142,7 @@ export class OpinionController {
    */
   public getOpinionsByProduct() {
     return async (request: any, response: any) => {
-      let productID = request.params.id;
+      let productID : string = request.params.id;
       try {
         let opinions = await this.opinionService.getOpinionsByProduct(productID);
         response.status(200).send(opinions);
