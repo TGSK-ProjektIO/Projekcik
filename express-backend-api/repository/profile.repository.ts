@@ -97,6 +97,32 @@ export class ProfileRepository {
     });
   }
 
+  //FIXME: How to do it in REST manner?
+  public async readAll(_id: string): Promise<Array<Profile>> {
+    return new Promise<Array<Profile>>(async (resolve, reject) => {
+      const client = this.createClient();
+      try {
+        const db = client.db(DB_NAME);
+        const collection = db.collection(PROFILE_COLLECTION_NAME);
+        const cursor = collection.find<Profile>({});
+        let response = (await cursor.toArray());
+        // let response = await collection.findOne<Profile>({
+        //   _id: new ObjectId(_id)
+        // });
+        if (response !== null) {
+          resolve(response);
+        } else {
+          console.log("NOT FOUND")
+          reject();
+        }
+      } catch (exception) {
+        reject();
+      } finally {
+        client.close();
+      }
+    });
+  }
+
   public async update(profile: Profile): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       if (!profile._id) {
