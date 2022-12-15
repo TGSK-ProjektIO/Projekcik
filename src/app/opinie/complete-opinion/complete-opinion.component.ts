@@ -18,7 +18,7 @@ export class CompleteOpinionComponent implements OnInit {
   // Needed to pull [[ opinions ]] from database that are assigned to [[ product ]]
   @Input() productID : string = "";
   // Needed to identify singular [[ opinion ]]
-  @Input() ID : ObjectId = new ObjectId();
+  @Input() ID : string = "";
   // Needed to assign [[ user ]] to [[ opinion ]]
   @Input() userID : string = "";
 
@@ -34,7 +34,7 @@ export class CompleteOpinionComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  GetID() : ObjectId { return this.ID; }
+  GetID() : string { return this.ID; }
   GetUserID() : string { return this.userID; }
   GetReview() : string { return this.review.GetReview(); }
   GetMeanRating() : number {

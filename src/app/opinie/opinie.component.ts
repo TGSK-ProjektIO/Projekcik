@@ -4,7 +4,7 @@ import {RatingComponent} from "./rating/rating.component";
 import {OpinionHostDirective} from "./opinion-host.directive";
 import {OpinionCreatorComponent} from "./opinion-creator/opinion-creator.component";
 import {Opinion} from "../../../express-backend-api/model/opinion";
-import {ObjectId} from "mongodb";
+
 
 // TODO: get user type from session
 export enum UserType { anon, logged, admin}
@@ -55,7 +55,6 @@ export class OpinieComponent implements OnInit {
 
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {
     newOpinion.userID = this.userLoggedID;
-    newOpinion.ID = new ObjectId();
 
     this.DB_CreateOpinion(this.OpinionComponentToDB(newOpinion));
 
@@ -63,7 +62,7 @@ export class OpinieComponent implements OnInit {
     this.ShowOpinion(newOpinion, 1);
   }
 
-  GetOpinion(ID: ObjectId): CompleteOpinionComponent | undefined {
+  GetOpinion(ID: string): CompleteOpinionComponent | undefined {
     let foundOpinion = this.DB_GetOpinionByID(ID);
     if(foundOpinion == undefined) return undefined;
     return this.OpinionDBToComponent(foundOpinion);
@@ -97,7 +96,7 @@ export class OpinieComponent implements OnInit {
     this.allOpinionsRefs.splice(index, 0, componentRef);
   }
 
-  ModifyOpinion(ID: ObjectId, ratings: RatingComponent[], text: string): void {
+  ModifyOpinion(ID: string, ratings: RatingComponent[], text: string): void {
     for (const opinion of this.allOpinions) {
       if(opinion.ID == ID) {
         opinion.ratings = ratings;
@@ -107,7 +106,7 @@ export class OpinieComponent implements OnInit {
     }
   }
 
-  DeleteOpinion(ID: ObjectId): boolean {
+  DeleteOpinion(ID: string): boolean {
     for (let i = 0; i < this.allOpinions.length; i++) {
       // TODO: may be problematic if sorting gets implemented
       if(this.allOpinions[i].ID == ID) {
@@ -150,7 +149,8 @@ export class OpinieComponent implements OnInit {
   OpinionDBToComponent(opinion : Opinion) : CompleteOpinionComponent {
     let opinionComponent = new CompleteOpinionComponent();
     opinionComponent.SetParent(this);
-    opinionComponent.ID = <ObjectId>opinion._id;
+    // @ts-ignore
+    opinionComponent.ID = opinion._id.toString();
     opinionComponent.userID = opinion.userId;
     opinionComponent.SetReview(opinion.review.text);
     for (const rating of opinion.ratings) {
@@ -223,7 +223,7 @@ export class OpinieComponent implements OnInit {
     return opinionArray;
   }
 
-  private DB_GetOpinionByID(id: ObjectId): Opinion | undefined {
+  private DB_GetOpinionByID(id: string): Opinion | undefined {
     let opinion: Opinion | undefined;
     fetch(`http://localhost:3000/api/v1/opinie/getByProduct/${id}`, {
       method: 'POST',
