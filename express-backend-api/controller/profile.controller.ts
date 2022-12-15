@@ -181,6 +181,26 @@ export class ProfileController {
     }
   }
 
+  public getProfileByUserId() {
+    return async (request: any, response: any) => {
+      let userId = request.params.userId;
+      if (!userId) {
+        return response.status(400).send({
+          message: "Request is missing required 'userId' parameter"
+        });
+      }
+
+      try {
+        const profile = await this.profileService.getProfileByUserId(userId);
+        return response.status(200).send(profile);
+      } catch (error) {
+        return response.status(404).send({
+          message: "Profile not found"
+        });
+      }
+    }
+  }
+
   public getProfileByNickname() {
     return async (request: any, response: any) => {
       let nickname = request.params.nickname;
@@ -200,7 +220,6 @@ export class ProfileController {
       }
     }
   }
-
 
   public getAllProfiles() {
     return async (request: any, response: any) => {

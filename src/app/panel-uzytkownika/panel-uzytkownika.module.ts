@@ -10,9 +10,9 @@ import {MatTabsModule} from "@angular/material/tabs";
 
 const appRoute: Routes = [
   {path: '', component: PanelProfiluComponent},
-  {path: 'panel-profilu', component: PanelProfiluComponent},
-  {path: 'panel-administratora', component: PanelAdministratoraComponent},
-  {path: 'panel-edycji', component: PanelEdycjiComponent}
+  {path: 'panel-profilu/:id', component: PanelProfiluComponent},
+  {path: 'panel-administratora/:id', component: PanelAdministratoraComponent},
+  {path: 'panel-edycji/:id', component: PanelEdycjiComponent}
 ]
 
 @NgModule({

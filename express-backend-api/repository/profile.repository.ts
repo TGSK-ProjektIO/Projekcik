@@ -47,31 +47,9 @@ export class ProfileRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
-  }
-
-  public async readByNickname(nickname: string): Promise<Profile> {
-    return new Promise<Profile>(async (resolve, reject) => {
-      const client = this.createClient();
-      try {
-        const db = client.db(DB_NAME);
-        const collection = db.collection(PROFILE_COLLECTION_NAME);
-        let response = await collection.findOne<Profile>({
-          nickname: nickname
-        });
-        if (response !== null) {
-          resolve(response);
-        } else {
-          reject();
-        }
-      } catch (exception) {
-        reject();
-      } finally {
-        client.close();
-      }
-    })
   }
 
   public async read(_id: string): Promise<Profile> {
@@ -92,12 +70,56 @@ export class ProfileRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
 
-  //FIXME: How to do it in REST manner?
+  public async readByUserId(userId: string): Promise<Profile> {
+    return new Promise<Profile>(async (resolve, reject) => {
+      const client = this.createClient();
+      try {
+        const db = client.db(DB_NAME);
+        const collection = db.collection(PROFILE_COLLECTION_NAME);
+        let response = await collection.findOne<Profile>({
+          userId: userId
+        });
+        if (response !== null) {
+          resolve(response);
+        } else {
+          reject();
+        }
+      } catch (exception) {
+        reject();
+      } finally {
+        await client.close();
+      }
+    })
+  }
+
+  public async readByNickname(nickname: string): Promise<Profile> {
+    return new Promise<Profile>(async (resolve, reject) => {
+      const client = this.createClient();
+      try {
+        const db = client.db(DB_NAME);
+        const collection = db.collection(PROFILE_COLLECTION_NAME);
+        let response = await collection.findOne<Profile>({
+          nickname: nickname
+        });
+        if (response !== null) {
+          resolve(response);
+        } else {
+          reject();
+        }
+      } catch (exception) {
+        reject();
+      } finally {
+        await client.close();
+      }
+    })
+  }
+
+  // Not sure if this is right, but ok
   public async readAll(_id: string): Promise<Array<Profile>> {
     return new Promise<Array<Profile>>(async (resolve, reject) => {
       const client = this.createClient();
@@ -118,7 +140,7 @@ export class ProfileRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -152,7 +174,7 @@ export class ProfileRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -174,7 +196,7 @@ export class ProfileRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
