@@ -13,8 +13,8 @@ export class OpinionRouter {
     app.post(`${basePath}/add`, this.opinionController.addOpinion());
     app.delete(`${basePath}/remove`, this.opinionController.removeOpinion());
     app.put(`${basePath}/modify`, this.opinionController.modifyOpinion());
-    app.put(`${basePath}/like`, this.opinionController.addLike());
-    app.put(`${basePath}/dislike`, this.opinionController.addDislike());
+    app.put(`${basePath}/like/:id`, this.opinionController.addLike());
+    app.put(`${basePath}/dislike/:id`, this.opinionController.addDislike());
     app.get(`${basePath}/get/:id`, this.opinionController.getOpinion());
     app.get(`${basePath}/getByUser/:id`, this.opinionController.getOpinionsByUser());
     app.get(`${basePath}/getByProduct/:id`, this.opinionController.getOpinionsByProduct());

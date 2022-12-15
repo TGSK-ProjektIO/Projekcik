@@ -9,6 +9,10 @@ export class OpinionController {
               @inject(TYPES.SessionService) private sessionService: SessionService) {
   }
 
+  /** Adds opinion to database
+   * @request Opinion object to add
+   * @response status
+   */
   public addOpinion() {
     return async (request: any, response: any) => {
       let opinion = request.body;
@@ -26,6 +30,10 @@ export class OpinionController {
     }
   }
 
+  /** Removes opinion from database
+   * @request Opinion object to delete
+   * @response status
+   */
   public removeOpinion() {
     return async (request: any, response: any) => {
       let opinion = request.body;
@@ -43,6 +51,10 @@ export class OpinionController {
     }
   }
 
+  /** Modifies opinion
+   * @request Modified Opinion object
+   * @response status
+   */
   public modifyOpinion() {
     return async (request: any, response: any) => {
       let opinion = request.body;
@@ -60,13 +72,17 @@ export class OpinionController {
     }
   }
 
+  /** Adds like to opinion
+   * @request   Opinion object to add like to
+   * @id        User ID
+   * @response  status
+   */
   public addLike() {
     return async (request: any, response: any) => {
       let opinion = request.body;
+      let userID = request.params.id;
       try {
-        //TODO: Get user and throw error if not found
-        //TODO: Get userID from users
-        await this.opinionService.addLike(opinion.id, "128");
+        await this.opinionService.addLike(opinion.id, userID);
         response.status(201).send({
           message: "Added like",
           id: opinion.id
@@ -79,13 +95,17 @@ export class OpinionController {
     }
   }
 
+  /** Adds dislike to opinion
+   * @request   Opinion object to add like to
+   * @id        User ID
+   * @response  status
+   */
   public addDislike() {
     return async (request: any, response: any) => {
       let opinion = request.body;
+      let userID = request.params.id;
       try {
-        //TODO: Get user and throw error if not found
-        //TODO: Get userID from users
-        await this.opinionService.addDislike(opinion.id, "128");
+        await this.opinionService.addDislike(opinion.id, userID);
         response.status(201).send({
           message: "Added dislike",
           id: opinion.id
@@ -98,6 +118,10 @@ export class OpinionController {
     }
   }
 
+  /** Get Opinion by ID
+   * @id        Opinion ID
+   * @response  status
+   */
   public getOpinion() {
     return async (request: any, response: any) => {
       let opinionID = request.params.id;
@@ -112,6 +136,10 @@ export class OpinionController {
     }
   }
 
+  /** Get Array of product Opinions
+   * @id        Product ID
+   * @response  Array of Opinions for product/status
+   */
   public getOpinionsByProduct() {
     return async (request: any, response: any) => {
       let productID = request.params.id;
@@ -126,6 +154,10 @@ export class OpinionController {
     }
   }
 
+  /** Get Array of user Opinions
+   * @id        User ID
+   * @response  Array of Opinions for product/status
+   */
   public getOpinionsByUser() {
     return async (request: any, response: any) => {
       let userID = request.params.id;
