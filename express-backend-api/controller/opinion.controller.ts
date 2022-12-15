@@ -120,7 +120,7 @@ export class OpinionController {
 
   /** Get Opinion by ID
    * @id        Opinion ID
-   * @response  status
+   * @response  Opinion/status
    */
   public getOpinion() {
     return async (request: any, response: any) => {
@@ -145,7 +145,7 @@ export class OpinionController {
       let productID = request.params.id;
       try {
         let opinions = await this.opinionService.getOpinionsByProduct(productID);
-        response.status(201).send(opinions);
+        response.status(200).send(opinions);
       } catch (error) {
         response.status(400).send({
           message: "Cannot retrieve opinions from database by product ID"
@@ -163,7 +163,7 @@ export class OpinionController {
       let userID = request.params.id;
       try {
         let opinions = await this.opinionService.getOpinionsByUser(userID);
-        response.status(201).send(opinions);
+        response.status(200).send(opinions);
       } catch (error) {
         response.status(400).send({
           message: "Cannot retrieve opinions from database by user ID"

@@ -3,6 +3,7 @@ import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
 import {OpinieComponent, UserType} from "../opinie.component";
+import {ObjectId} from "mongodb";
 
 @Component({
   selector: 'app-complete-opinion',
@@ -17,7 +18,7 @@ export class CompleteOpinionComponent implements OnInit {
   // Needed to pull [[ opinions ]] from database that are assigned to [[ product ]]
   @Input() productID : string = "";
   // Needed to identify singular [[ opinion ]]
-  @Input() ID : number = 0;
+  @Input() ID : ObjectId = new ObjectId();
   // Needed to assign [[ user ]] to [[ opinion ]]
   @Input() userID : string = "";
 
@@ -33,7 +34,7 @@ export class CompleteOpinionComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  GetID() : number { return this.ID; }
+  GetID() : ObjectId { return this.ID; }
   GetUserID() : string { return this.userID; }
   GetReview() : string { return this.review.GetReview(); }
   GetMeanRating() : number {
