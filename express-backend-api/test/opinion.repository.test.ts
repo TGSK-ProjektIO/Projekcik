@@ -7,6 +7,7 @@ import {ObjectId} from "mongodb";
 const opinionRepository = container.get<OpinionRepository>(TYPES.OpinionRepository);
 
 let validOpinion: Opinion;
+let validOpinionToDelete: Opinion;
 let invalidOpinion: Opinion;
 
 beforeAll(async () => {
@@ -16,6 +17,15 @@ beforeAll(async () => {
 beforeEach(async () => {
   validOpinion = {
     userId: "121",
+    productId: "2",
+    opinionRatings: [{userID: "122", like: 1, dislike: 0}, {userID: "121", like: 1, dislike: 0},
+      {userID: "120", like: 1, dislike: 0}, {userID: "121", like: 0, dislike: 1}, {userID: "121", like: 0, dislike: 1}],
+    review: {userID: "122", text: "skrrt skiri papa tutu"},
+    ratings: [{userID: "152", name: "skrrt", rating: 5}, {userID: "1253", name: "skrrt", rating: 5}]
+  };
+
+  validOpinionToDelete = {
+    userId: "119",
     productId: "2",
     opinionRatings: [{userID: "122", like: 1, dislike: 0}, {userID: "121", like: 1, dislike: 0},
       {userID: "120", like: 1, dislike: 0}, {userID: "121", like: 0, dislike: 1}, {userID: "121", like: 0, dislike: 1}],
@@ -34,7 +44,18 @@ beforeEach(async () => {
   };
 });
 
-test('Create Opinion positive test', async () => {
+test('Create And Read Opinion positive test', async () => {
   const opinionRep = await opinionRepository.create(validOpinion);
   expect(opinionRep._id).not.toBeNaN();
+  // @ts-ignore
+  let readOpinion = await opinionRepository.read(opinionRep._id);
+  expect(readOpinion).toEqual(opinionRep);
+});
+
+test('Delete Opinion positive test', async () => {
+  let opinionRep = await opinionRepository.create(validOpinionToDelete);
+  // @ts-ignore
+  await expect(opinionRepository.delete(opinionRep._id)).resolves.toBeUndefined();
+  // @ts-ignore
+  await expect(opinionRepository.read(opinionRep._id)).rejects.toBeUndefined();
 });
