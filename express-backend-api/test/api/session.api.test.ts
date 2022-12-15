@@ -32,7 +32,7 @@ beforeEach(async () => {
   };
   user = await userRepository.create(validUserPartial);
   validSessionParams = {
-    startDate: new Date("2019-01-16"),
+    startDate: new Date(),
     userId: user._id
   };
   session = await sessionRepository.create(validSessionParams);
@@ -105,6 +105,55 @@ describe('Logout', () => {
     const secondResponse = await request(app)
       .get(API_URI_LIR + '/session/' + session._id.toString() + '/logout')
     expect(secondResponse.status).toEqual(400);
+  });
+});
+
+describe('Has expired', () => {
+  it('Properly tries to retrieve information about not expired session', async () => {
+    const response = await request(app)
+      .get(`${API_URI_LIR}/session/${session._id.toString()}/has-expired`);
+    expect(response.status).toEqual(200);
+    expect(response.body.expired).toBeFalsy();
+  });
+  it('Properly tries to retrieve info about expired session', async () => {
+    await sessionRepository.update({
+      _id: session._id,
+      expireDate: new Date()
+    });
+    const response = await request(app)
+      .get(`${API_URI_LIR}/session/${session._id.toString()}/has-expired`);
+    expect(response.status).toEqual(200);
+    expect(response.body.expired).toBeTruthy();
+  });
+  it('Properly tries to retrieve info about invalidated session', async () => {
+    await request(app).get(API_URI_LIR + '/session/' + session._id.toString() + '/logout')
+    const response = await request(app)
+      .get(`${API_URI_LIR}/session/${session._id.toString()}/has-expired`);
+    expect(response.status).toEqual(200);
+    expect(response.body.expired).toBeFalsy();
+  });
+});
+
+describe('Change password', () => {
+  it('Properly tries to change password', async () => {
+    const newPassword = faker.internet.password();
+    const oldPassword = (await userRepository.read(session.userId.toString())).password;
+    const response = await request(app)
+      .put(`${API_URI_LIR}/session/${session._id.toString()}/change-password`)
+      .send({newPassword: newPassword});
+    expect(response.status).toEqual(200);
+    const modifiedUser = await userRepository.read(session.userId.toString());
+    expect(modifiedUser.password).not.toEqual(newPassword);
+    expect(modifiedUser.password).not.toEqual(oldPassword);
+  });
+  it('Tries to change password for non existing session', async () => {
+    const oldPassword = (await userRepository.read(session.userId.toString())).password;
+    const response = await request(app)
+      .put(`${API_URI_LIR}/session/nonexisting/change-password`)
+      .send({newPassword: faker.internet.password()});
+    expect(response.status).toEqual(404);
+    const modifiedUser = await userRepository.read(session.userId.toString());
+    expect(modifiedUser.password).toEqual(oldPassword);
   });
 });
 
