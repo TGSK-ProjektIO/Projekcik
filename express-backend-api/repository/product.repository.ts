@@ -70,7 +70,8 @@ export class ProductRepository {
                 description: product.description,
                 tag: product.tag,
                 categoryId: product.categoryName,
-                attribute: product.attribute
+                attribute: product.attribute,
+                image: product.image
               }
             },
             { upsert: false }

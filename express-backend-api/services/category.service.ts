@@ -30,7 +30,7 @@ export class CategoryService {
     public getAllCategories(): Promise<Array<Category>> {
         return new Promise<Array<Category>>(async (resolve, reject) => {
             try {
-            const categories = await this.categoryRepository.getAllCategories();
+            const categories = await this.categoryRepository.readAll();
             } catch (error) {
             reject();
             }

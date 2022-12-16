@@ -29,7 +29,7 @@ export class ProductService {
   public getAllProducts(): Promise<Array<Product>> {
       return new Promise<Array<Product>>(async (resolve, reject) => {
         try {
-          const products = await this.productRepository.getAllProducts();
+          const products = await this.productRepository.readAll();
         } catch (error) {
           reject();
         }
