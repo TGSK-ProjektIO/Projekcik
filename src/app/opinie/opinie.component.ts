@@ -24,12 +24,12 @@ export class OpinieComponent implements OnInit {
   isUserType(type : UserType) : boolean {
     return this.userType == type;
   }
-  //TODO: get productID from product
-  id = "128";
+  // Get productID from product/profile
+  @Input() id = "2";
   // TODO: get product attributes from product
   productAttributes : string[] = ["fajno", "niefajno", "zajefajno", "wydajność"];
 
-  @Input() pageType : PageType = PageType.profile;
+  @Input() pageType : PageType = PageType.product;
   allOpinions : CompleteOpinionComponent[] = [];
   allOpinionsRefs : CompleteOpinionComponent[] = [];
   opinionCreator : OpinionCreatorComponent = new OpinionCreatorComponent(this);
