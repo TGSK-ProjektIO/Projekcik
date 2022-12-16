@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Profile} from "../../../express-backend-api/model/profile";
 import {User} from "../../../express-backend-api/model/user";
 import {ObjectId} from "mongodb";

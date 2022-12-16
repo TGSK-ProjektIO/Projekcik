@@ -1,3 +1,5 @@
+<html>
+<body>
 <div class="edit-panel">
   <div class="sub-panel">
     <h2>Dane profilu</h2>
@@ -16,5 +18,7 @@
     Hasło <br/>
     <button>Zmień hasło</button>
   </div>
-  <button [routerLink]="['/']" style="margin: 0 0 1em 1em">Wróć</button>
+  <button (click)="redirectToProfile()" style="margin: 0 0 1em 1em">Wróć</button>
 </div>
+</body>
+</html>

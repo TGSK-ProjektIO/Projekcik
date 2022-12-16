@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PanelUzytkownikaComponent} from "../panel-uzytkownika.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-panel-edycji',
@@ -8,11 +8,13 @@ import {PanelUzytkownikaComponent} from "../panel-uzytkownika.component";
 })
 export class PanelEdycjiComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-
+  redirectToProfile() {
+    this.router.navigateByUrl('/panel-profilu');
+  }
 
 }
