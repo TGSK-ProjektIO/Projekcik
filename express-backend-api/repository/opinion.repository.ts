@@ -165,7 +165,7 @@ export class OpinionRepository {
         const db = client.db(DB_NAME);
         const collection = db.collection(OPINION_COLLECTION_NAME);
         const result = await collection.deleteOne({
-          _id: _id
+          _id: new ObjectId(_id)
         });
         if (result.deletedCount === 1) {
           resolve();

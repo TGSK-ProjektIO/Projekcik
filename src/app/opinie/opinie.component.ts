@@ -203,8 +203,8 @@ export class OpinieComponent implements OnInit {
       console.error(err);
     });
   }
-  private DB_GetOpinionsByProduct(productID: string) {
-    let opinionArray : Array<Opinion> = new Array<Opinion>();
+  private DB_GetOpinionsByProduct(productID: string): Array<Opinion> | undefined {
+    let opinionArray : Array<Opinion> | undefined;
     fetch(`http://localhost:3000/api/v1/opinie/getByProduct/${productID}`, {
       method: 'GET',
       headers: {
@@ -212,9 +212,8 @@ export class OpinieComponent implements OnInit {
         'Content-Type': 'application/json'
       }
     }).then(async response => {
-      console.log(response)
       if (response.status === 200) {
-        opinionArray = await response.json();
+        opinionArray = <Array<Opinion>>JSON.parse(await response.text());
       }
       if (response.status === 400) {
 
@@ -222,6 +221,7 @@ export class OpinieComponent implements OnInit {
     }).catch(err => {
       console.error(err);
     });
+    console.log(opinionArray);
     return opinionArray;
   }
 
@@ -232,8 +232,7 @@ export class OpinieComponent implements OnInit {
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({})
+      }
     }).then(async response => {
       if (response.status === 200) {
         opinion = await response.json();
