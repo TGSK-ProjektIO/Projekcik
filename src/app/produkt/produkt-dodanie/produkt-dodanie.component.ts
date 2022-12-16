@@ -45,7 +45,6 @@ export class ProduktDodanieComponent implements OnInit {
           await this.router.navigateByUrl('/');
         }
         if (response.status === 404) {
-          console.log("hi");
         }
       }).catch(err => {
         console.error(err);
