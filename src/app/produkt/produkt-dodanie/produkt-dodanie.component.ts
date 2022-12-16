@@ -26,7 +26,7 @@ export class ProduktDodanieComponent implements OnInit {
       this.router.navigateByUrl('/');
     }
   
-    onSignInPressed() {
+    onSavePressed() {
       fetch('http://localhost:3000/api/v1/produkt/product', {
         method: 'POST',
         headers: {
@@ -37,6 +37,7 @@ export class ProduktDodanieComponent implements OnInit {
           "name": this.name,
           "description": this.description,
           "categoryName": this.categoryName,
+          "tag": this.tag,
           "image": this.image
         })
       }).then(async response => {
@@ -44,6 +45,7 @@ export class ProduktDodanieComponent implements OnInit {
           await this.router.navigateByUrl('/');
         }
         if (response.status === 404) {
+          console.log("hi");
         }
       }).catch(err => {
         console.error(err);

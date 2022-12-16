@@ -3,6 +3,7 @@ import {TYPES} from "../config/types.config";
 import {CategoryService} from "../services/category.service";
 import {Category} from "../model/category";
 
+@injectable()
 export class CategoryController {
     constructor(@inject(TYPES.CategoryService) private categoryService: CategoryService) {
     }
