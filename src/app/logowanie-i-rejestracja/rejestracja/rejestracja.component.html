@@ -8,6 +8,18 @@
   <div class="container py-1 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <alert type="danger"
+               [dismissible]="true"
+               [isOpen]="isWarningAlertOpen"
+               (onClosed)="onCloseWarningAlert()">
+          <p class="text-center">User with given email already exists</p>
+        </alert>
+        <alert type="danger"
+                 [dismissible]="true"
+                 [isOpen]="isFailureAlertOpen"
+                 (onClosed)="onCloseFailureAlert()">
+            <p class="text-center">Unknown error has occurred</p>
+        </alert>
         <div class="card bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
 
