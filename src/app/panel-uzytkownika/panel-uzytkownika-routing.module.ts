@@ -16,7 +16,7 @@ const appRoute: Routes = [
     component: PanelUzytkownikaComponent,
     children: [
       {
-        path: 'panel-profilu',
+        path: '',
         component: PanelProfiluComponent
       },
       {

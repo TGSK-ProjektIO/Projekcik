@@ -18,8 +18,8 @@
     <button class="btn btn-primary" style="margin: 0 1em 0 0" [hidden]="!isCurrent" (click)="redirectToEdit()">Edytuj profil</button>
     <button class="btn btn-primary" [hidden]="!mock_user.isAdmin || !isCurrent" (click)="redirectToAdmin()">Panel administratora</button>
   </div>
-  <div class="card bg-white text-white bg-opacity-10" style="margin-top: 5em; display: block">
-    <h3>Ocenione produkty</h3>
+  <div class="card bg-white text-white bg-opacity-10" style="margin-top: 2em; display: block">
+    <h2 style="margin: 1em">Ocenione produkty</h2>
     <app-opinie [pageType]=pageTypes id="639b7603f04872ad0164cf8a"></app-opinie>
 <!--    <div class="scroller-sub-panel">-->
 <!--      <div class="sub-sub-panel" *ngFor="let opinion of mock_opinions">

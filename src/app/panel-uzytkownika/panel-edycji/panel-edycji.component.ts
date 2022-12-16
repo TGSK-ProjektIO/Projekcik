@@ -14,7 +14,7 @@ export class PanelEdycjiComponent implements OnInit {
   }
 
   redirectToProfile() {
-    this.router.navigateByUrl('/panel-profilu');
+    this.router.navigateByUrl('');
   }
 
 }
