@@ -30,17 +30,19 @@ export class ResetowanieComponent implements OnInit {
   }
 
   resetPassword() {
-    fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/send-reset-password-email/${this.email}`, {
-      method: 'GET'
-    }).then(async response => {
-      if (response.status === 200) {
-        this.isSuccessAlertOpen = true;
-      } else {
-        this.isWarningAlertOpen = true;
-      }
-    }).catch(() => {
-      this.isFailureAlertOpen = true;
-    });
+    if (this.isEmailValid()) {
+      fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/send-reset-password-email/${this.email}`, {
+        method: 'GET'
+      }).then(async response => {
+        if (response.status === 200) {
+          this.isSuccessAlertOpen = true;
+        } else {
+          this.isWarningAlertOpen = true;
+        }
+      }).catch(() => {
+        this.isFailureAlertOpen = true;
+      });
+    }
   }
 
   onCloseSuccessAlert() {
