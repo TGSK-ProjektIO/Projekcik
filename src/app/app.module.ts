@@ -11,6 +11,8 @@ import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i-rejestracja.module";
+import {ProduktModule} from "./produkt/produkt.module";
+
 import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
 import {RouterOutlet} from "@angular/router";
@@ -32,6 +34,7 @@ import {RouterOutlet} from "@angular/router";
     PanelUzytkownikaModule,
     RouterOutlet,
     LogowanieIRejestracjaModule,
+    ProduktModule,
     AppRoutingModule
   ],
   providers: [],
