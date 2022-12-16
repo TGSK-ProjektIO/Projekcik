@@ -3,7 +3,7 @@ import {DATABASE_URi, DB_NAME, USER_COLLECTION_NAME} from "../config/mongo.confi
 import {MongoClient, ObjectId} from "mongodb";
 import {injectable} from "inversify";
 import {UserPartial} from "../model/user.partial";
-import {SHA256} from "crypto-ts";
+// import {SHA256} from "crypto-ts";
 import {createHash, Hmac, randomBytes} from "crypto";
 
 @injectable()
