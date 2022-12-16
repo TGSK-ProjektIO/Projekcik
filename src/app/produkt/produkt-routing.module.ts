@@ -16,11 +16,11 @@ const routes: Routes = [
         component: ProduktDodanieComponent
       },
       {
-        path: 'produkt-modyfikacja',
+        path: 'produkt-modyfikacja/:id',
         component: ProduktModyfikacjaComponent
       },
       {
-        path: 'produkt-widok',
+        path: 'produkt-widok/:id',
         component: ProduktWidokComponent
       },
     ]

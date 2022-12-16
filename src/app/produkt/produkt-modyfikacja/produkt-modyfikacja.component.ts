@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-produkt-modyfikacja',
@@ -9,45 +10,60 @@ import {Router} from "@angular/router";
 
 export class ProduktModyfikacjaComponent implements OnInit {
 
-  name = '';
-  description = '';
-  tag = '';
-  categoryName = '';
-  image = '';
+  product: any;
+  id: string = '';
+  error: string = '';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+      this.product = {};
+      this.id = this.route.snapshot.paramMap.get('id') || '';
+      this.getProduct();
     }
 
     redirectToMainPage() {
       this.router.navigateByUrl('/');
     }
   
-    onSavePressed() {
-      fetch('http://localhost:3000//api/v1/produkt/product/:id', {
-        method: 'PUT',
-        headers: {
-          'Accept': '*/*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "name": this.name,
-          "description": this.description,
-          "categoryName": this.categoryName,
-          "tag": this.tag,
-          "image": this.image
-        })
-      }).then(async response => {
-        if (response.status === 201) {
-          await this.router.navigateByUrl('/');
+    async onSavePressed() {
+      try {
+        const options = {
+          method: 'PUT',
+          body: JSON.stringify(this.product),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        const response = await fetch(`/api/v1/produkt/product/${this.id}`, options);
+        if (response.status === 200) {
+          //...
+        } else {
+          this.error = 'Error updating product';
         }
-        if (response.status === 404) {
-          console.log("hi");
+      } catch (e) {
+        this.error = 'An error occurred';
+      }
+    }
+
+    async getProduct() {
+      try {
+        const options = {
+          method: 'GET',
+          body: JSON.stringify(this.product),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        const response = await fetch(`/api/v1/produkt/product/${this.id}`, options);
+        if (response.status === 200) {
+          this.product = await response.json();
+        } else {
+          this.error = 'Error updating product';
         }
-      }).catch(err => {
-        console.error(err);
-      });
+      } catch (e) {
+        this.error = 'An error occurred';
+      }
     }
 }
