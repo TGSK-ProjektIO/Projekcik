@@ -9,5 +9,6 @@ export interface Product {
     tag: Array<string>;
     categoryId: string;
     attribute: Array<Attribute>;
+    image?: string;
     isVisible: boolean;
 }
