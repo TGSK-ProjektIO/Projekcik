@@ -73,8 +73,8 @@ beforeEach(async () => {
 });
 
 test('Create Product positive test', async () => {
-  const productRep = await productRepository.create(product1);
-  expect(productRep._id).not.toBeNaN();
+  const createdProduct = await productRepository.create(product1);
+  expect(createdProduct._id).not.toBeNaN();
 });
 
 test('Create Product negative test', async () => {
@@ -83,37 +83,37 @@ test('Create Product negative test', async () => {
 
 
 test('Get Product positive test', async () => {
-  const productRep = await productRepository.create(product3);
+  const createdProduct = await productRepository.create(product3);
   // @ts-ignore
-  let getProduct = await productRepository.read(productRep._id);
-  expect(getProduct).toEqual(productRep);
+  let getProduct = await productRepository.read(createdProduct._id);
+  expect(getProduct).toEqual(createdProduct);
 });
 
 
 jest.setTimeout(10000);
 test('Delete Product positive test', async () => {
-    const productRep = await productRepository.create(product4);
+    const createdProduct = await productRepository.create(product4);
   // @ts-ignore
-  await expect(productRepository.delete(productRep._id)).resolves.toBeUndefined();
+  await expect(productRepository.delete(createdProduct._id)).resolves.toBeUndefined();
   // @ts-ignore
-  await expect(productRepository.read(productRep._id)).rejects.toBeUndefined();
+  await expect(productRepository.read(createdProduct._id)).rejects.toBeUndefined();
 });
 
 //dziala?
 test('Update Product positive test', async () => {
-  let productRep = await productRepository.create(product5);
-  productRep.description = "description hahahaha";
+  let createdProduct = await productRepository.create(product5);
+  createdProduct.description = "description hahahaha";
   // @ts-ignore
-  await expect(productRepository.update(productRep)).resolves.toBeUndefined();
+  await expect(productRepository.update(createdProduct)).resolves.toBeUndefined();
   // @ts-ignore
-  await expect(productRepository.read(productRep._id)).resolves.toEqual(productRep);
+  await expect(productRepository.read(createdProduct._id)).resolves.toEqual(createdProduct);
 });
 
 test('Get Products positive test', async () => {
-  //await productRepository.deleteAll();
+  await productRepository.deleteAll();
   await productRepository.create(product1);
-  await productRepository.create(product2);
   await productRepository.create(product3);
-  //let getProducts = await productRepository.readAll();
-  //expect(getProducts.length).toEqual(3);
+  await productRepository.create(product4);
+  let getProducts = await productRepository.readAll();
+  await expect(getProducts.length).toEqual(3);
 });

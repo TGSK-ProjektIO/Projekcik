@@ -29,8 +29,8 @@ export class CategoryService {
     public getAllCategories(): Promise<Array<Category>> {
         return this.categoryRepository.readAll();
     }
-/*
+
     public deleteAllCategories(): Promise<void> {
         return this.categoryRepository.deleteAll();
-    }*/
+    }
 }

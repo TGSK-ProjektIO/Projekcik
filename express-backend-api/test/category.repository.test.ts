@@ -71,3 +71,11 @@ test('Update Product positive test', async () => {
   // @ts-ignore
   await expect(categoryRepository.read(createdCategory._id)).resolves.toEqual(createdCategory);
 });
+
+test('Get Categories positive test', async () => {
+  await categoryRepository.deleteAll();
+  await categoryRepository.create(category1);
+  await categoryRepository.create(category3);
+  let getCategories = await categoryRepository.readAll();
+  await expect(getCategories.length).toEqual(2);
+});
