@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PanelUzytkownikaComponent} from "../panel-uzytkownika.component";
 
 @Component({
   selector: 'app-panel-edycji',
@@ -11,5 +12,7 @@ export class PanelEdycjiComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+
 
 }
