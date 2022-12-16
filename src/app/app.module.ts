@@ -11,6 +11,7 @@ import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i-rejestracja.module";
+import {OpinieModule} from "./opinie/opinie.module";
 import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
 import {RouterOutlet} from "@angular/router";
@@ -23,7 +24,6 @@ import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator"
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatOptionModule} from "@angular/material/core";
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,23 +34,24 @@ import {MatOptionModule} from "@angular/material/core";
     SugestieIZgloszeniaComponent,
     WyszukiwanieComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        PanelUzytkownikaModule,
-        RouterOutlet,
-        LogowanieIRejestracjaModule,
-        AppRoutingModule,
-        MatPaginatorModule,
-        MatTableModule,
-        MatSortModule,
-        FormsModule,
-        MatOptionModule,
-        MatInputModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    PanelUzytkownikaModule,
+    RouterOutlet,
+    LogowanieIRejestracjaModule,
+    AppRoutingModule,
+    OpinieModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
+    FormsModule,
+    MatOptionModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
