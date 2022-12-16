@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {ValidationService} from "../services/validation.service";
 
 @Component({
   selector: 'app-resetowanie',
@@ -7,9 +8,11 @@ import {Router} from "@angular/router";
   styleUrls: ['./resetowanie.component.css']
 })
 export class ResetowanieComponent implements OnInit {
+  email = '';
 
   constructor(
-    private router: Router
+    private router: Router,
+    private validationService: ValidationService
   ) { }
 
   ngOnInit(): void {
@@ -17,5 +20,9 @@ export class ResetowanieComponent implements OnInit {
 
   redirectToMainPage() {
     this.router.navigateByUrl('/');
+  }
+
+  isEmailValid(): boolean {
+    return this.validationService.validateEmail(this.email);
   }
 }
