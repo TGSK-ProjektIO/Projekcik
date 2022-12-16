@@ -8,5 +8,31 @@ export class CategoryService {
     constructor(@inject(TYPES.CategoryRepository) private categoryRepository: CategoryRepository) {
 
     }
+
+    public addCategory(category: Category): Promise<Category> {
+        return this.categoryRepository.create(category);
+      }
+
+    public updateCategory(category: Category): Promise<Category>  {
+        return this.categoryRepository.update(category);
+      }
+
+    public getCategory(id: string): Promise<Category> {
+        return this.categoryRepository.read(id);
+      }
   
+    public deleteCategory(id: string): Promise<Category> {
+        return this.categoryRepository.delete(id);
+      }
+
+    public getAllCategories(): Promise<Array<Category>> {
+        return new Promise<Array<Category>>(async (resolve, reject) => {
+          try {
+            const categories = await this.categoryRepository.getAllCategories();
+            resolve(categories);
+          } catch (error) {
+            reject();
+          }
+        });
+      }
 }

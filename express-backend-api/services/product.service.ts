@@ -10,9 +10,30 @@ export class ProductService {
 
   }
 
-  /* 
-public raddProduct(product: Product): Promise<Product> {
-    return this.productRepository.create(product);
-  }
-  */
+  public addProduct(product: Product): Promise<Product> {
+      return this.productRepository.create(product);
+    }
+
+  public updateProduct(product: Product): Promise<Product>  {
+      return this.productRepository.update(product);
+    }
+  public getProduct(id: string): Promise<Product> {
+      return this.productRepository.read(id);
+    }
+
+  public deleteProduct(id: string): Promise<Product> {
+      return this.productRepository.delete(id);
+    }
+
+  public getAllProducts(): Promise<Array<Product>> {
+      return new Promise<Array<Product>>(async (resolve, reject) => {
+        try {
+          const products = await this.productRepository.getAllProducts();
+          resolve(products);
+        } catch (error) {
+          reject();
+        }
+      });
+    }
+  
 }
