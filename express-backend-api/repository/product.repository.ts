@@ -1,4 +1,5 @@
 import {Product} from "../model/product";
+import {Category} from "../model/category";
 import {DATABASE_URi, DB_NAME, PRODUCT_COLLECTION_NAME} from "../config/mongo.config";
 import {MongoClient, ObjectId} from "mongodb";
 import {injectable} from "inversify";

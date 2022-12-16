@@ -23,6 +23,7 @@ beforeEach(async () => {
     tag: ["a","b"],
     categoryId: "12",
     attribute: [{categoryId: "12",name: "name1",value: "value1"}],
+    isVisible: true
   };
 
   product2 = {
@@ -32,6 +33,7 @@ beforeEach(async () => {
     tag: ["a","b"],
     categoryId: "12",
     attribute: [{categoryId: "12",name: "name1",value: "value1"}],
+    isVisible: true
   };
 
   product3 = {
@@ -40,6 +42,7 @@ beforeEach(async () => {
     tag: ["a","b"],
     categoryId: "12",
     attribute: [{categoryId: "12",name: "name1",value: "value1"}],
+    isVisible: true
   };
 
 });
@@ -74,7 +77,7 @@ test('Delete Product positive test', async () => {
 //dziala?
 test('Update Product positive test', async () => {
   let productRep = await productRepository.create(product3);
-  productRep.tag.push("c");
+  productRep.description = "description hahahaha";
   // @ts-ignore
   await expect(productRepository.update(productRep)).resolves.toBeUndefined();
   // @ts-ignore
