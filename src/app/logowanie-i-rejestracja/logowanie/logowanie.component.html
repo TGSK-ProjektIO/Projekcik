@@ -21,14 +21,14 @@
                 <div class="form-outline mb-4">
                   <input type="email" id="typeEmailLogin" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="email"/>
                   <label class="form-label" for="typeEmailLogin">E-mail</label>
-                  <p class="text-danger" [hidden]="isEmailValid()">Invalid username</p>
+                  <p class="text-danger" [hidden]="(isEmailValid() || !email.length)">Invalid e-mail</p>
 
                 </div>
 
                 <div class="form-outline mb-4">
                   <input type="password" id="typePasswordLogin" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="password"/>
                   <label class="form-label" for="typePasswordLogin">Password</label>
-                  <p class="text-danger" [hidden]="isPasswordValid()">Invalid password</p>
+                  <p class="text-danger" [hidden]="isPasswordValid() || !password.length">Password must have from 6 to 20 characters, at least one big letter and one number</p>
 
                 </div>
 

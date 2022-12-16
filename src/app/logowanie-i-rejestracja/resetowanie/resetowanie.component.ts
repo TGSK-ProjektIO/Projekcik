@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {ValidationService} from "../services/validation.service";
 
 @Component({
   selector: 'app-resetowanie',
@@ -13,7 +14,8 @@ export class ResetowanieComponent implements OnInit {
   isFailureAlertOpen = false;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private validationService: ValidationService
   ) { }
 
   ngOnInit(): void {
@@ -21,6 +23,10 @@ export class ResetowanieComponent implements OnInit {
 
   redirectToMainPage() {
     this.router.navigateByUrl('/');
+  }
+
+  isEmailValid(): boolean {
+    return this.validationService.validateEmail(this.email);
   }
 
   resetPassword() {
