@@ -69,7 +69,7 @@ export class ProductRepository {
                 name: product.name,
                 description: product.description,
                 tag: product.tag,
-                categoryId: product.categoryId,
+                categoryId: product.categoryName,
                 attribute: product.attribute
               }
             },

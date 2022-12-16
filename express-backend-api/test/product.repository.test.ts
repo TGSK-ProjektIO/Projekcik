@@ -23,7 +23,7 @@ beforeEach(async () => {
     name: "p1",
     description: "this product is a ...",
     tag: ["a","b"],
-    categoryId: "12",
+    categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
     isVisible: true
   };
@@ -33,7 +33,7 @@ beforeEach(async () => {
     name: "p2",
     description: "this product is a ...",
     tag: ["a","b"],
-    categoryId: "12",
+    categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
     isVisible: true
   };
@@ -42,7 +42,7 @@ beforeEach(async () => {
     name: "p3",
     description: "this product is a ...",
     tag: ["a","b"],
-    categoryId: "12",
+    categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
     isVisible: true
   };
@@ -51,7 +51,7 @@ beforeEach(async () => {
     name: "p4",
     description: "this product is a ...",
     tag: ["a","b", "c","d"],
-    categoryId: "12",
+    categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
     isVisible: true
   };
@@ -60,7 +60,7 @@ beforeEach(async () => {
     name: "p5",
     description: "this product is a ...",
     tag: ["a","b", "c","d"],
-    categoryId: "12",
+    categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
     isVisible: true
   };
