@@ -7,6 +7,10 @@ import {Router} from "@angular/router";
   styleUrls: ['./resetowanie.component.css']
 })
 export class ResetowanieComponent implements OnInit {
+  email = '';
+  isSuccessAlertOpen = false;
+  isWarningAlertOpen = false;
+  isFailureAlertOpen = false;
 
   constructor(
     private router: Router
@@ -17,5 +21,31 @@ export class ResetowanieComponent implements OnInit {
 
   redirectToMainPage() {
     this.router.navigateByUrl('/');
+  }
+
+  resetPassword() {
+    fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/send-reset-password-email/${this.email}`, {
+      method: 'GET'
+    }).then(async response => {
+      if (response.status === 200) {
+        this.isSuccessAlertOpen = true;
+      } else {
+        this.isWarningAlertOpen = true;
+      }
+    }).catch(() => {
+      this.isFailureAlertOpen = true;
+    });
+  }
+
+  onCloseSuccessAlert() {
+    this.isSuccessAlertOpen = false;
+  }
+
+  onCloseWarningAlert() {
+    this.isWarningAlertOpen = false;
+  }
+
+  onCloseFailureAlert() {
+    this.isFailureAlertOpen = false;
   }
 }

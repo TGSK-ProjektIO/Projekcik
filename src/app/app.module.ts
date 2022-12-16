@@ -14,6 +14,7 @@ import {OpinieModule} from "./opinie/opinie.module";
 import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
 import {RouterOutlet} from "@angular/router";
+import {AlertConfig, AlertModule} from "ngx-bootstrap/alert";
 
 @NgModule({
   declarations: [
@@ -31,9 +32,10 @@ import {RouterOutlet} from "@angular/router";
     RouterOutlet,
     LogowanieIRejestracjaModule,
     OpinieModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AlertModule
   ],
-  providers: [],
+  providers: [AlertConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
