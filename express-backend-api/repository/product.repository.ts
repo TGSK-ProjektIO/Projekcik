@@ -134,7 +134,7 @@ delete(_id: string): Promise<void> {
       });
 }
 
-getAllProducts() {
+readAll() {
   return new Promise<Product[]>(async (resolve, reject) => {
     const client = this.createClient();
     try {
@@ -153,6 +153,27 @@ getAllProducts() {
     }
   });
   }
+
+  deleteAll(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+        const client = this.createClient();
+        try {
+          const db = client.db(DB_NAME);
+          const collection = db.collection(PRODUCT_COLLECTION_NAME);
+          const result = await collection.deleteMany({});
+          const count = await collection.countDocuments({});
+          if (count === 0) {
+            resolve();
+          } else {
+            reject();
+          }
+        } catch (exception) {
+          reject();
+        } finally {
+          client.close();
+        }
+      });
+}
 
 }
 

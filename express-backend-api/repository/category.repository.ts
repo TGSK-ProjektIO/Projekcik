@@ -130,7 +130,7 @@ delete(_id: string): Promise<void> {
       });
 }
 
-getAllCategories() {
+readAll() {
   return new Promise<Category[]>(async (resolve, reject) => {
     const client = this.createClient();
     try {
