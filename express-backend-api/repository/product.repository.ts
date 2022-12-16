@@ -69,7 +69,7 @@ export class ProductRepository {
                 name: product.name,
                 description: product.description,
                 tag: product.tag,
-                categoryId: product.categoryName,
+                categoryName: product.categoryName,
                 attribute: product.attribute,
                 image: product.image
               }
@@ -135,7 +135,7 @@ delete(_id: string): Promise<void> {
       });
 }
 
-readAll() {
+readAll(): Promise<Product[]> {
   return new Promise<Product[]>(async (resolve, reject) => {
     const client = this.createClient();
     try {

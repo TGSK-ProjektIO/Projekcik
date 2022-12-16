@@ -25,6 +25,7 @@ beforeEach(async () => {
     tag: ["a","b"],
     categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
+    image: "a",
     isVisible: true
   };
 
@@ -35,6 +36,7 @@ beforeEach(async () => {
     tag: ["a","b"],
     categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
+    image: "a",
     isVisible: true
   };
 
@@ -44,6 +46,7 @@ beforeEach(async () => {
     tag: ["a","b"],
     categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
+    image: "a",
     isVisible: true
   };
 
@@ -53,6 +56,7 @@ beforeEach(async () => {
     tag: ["a","b", "c","d"],
     categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
+    image: "a",
     isVisible: true
   };
 
@@ -62,6 +66,7 @@ beforeEach(async () => {
     tag: ["a","b", "c","d"],
     categoryName: "12",
     attribute: [{name: "name1",value: "value1"}],
+    image: "a",
     isVisible: true
   };
 
