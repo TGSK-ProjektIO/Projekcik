@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Profile} from "../../../express-backend-api/model/profile";
 import {User} from "../../../express-backend-api/model/user";
 import {ObjectId} from "mongodb";
@@ -16,56 +16,99 @@ export class PanelUzytkownikaComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.user = this.fetchUser("niewiem");
-    if(this.user)
-    {
-      this.profile = this.fetchProfileByUserId(this.user._id);
-    }
+
   }
 
-  public fetchUser(id: string): User | undefined {
-    let user: User | undefined;
-    fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/${id}`, {
+  // ---------- FETCH METHODS ----------
+
+  private async fetchUser(id: string): Promise<User> {
+    return await fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/${id}`, {
       method: 'GET',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({})
-    }).then(async response => {
-      if (response.status === 200) {
-        user = await response.json();
       }
-      if (response.status === 400) {}
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
     }).catch(err => {
       console.error(err);
     });
-    return user;
   }
 
-  public fetchProfileByUserId(userId: ObjectId | undefined): Profile | undefined {
-    let profile: Profile | undefined;
-    fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfile/${userId}`, {
+  private async fetchProfileByUserId(userId: ObjectId | undefined): Promise<Profile> {
+    return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfile/${userId}`, {
       method: 'GET',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({})
-    }).then(async response => {
-      if (response.status === 200) {
-        profile = await response.json();
       }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+
+  private async fetchProfileByNickname(nickname: string): Promise<Profile> {
+    return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfile/${nickname}`, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+
+  private fetchChangeNickname(id: string, nickname: string) {
+    fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeNickname/${id}/${nickname}`, {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then(async response => {
+      if (response.status === 200) {}
       if (response.status === 400) {}
     }).catch(err => {
       console.error(err);
     });
-    return profile;
   }
 
-  public fetchProfileByNickname() {
+  private fetchChangeProfilePicture(id: string, profilePicture: string) {
+    fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeProfilePicture/${id}/${profilePicture}`, {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then(async response => {
+      if (response.status === 200) {}
+      if (response.status === 400) {}
+    }).catch(err => {
+      console.error(err);
+    });
+  }
 
-
+  private fetchChangeDescription(id: string, description: string) {
+    fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeDescription/${id}/${description}`, {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then(async response => {
+      if (response.status === 200) {}
+      if (response.status === 400) {}
+    }).catch(err => {
+      console.error(err);
+    });
   }
 
 }
