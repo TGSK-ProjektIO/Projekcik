@@ -1,13 +1,27 @@
-<div class="Opinion">
-  <div class="Header">
-    <img src="https://i.imgur.com/tYkCX47.jpg" /> Verified Customer <span class="badge badge-dark">@{{GetUserID()}}</span>
+<div class="card bg-dark text-white mx-auto my-2" style="
+display: block;
+border: #334465 2px outset;
+width: 95%;
+padding: 10px;">
+  <div class="bg-dark text-white" style="
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;">
+    <img src="https://i.imgur.com/tYkCX47.jpg"/>
+    <span class="badge badge-dark">Verified Customer</span>
+    <span class="badge badge-dark" style="margin-left: -10px;">@{{GetUserID()}}</span>
     <button *ngIf="opinieParent.isUserType(UserTypes.admin)"
             class="btn btn-default"
             (click)="DestroyOpinion()">
               <img style="width: 2em; border: none;" src="https://i.imgur.com/peujZRW.png" />
     </button>
   </div>
-  <div class="Ratings">
+  <div class="bg-dark text-white" style="
+    margin-left: 1%;
+    margin-right: 1%;
+    font-size: 12px;
+    overflow-x: auto;
+    margin-bottom: 10px;">
     <table>
       <tr>
         <th *ngFor="let setRating of ratings">
@@ -18,11 +32,18 @@
       </tr>
     </table>
   </div>
-  <div class="Review">
+  <div class="bg-dark text-white" style="
+    display: block;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-bottom: 10px;
+    font-size: 14px;">
     <app-review text="{{review.GetReview()}}"
                 [isReadonly]=!CanEdit()></app-review>
   </div>
-  <div class="OpinionRating">
+  <div class="bg-dark text-white" style="
+    display: block;
+    font-size: 10px;">
     <app-opinion-rating [isReadonly]=CanEdit()
                         [likes]=opinionRating.likes
                         [dislikes]=opinionRating.dislikes></app-opinion-rating>
