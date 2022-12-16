@@ -17,25 +17,22 @@ export class EmailService {
     },
   });
 
-  //todo zmienic w obu metodach receivers na user.email
-
   public async sendEmailConfirmationMail(user: User): Promise<void> {
-    //send mail with defined transport object
-    let info = await this.transporter.sendMail({
-      from: '"OpinionCollector" <opinioncontroller@gmail.com>', // sender address
-      to: "opinioncontroller@gmail.com", // list of receivers
-      subject: "Email confirmation", // Subject line
-      html: '<p>Click <a href="http://localhost:4200/confirm/' + user._id.toString() + "/" + user.emailToken + '"> here</a> to verify your account.</p>', // html body
+    await this.transporter.sendMail({
+      from: '"OpinionCollector" <opinioncontroller@gmail.com>',
+      to: user.email,
+      subject: "Email confirmation",
+      html: '<p>Click <a href="http://localhost:4200/confirm/' + user._id.toString() + "/" + user.emailToken + '"> here</a> to verify your account.</p>'
     });
   }
 
 
   public async sendPasswordResetMail(user: User): Promise<void> {
-    let info = await this.transporter.sendMail({
-      from: '"OpinionCollector" <opinioncontroller@gmail.com>', // sender address
-      to: "opinioncontroller@gmail.com", // list of receivers
-      subject: "Reset password", // Subject line
-      html: '<p>Click <a href="http://localhost:4200/reset/' + user._id.toString() + "/" + user.emailToken + '"> here</a> to verify your account.</p>', // html body
+    await this.transporter.sendMail({
+      from: '"OpinionCollector" <opinioncontroller@gmail.com>',
+      to: user.email,
+      subject: "Reset password",
+      html: '<p>Click <a href="http://localhost:4200/reset/' + user._id.toString() + "/" + user.emailToken + '"> here</a> to verify your account.</p>'
     });
   }
 }

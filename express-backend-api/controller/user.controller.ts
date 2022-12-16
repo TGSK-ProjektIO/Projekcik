@@ -28,16 +28,22 @@ export class UserController {
    }
  }
 
- // public resetPassword() {
- //   return (request: any, response: any) => {
- //     let email = request.body?.email;
- //     if (!email) {
- //       return response.status(400).send({
- //         error: "Missing 'email' parameter"
- //       });
- //     }
- //   }
- // }
+ public sendPasswordResetEmail() {
+   return async (request: any, response: any) => {
+     const email = request.params.email;
+     try {
+       const user = await this.userService.getUserByEmail(email);
+       await this.emailService.sendPasswordResetMail(user);
+       return response.status(200).send({
+         message: "Sent password reset email"
+       });
+     } catch (e) {
+       return response.status(404).send({
+         error: "Cannot find user with given email"
+       });
+     }
+   }
+ }
 
  public confirmEmail() {
    return async (request: any, response: any) => {
