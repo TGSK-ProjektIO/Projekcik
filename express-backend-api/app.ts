@@ -2,6 +2,8 @@ import {container} from "./config/container.config";
 import {TYPES} from "./config/types.config";
 import {UserRouter} from "./router/user.router";
 import {SessionRouter} from "./router/session.router";
+import {ProductRouter} from "./router/product.router";
+import {CategoryRouter} from "./router/category.router";
 import cors = require('cors');
 
 var express = require('express');
@@ -33,7 +35,13 @@ app.use('/api/v1/wyszukiwanie', wyszukiwanie);
 const userRouter = container.get<UserRouter>(TYPES.UserRouter);
 const sessionRouter = container.get<SessionRouter>(TYPES.SessionRouter);
 
+const productRouter = container.get<ProductRouter>(TYPES.ProductRouter);
+const categoryRouter = container.get<CategoryRouter>(TYPES.CategoryRouter);
+
 userRouter.addRoutes(app);
 sessionRouter.addRoutes(app);
+
+productRouter.addRoutes(app);
+categoryRouter.addRoutes(app);
 
 module.exports = app;

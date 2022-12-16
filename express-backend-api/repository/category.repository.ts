@@ -67,7 +67,8 @@ update(category: Category): Promise<void> {
             {_id: category._id},
             {
               $set: {
-                //atrybuty
+                name: category.name,
+                attribute: category.attribute
               }
             },
             { upsert: false }

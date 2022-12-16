@@ -1,7 +1,9 @@
 import {ObjectId} from "mongodb";
 
-export interface Category {
+
+export interface Attribute {
     _id?: ObjectId;
+    categoryId: string;
     name: string;
-    attribute: Array<Object>;
+    value: string;
 }
