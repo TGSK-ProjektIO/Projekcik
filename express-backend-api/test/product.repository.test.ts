@@ -11,6 +11,8 @@ const productRepository = container.get<ProductRepository>(TYPES.ProductReposito
 let product1: Product;
 let product2: Product;
 let product3: Product;
+let product4: Product;
+let product5: Product;
 
 beforeAll(async () => {
   await productRepository.setup();
@@ -45,6 +47,24 @@ beforeEach(async () => {
     isVisible: true
   };
 
+  product4 = {
+    name: "p4",
+    description: "this product is a ...",
+    tag: ["a","b", "c","d"],
+    categoryId: "12",
+    attribute: [{name: "name1",value: "value1"}],
+    isVisible: true
+  };
+
+  product5 = {
+    name: "p5",
+    description: "this product is a ...",
+    tag: ["a","b", "c","d"],
+    categoryId: "12",
+    attribute: [{name: "name1",value: "value1"}],
+    isVisible: true
+  };
+
 });
 
 test('Create Product positive test', async () => {
@@ -58,7 +78,7 @@ test('Create Product negative test', async () => {
 
 
 test('Get Product positive test', async () => {
-  const productRep = await productRepository.create(product1);
+  const productRep = await productRepository.create(product3);
   // @ts-ignore
   let getProduct = await productRepository.read(productRep._id);
   expect(getProduct).toEqual(productRep);
@@ -67,7 +87,7 @@ test('Get Product positive test', async () => {
 
 jest.setTimeout(10000);
 test('Delete Product positive test', async () => {
-    const productRep = await productRepository.create(product3);
+    const productRep = await productRepository.create(product4);
   // @ts-ignore
   await expect(productRepository.delete(productRep._id)).resolves.toBeUndefined();
   // @ts-ignore
@@ -76,7 +96,7 @@ test('Delete Product positive test', async () => {
 
 //dziala?
 test('Update Product positive test', async () => {
-  let productRep = await productRepository.create(product3);
+  let productRep = await productRepository.create(product5);
   productRep.description = "description hahahaha";
   // @ts-ignore
   await expect(productRepository.update(productRep)).resolves.toBeUndefined();
