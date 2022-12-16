@@ -53,7 +53,14 @@ describe('login', () => {
 
     expect(res.status).toEqual(400);
   });
-  it('should return status 201, session created successfully', async () => {
+  it('Properly tries to login', async () => {
+    const confirmEmailResponse = await request(app)
+      .put(`${API_URI_LIR}/user/confirm-email`)
+      .send({
+        userId: user._id.toString(),
+        emailToken: user.emailToken
+      });
+    expect(confirmEmailResponse.status).toEqual(200);
     const res = await request(app)
       .post(API_URI_LIR + '/session/login')
       .send({email: user.email,
@@ -61,7 +68,14 @@ describe('login', () => {
 
     expect(res.status).toEqual(201);
   });
-  it('should return status 401, wrong password', async () => {
+  it('Tries to login with incorrect password', async () => {
+    const confirmEmailResponse = await request(app)
+      .put(`${API_URI_LIR}/user/confirm-email`)
+      .send({
+        userId: user._id.toString(),
+        emailToken: user.emailToken
+      });
+    expect(confirmEmailResponse.status).toEqual(200);
     const res = await request(app)
       .post(API_URI_LIR + '/session/login')
       .send({email: user.email,
@@ -69,12 +83,22 @@ describe('login', () => {
 
     expect(res.status).toEqual(401);
   });
-  it('should return status 404, user with given email does not exist', async () => {
+  it('Tries to login to account with no email confirmed', async () => {
     const res = await request(app)
       .post(API_URI_LIR + '/session/login')
-      .send({email: faker.internet.email(),
-        password: user.password})
-
+      .send({
+        email: user.email,
+        password: validUserPartial.password
+      });
+    expect(res.status).toEqual(401);
+  });
+  it('Tries to login for non existing email', async () => {
+    const res = await request(app)
+      .post(API_URI_LIR + '/session/login')
+      .send({
+        email: faker.internet.email(),
+        password: validUserPartial.password
+      });
     expect(res.status).toEqual(404);
   });
 });

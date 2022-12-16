@@ -27,17 +27,22 @@ export class SessionController {
 
       try {
         const user = await this.userService.getUserByEmail(email);
+        if (!user.isEmailVerified) {
+          return response.status(401).send({
+            error: "User email is not verified"
+          });
+        }
         if(user.password == createHash('sha256').update(password).digest('hex')) {
           const session = await this.sessionService.createSession(user);
           return response.status(201).send(session);
         } else {
           return response.status(401).send({
-            message: "Wrong password"
+            error: "Wrong password"
           });
         }
       } catch (error) {
         return response.status(404).send({
-          message: "User not found"
+          error: "User not found"
         });
       }
     }
