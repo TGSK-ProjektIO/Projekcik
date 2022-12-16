@@ -17,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
 import {RouterOutlet} from "@angular/router";
 import { HttpClientModule } from '@angular/common/http';
+import { ProduktRoutingModule } from './produkt/produkt-routing.module';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterOutlet,
     LogowanieIRejestracjaModule,
     ProduktModule,
+    ProduktRoutingModule,
     AppRoutingModule,
     HttpClientModule
   ],

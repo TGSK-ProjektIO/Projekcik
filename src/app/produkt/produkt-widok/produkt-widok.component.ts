@@ -32,7 +32,7 @@ export class ProduktWidokComponent implements OnInit {
     }
 
     redirectToModify() {
-      this.router.navigateByUrl('/app-produkt-modyfikacja');
+      this.router.navigateByUrl('/produkt-modyfikacja');
     }
 
 
