@@ -14,6 +14,17 @@ import {ReportService} from "../services/report.service";
 import {ReportController} from "../controller/report.controller";
 import {ReportRouter} from "../router/report.router";
 
+import {ProfileRepository} from "../repository/profile.repository";
+import {ProfileService} from "../services/profile.service";
+import {ProfileController} from "../controller/profile.controller";
+import {ProfileRouter} from "../router/profile.router";
+
+import {OpinionRepository} from "../repository/opinion.repository";
+import {OpinionController} from "../controller/opinion.controller";
+import {OpinionRouter} from "../router/opinion.router";
+import {OpinionService} from "../services/opinion.service";
+
+
 export const container = new Container();
 
 container.bind<UserController>(TYPES.UserController)
@@ -24,6 +35,11 @@ container.bind<SessionController>(TYPES.SessionController)
   .inSingletonScope();
 container.bind<ReportController>(TYPES.ReportController)
   .to(ReportController)
+container.bind<OpinionController>(TYPES.OpinionController)
+  .to(OpinionController)
+  .inSingletonScope();
+container.bind<ProfileController>(TYPES.ProfileController)
+  .to(ProfileController)
   .inSingletonScope();
 
 container.bind<UserRepository>(TYPES.UserRepository)
@@ -34,6 +50,11 @@ container.bind<SessionRepository>(TYPES.SessionRepository)
   .inSingletonScope();
 container.bind<ReportRepository>(TYPES.ReportRepository)
   .to(ReportRepository)
+container.bind<OpinionRepository>(TYPES.OpinionRepository)
+  .to(OpinionRepository)
+  .inSingletonScope();
+container.bind<ProfileRepository>(TYPES.ProfileRepository)
+  .to(ProfileRepository)
   .inSingletonScope();
 
 container.bind<UserRouter>(TYPES.UserRouter)
@@ -44,6 +65,11 @@ container.bind<SessionRouter>(TYPES.SessionRouter)
   .inSingletonScope();
 container.bind<ReportRouter>(TYPES.ReportRouter)
   .to(ReportRouter)
+container.bind<OpinionRouter>(TYPES.OpinionRouter)
+  .to(OpinionRouter)
+  .inSingletonScope();
+container.bind<ProfileRouter>(TYPES.ProfileRouter)
+  .to(ProfileRouter)
   .inSingletonScope();
 
 container.bind<UserService>(TYPES.UserService)
@@ -54,4 +80,9 @@ container.bind<SessionService>(TYPES.SessionService)
   .inSingletonScope();
 container.bind<ReportService>(TYPES.ReportService)
   .to(ReportService)
+container.bind<OpinionService>(TYPES.OpinionService)
+  .to(OpinionService)
+  .inSingletonScope();
+container.bind<ProfileService>(TYPES.ProfileService)
+  .to(ProfileService)
   .inSingletonScope();

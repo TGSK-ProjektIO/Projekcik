@@ -6,14 +6,9 @@ import { PanelProfiluComponent } from './panel-profilu/panel-profilu.component';
 import { PanelAdministratoraComponent } from './panel-administratora/panel-administratora.component';
 import { PanelEdycjiComponent } from './panel-edycji/panel-edycji.component';
 import {MatTabsModule} from "@angular/material/tabs";
-
-
-const appRoute: Routes = [
-  {path: '', component: PanelProfiluComponent},
-  {path: 'panel-profilu', component: PanelProfiluComponent},
-  {path: 'panel-administratora', component: PanelAdministratoraComponent},
-  {path: 'panel-edycji', component: PanelEdycjiComponent}
-]
+import {OpinieModule} from "../opinie/opinie.module";
+import {PanelUzytkownikaComponent} from "./panel-uzytkownika.component";
+import {PanelUzytkownikaRoutingModule} from "./panel-uzytkownika-routing.module";
 
 @NgModule({
   declarations: [
@@ -26,10 +21,11 @@ const appRoute: Routes = [
     PanelAdministratoraComponent,
     PanelEdycjiComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forRoot(appRoute, { paramsInheritanceStrategy: 'always' }),
-        MatTabsModule
-    ]
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    PanelUzytkownikaRoutingModule,
+    OpinieModule
+  ]
 })
 export class PanelUzytkownikaModule { }

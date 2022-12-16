@@ -4,6 +4,8 @@ import {UserRouter} from "./router/user.router";
 import {SessionRouter} from "./router/session.router";
 import cors = require('cors');
 import {ReportRouter} from "./router/report.router";
+import {ProfileRouter} from "./router/profile.router";
+import {OpinionRouter} from "./router/opinion.router";
 
 var express = require('express');
 var path = require('path');
@@ -34,9 +36,13 @@ app.use('/api/v1/wyszukiwanie', wyszukiwanie);
 const userRouter = container.get<UserRouter>(TYPES.UserRouter);
 const sessionRouter = container.get<SessionRouter>(TYPES.SessionRouter);
 const reportRouter = container.get<ReportRouter>(TYPES.ReportRouter);
+const opinionRouter = container.get<OpinionRouter>(TYPES.OpinionRouter);
+const profileRouter = container.get<ProfileRouter>(TYPES.ProfileRouter);
 
 userRouter.addRoutes(app);
 sessionRouter.addRoutes(app);
+opinionRouter.addRoutes(app);
+profileRouter.addRoutes(app);
 reportRouter.addRoutes(app);
 
 module.exports = app;

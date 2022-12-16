@@ -1,0 +1,35 @@
+::-webkit-scrollbar {
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(200,200,200,1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color:#fff;
+  -webkit-box-shadow: inset 0 0 6px rgba(90,90,90,0.7);
+}
+
+table {
+  border-collapse: separate;
+  overflow-x: scroll;
+}
+
+tr {
+}
+
+th {
+  text-align: center;
+}
+
+img {
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  margin-right: 10px;
+  border: #334465 3px solid;
+  border-radius: 100%;
+}

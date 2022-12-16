@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PageType} from "../../opinie/opinie.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-panel-profilu',
@@ -7,10 +9,20 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class PanelProfiluComponent implements OnInit {
 
-  constructor() { }
+  pageTypes: PageType = PageType.profile
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
 
+  }
+
+  redirectToEdit() {
+    this.router.navigateByUrl('/panel-edycji');
+  }
+
+  redirectToAdmin() {
+    this.router.navigateByUrl('/panel-administratora');
   }
 
   // Placeholder (don't sue us)
