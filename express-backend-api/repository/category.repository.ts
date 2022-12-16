@@ -136,7 +136,7 @@ getAllCategories() {
     try {
       const db = client.db(DB_NAME);
       const collection = db.collection(CATEGORY_COLLECTION_NAME);
-      let response = await collection.findOne<Category[]>();
+      let response = await collection.find<Category>({}).toArray();
       if (response !== null) {
         resolve(response);
       } else {

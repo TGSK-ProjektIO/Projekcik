@@ -140,7 +140,7 @@ getAllProducts() {
     try {
       const db = client.db(DB_NAME);
       const collection = db.collection(PRODUCT_COLLECTION_NAME);
-      let response = await collection.findOne<Product[]>();
+      let response = await collection.find<Product>({}).toArray();
       if (response !== null) {
         resolve(response);
       } else {
