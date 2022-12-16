@@ -1,6 +1,6 @@
 import {ObjectId} from "mongodb";
 import {Category} from "../model/category";
-import {Attribute} from "./attrbute";
+import {Attribute} from "./attribute";
 
 export interface Product {
     _id?: ObjectId;

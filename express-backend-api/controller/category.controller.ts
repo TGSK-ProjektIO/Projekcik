@@ -29,25 +29,19 @@ export class CategoryController {
       
       public updateCategory() {
         return async (request: any, response: any) => {
-          const categoryId = request.params.id;
-          //idk co dalej
-          if (!categoryId) {
-            return response.status(400).send({
-              message: "Request is missing required 'id' parameter"
-            });
+            let category = request.body;
+            try {
+              await this.categoryService.updateCategory(category);
+              response.status(201).send({
+                message: "updated",
+                id: category.id
+              });
+            } catch (error) {
+              response.status(400).send({
+                message: "Category not found"
+              });
+            }
           }
-          try {
-            const category = await this.categoryService.updateCategory(categoryId);
-            //idk
-            return response.status(200).send({
-              message: "Category updated successfully"
-            });
-          } catch (error) {
-            return response.status(404).send({
-              message: "Category not found"
-            });
-          }
-        }
       }
       
       
