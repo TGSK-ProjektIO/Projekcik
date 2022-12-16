@@ -135,7 +135,23 @@ delete(_id: string): Promise<void> {
 }
 
 getAllProducts() {
-    throw new Error("Method not implemented.");
+  return new Promise<Product[]>(async (resolve, reject) => {
+    const client = this.createClient();
+    try {
+      const db = client.db(DB_NAME);
+      const collection = db.collection(PRODUCT_COLLECTION_NAME);
+      let response = await collection.findOne<Product[]>();
+      if (response !== null) {
+        resolve(response);
+      } else {
+        reject();
+      }
+    } catch (exception) {
+      reject();
+    } finally {
+      client.close();
+    }
+  });
   }
 
 }
