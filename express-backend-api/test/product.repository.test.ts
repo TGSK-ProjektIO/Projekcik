@@ -18,30 +18,30 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   product1 = {
-    name: "product1Name",
+    name: "p1",
     description: "this product is a ...",
     tag: ["a","b"],
     categoryId: "12",
-    attribute: [{categoryId: "12",name: "name1",value: "value1"}],
+    attribute: [{name: "name1",value: "value1"}],
     isVisible: true
   };
 
   product2 = {
     _id: new ObjectId(),
-    name: "product2Name",
+    name: "p2",
     description: "this product is a ...",
     tag: ["a","b"],
     categoryId: "12",
-    attribute: [{categoryId: "12",name: "name1",value: "value1"}],
+    attribute: [{name: "name1",value: "value1"}],
     isVisible: true
   };
 
   product3 = {
-    name: "product3",
+    name: "p3",
     description: "this product is a ...",
     tag: ["a","b"],
     categoryId: "12",
-    attribute: [{categoryId: "12",name: "name1",value: "value1"}],
+    attribute: [{name: "name1",value: "value1"}],
     isVisible: true
   };
 

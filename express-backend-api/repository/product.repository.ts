@@ -39,7 +39,7 @@ export class ProductRepository {
         try {
           const db = client.db(DB_NAME);
           const collection = db.collection(PRODUCT_COLLECTION_NAME);
-          if (await collection.count({_id: product._id}) >= 1) {
+          if (await collection.count({_id: product._id}) >= 1 || await collection.count({name: product.name}) >= 1) {
             reject();
           }
           const response = await collection.insertOne(product);
