@@ -9,6 +9,7 @@ import { FormsModule } from "@angular/forms";
 import { CompleteOpinionComponent } from "./complete-opinion/complete-opinion.component";
 import { OpinionHostDirective } from './opinion-host.directive';
 import { OpinionCreatorComponent } from "./opinion-creator/opinion-creator.component";
+import {OpinieRoutingModule} from "./opinie-routing.module";
 
 
 
@@ -29,7 +30,8 @@ import { OpinionCreatorComponent } from "./opinion-creator/opinion-creator.compo
   imports: [
     CommonModule,
     RatingModule,
-    FormsModule
+    FormsModule,
+    OpinieRoutingModule
   ]
 })
 export class OpinieModule {
