@@ -8,11 +8,11 @@ import {Router} from "@angular/router";
 })
 export class ProduktWidokComponent implements OnInit {
 
-  name = '';
-  description = '';
-  tag = '';
-  categoryName = '';
-  image = '';
+  name = 'name';
+  description = 'description';
+  tag = 'tag1, tag2';
+  categoryName = 'drzewo';
+  image = 'https://images.obi.pl/product/PL/415x415/679553_1.jpg';
 
   constructor(private router: Router) {
     }
@@ -20,33 +20,25 @@ export class ProduktWidokComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    redirectToMainPage() {
-      this.router.navigateByUrl('/');
+    redirectToModify() {
+      this.router.navigateByUrl('/app-produkt-modyfikacja');
     }
-  
+
+    getProductName(): string {return this.name}
+    getProductDescription(): string {return this.description}
+    getProductTags(): string {return this.tag}
+    getProductCategoryName(): string {return this.categoryName}
+    getProductImage(): string {return this.image}
+
     onSavePressed() {
-      fetch('http://localhost:3000/api/v1/produkt/product', {
-        method: 'POST',
-        headers: {
-          'Accept': '*/*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "name": this.name,
-          "description": this.description,
-          "categoryName": this.categoryName,
-          "tag": this.tag,
-          "image": this.image
+      console.log("f");
+      fetch('http://localhost:3000/api/v1/produkt/product/639ca8f05c9c4496d548877d')
+        .then(response => {
+          return response.json();
         })
-      }).then(async response => {
-        if (response.status === 201) {
-          await this.router.navigateByUrl('/');
-        }
-        if (response.status === 404) {
-          console.log("hi");
-        }
-      }).catch(err => {
-        console.error(err);
-      });
+        .then(post=>{
+          console.log(post.name);
+        })
+
     }
 }

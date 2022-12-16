@@ -13,41 +13,44 @@
 
               <div class="mb-md-5 mt-md-4 pb-2">
 
-                <h2 class="fw-bold mb-2 text-uppercase">Add new product</h2>
-                <p class="text-white-50 mb-5">Please fill all spaces</p>
+                <h2 class="fw-bold mb-2 text-uppercase">Product</h2>
 
                 <div class="form-outline mb-4">
-                  <input type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="name"/>
-                  <label class="form-label" for="typeEmailLogin">Name</label>
-
+                <div class="row">
+                  <div class="col-md-6" >Name:</div>
+                  <div class="col-md-6">{{getProductName()}}</div>
+                </div>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="description"/>
-                    <label class="form-label" for="typeEmailLogin">Description</label>
-
+                <div class="row">
+                  <div class="col-md-6">Description:</div>
+                  <div class="col-md-6">{{getProductDescription()}}</div>
+                </div>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="text"class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="tag"/>
-                    <label class="form-label" for="typeEmailLogin">Tags</label>
-                </div>
+                  <div class="row">
+                    <div class="col-md-6">Tags:</div>
+                    <div class="col-md-6">{{getProductTags()}}</div>
+                  </div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <div class="row">
+                      <div class="col-md-6">Category:</div>
+                      <div class="col-md-6">{{getProductCategoryName()}}</div>
+                    </div>
+                    </div>
+
 
                 <div class="form-outline mb-4">
-                  <input type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="categoryName">
-                  <label class="form-label" for="typePasswordLogin">Category</label>
+                  <img style="display: inline-block;" width="300" height="500" src="{{getProductImage()}}" alt="Zdjęcie produktu"/>      
                 </div>
 
-                <div class="form-outline mb-4">
-                    <input type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="image">
-                    <label class="form-label" for="typePasswordLogin">Image</label>
-                </div>
-
-                <button class="btn btn-outline-light btn-lg px-5" type="submit" (click)="onSavePressed()">Save</button>
-                <button class="btn btn-outline-light btn-lg px-5" (click)="redirectToMainPage()">Cancel</button>
+                <button class="btn btn-outline-light btn-lg px-5" type="submit" (click)="redirectToModify()">Modify</button>
 
               </div>
-
             </div>
           </div>
         </div>
