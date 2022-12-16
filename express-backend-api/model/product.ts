@@ -7,7 +7,7 @@ export interface Product {
     name: string;
     description: string;
     tag: Array<string>;
-    categoryId: string;
+    categoryName: string;
     attribute: Array<Attribute>;
     image?: string;
     isVisible: boolean;
