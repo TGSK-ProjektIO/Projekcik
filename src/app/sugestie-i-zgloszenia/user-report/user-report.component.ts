@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ReportController} from "../ReportController";
-import {User} from "../User";
-import {Product} from "../../produkt/Product";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-report',
@@ -10,11 +8,13 @@ import {Product} from "../../produkt/Product";
 })
 export class UserReportComponent implements OnInit {
 
-  @Input() interface: ReportController = new ReportController();
-  @Input() user: User = new User("null");
-  @Input() product: Product = new Product("null","null","null","null");
+  //@Input() interface: ReportController = new ReportController();
+  //@Input() user: User = new User("null");
+  //@Input() product: Product = new Product("null","null","null","null");
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
 

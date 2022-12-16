@@ -1,8 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Report} from "../Report";
-import {User} from "../User";
-import {TypeOfReport} from "../TypeOfReport";
-import {ReportController} from "../ReportController";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'administrator-view',
@@ -11,13 +8,46 @@ import {ReportController} from "../ReportController";
 })
 export class AdministratorViewComponent implements OnInit {
 
-  @Input() interface: ReportController = new ReportController();
-  reports: Report[] = [];
+  //@Input() interface: ReportController = new ReportController();
+  //reports: Report[] = [];
 
-  constructor() { }
+  //constructor() { }
+
+  //ngOnInit(): void {
+  //  this.reports = this.interface.getReportsByCategory(TypeOfReport.ErrorInDescription);
+  //}
+
+
+
+  constructor(
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
-    this.reports = this.interface.getReportsByCategory(TypeOfReport.ErrorInDescription);
+  }
+
+  onSignInPressed() {
+    fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/session/login', {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "email": this.email,
+        "password": this.password
+      })
+    }).then(async response => {
+      if (response.status === 201) {
+        await this.router.navigateByUrl('/');
+      }
+      if (response.status === 404) {
+        this.invalidLoginFlag = true;
+      }
+    }).catch(err => {
+      console.error(err);
+    });
   }
 
 }

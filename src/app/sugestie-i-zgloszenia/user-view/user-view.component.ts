@@ -1,8 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ReportController} from "../ReportController";
-import {Report} from "../Report";
-import {User} from "../User";
-import {TypeOfReport} from "../TypeOfReport";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-view',
@@ -11,13 +8,17 @@ import {TypeOfReport} from "../TypeOfReport";
 })
 export class UserViewComponent implements OnInit {
 
-  @Input() interface: ReportController = new ReportController();
-  @Input() user: User = new User("null");
-  reports: Report[] = [];
-  constructor() {
+  //@Input() interface: ReportController = new ReportController();
+  //@Input() user: User = new User("null");
+  //reports: Report[] = [];
+
+  constructor(
+    private router: Router
+  ) {
   }
+
   ngOnInit(): void {
-    this.reports = this.interface.getReports(report => report.user == this.user);
   }
+  //this.reports = this.interface.getReports(report => report.user == this.user);
 
 }

@@ -15,7 +15,7 @@ export class ReportController {
         const sentReport = await this.reportService.sendReport(report);
         response.status(201).send({
           message: "created",
-          id: sentReport._id
+          id: sentReport.id
         });
       } catch (error) {
         response.status(400).send({
