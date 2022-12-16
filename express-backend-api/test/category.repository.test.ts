@@ -36,8 +36,8 @@ beforeEach(async () => {
 });
 
 test('Create Product positive test', async () => {
-  const categoryRep = await categoryRepository.create(category1);
-  expect(categoryRep._id).not.toBeNaN();
+  const createdCategory = await categoryRepository.create(category1);
+  expect(createdCategory._id).not.toBeNaN();
 });
 
 test('Create Product negative test', async () => {
@@ -46,28 +46,28 @@ test('Create Product negative test', async () => {
 
 
 test('Get Product positive test', async () => {
-  const categoryRep = await categoryRepository.create(category1);
+  const createdCategory = await categoryRepository.create(category1);
   // @ts-ignore
-  let getCategory = await categoryRepository.read(categoryRep._id);
-  expect(getCategory).toEqual(categoryRep);
+  let getCategory = await categoryRepository.read(createdCategory._id);
+  expect(getCategory).toEqual(createdCategory);
 });
 
 
 jest.setTimeout(10000);
 test('Delete Product positive test', async () => {
-    const categoryRep = await categoryRepository.create(category3);
+    const createdCategory = await categoryRepository.create(category3);
   // @ts-ignore
-  await expect(categoryRepository.delete(categoryRep._id)).resolves.toBeUndefined();
+  await expect(categoryRepository.delete(createdCategory._id)).resolves.toBeUndefined();
   // @ts-ignore
-  await expect(categoryRepository.read(categoryRep._id)).rejects.toBeUndefined();
+  await expect(categoryRepository.read(createdCategory._id)).rejects.toBeUndefined();
 });
 
 //dziala?
 test('Update Product positive test', async () => {
-  let categoryRep = await categoryRepository.create(category3);
-  categoryRep.attribute.push({at3: "example"});
+  let createdCategory = await categoryRepository.create(category3);
+  createdCategory.attribute.push({at3: "example"});
   // @ts-ignore
-  await expect(categoryRepository.update(categoryRep)).resolves.toBeUndefined();
+  await expect(categoryRepository.update(createdCategory)).resolves.toBeUndefined();
   // @ts-ignore
-  await expect(categoryRepository.read(categoryRep._id)).resolves.toEqual(categoryRep);
+  await expect(categoryRepository.read(createdCategory._id)).resolves.toEqual(createdCategory);
 });

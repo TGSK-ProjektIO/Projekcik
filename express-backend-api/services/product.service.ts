@@ -25,15 +25,12 @@ export class ProductService {
       return this.productRepository.delete(id);
     }
 
-    //for sure is wrong
   public getAllProducts(): Promise<Array<Product>> {
-      return new Promise<Array<Product>>(async (resolve, reject) => {
-        try {
-          const products = await this.productRepository.getAllProducts();
-        } catch (error) {
-          reject();
-        }
-      });
+      return this.productRepository.readAll();
     }
+
+  public deleteAllProducts(): Promise<void> {
+    return this.productRepository.deleteAll();
+  }
   
 }

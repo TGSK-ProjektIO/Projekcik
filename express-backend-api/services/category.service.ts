@@ -26,14 +26,11 @@ export class CategoryService {
         return this.categoryRepository.delete(id);
         }
 
-    //for sure is wrong
     public getAllCategories(): Promise<Array<Category>> {
-        return new Promise<Array<Category>>(async (resolve, reject) => {
-            try {
-            const categories = await this.categoryRepository.getAllCategories();
-            } catch (error) {
-            reject();
-            }
-        });
+        return this.categoryRepository.readAll();
     }
+/*
+    public deleteAllCategories(): Promise<void> {
+        return this.categoryRepository.deleteAll();
+    }*/
 }
