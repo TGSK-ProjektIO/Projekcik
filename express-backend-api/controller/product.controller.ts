@@ -90,7 +90,7 @@ public deleteProduct() {
   }
 }
 
-//idk
+
 public getAllProducts() {
   return async (request: any, response: any) => {
     let productId : string = request.params.id;
@@ -100,6 +100,22 @@ public getAllProducts() {
     } catch (error) {
       response.status(400).send({
         message: "Cannot retrieve products from database"
+      });
+    }
+  }
+}
+
+public deleteAllProducts() {
+  return async (request: any, response: any) => {
+    const productId = request.params.id;
+    try {
+      await this.productService.deleteAllProducts();
+      response.status(201).send({
+        message: "Deleted product",
+      });
+    } catch (error) {
+      response.status(400).send({
+        message: "Product not found"
       });
     }
   }
