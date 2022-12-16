@@ -37,12 +37,12 @@ export class OpinionController {
    */
   public removeOpinion() {
     return async (request: any, response: any) => {
-      let opinion = request.body;
+      let opinionID : string = request.params.id;
       try {
-        await this.opinionService.removeOpinion(opinion.id);
+        await this.opinionService.removeOpinion(opinionID);
         response.status(201).send({
           message: "deleted",
-          id: opinion.id
+          id: opinionID
         });
       } catch (error) {
         response.status(400).send({

@@ -11,7 +11,7 @@ export class OpinionRouter {
   addRoutes(app: Express): void {
     let basePath = "/api/v1/opinie"
     app.post(`${basePath}/add`, this.opinionController.addOpinion());
-    app.delete(`${basePath}/remove`, this.opinionController.removeOpinion());
+    app.delete(`${basePath}/remove/:id`, this.opinionController.removeOpinion());
     app.put(`${basePath}/modify`, this.opinionController.modifyOpinion());
     app.put(`${basePath}/like/:id`, this.opinionController.addLike());
     app.put(`${basePath}/dislike/:id`, this.opinionController.addDislike());

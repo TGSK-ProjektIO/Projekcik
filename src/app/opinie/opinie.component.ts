@@ -4,6 +4,8 @@ import {RatingComponent} from "./rating/rating.component";
 import {OpinionHostDirective} from "./opinion-host.directive";
 import {OpinionCreatorComponent} from "./opinion-creator/opinion-creator.component";
 import {Opinion} from "../../../express-backend-api/model/opinion";
+import {OpinionRating} from "../../../express-backend-api/model/opinion.rating";
+import {Rating} from "../../../express-backend-api/model/rating";
 
 
 // TODO: get user type from session
@@ -111,7 +113,7 @@ export class OpinieComponent implements OnInit {
     for (let i = 0; i < this.allOpinions.length; i++) {
       // TODO: may be problematic if sorting gets implemented
       if(this.allOpinions[i].ID == ID) {
-        this.DB_DeleteOpinion(this.OpinionComponentToDB(this.allOpinions[i]));
+        this.DB_DeleteOpinion(ID);
         this.allOpinions.splice(i, 1);
         break;
       }
@@ -130,21 +132,23 @@ export class OpinieComponent implements OnInit {
   // region Converters
   // ----------
   OpinionComponentToDB(opinion : CompleteOpinionComponent): Opinion {
-    let opinionDB : Opinion = {
-      userId: opinion.userID,
-      productId: opinion.productID,
-      opinionRatings: [],
-      review: { userID: opinion.userID, text: opinion.review.text},
-      ratings: []
-    };
+    let opinionRatingsDB: Array<OpinionRating> = new Array<OpinionRating>();
+    let ratingsDB: Array<Rating> = new Array<Rating>();
     for (const rating of opinion.ratings) {
-      opinionDB.ratings.push({
+      ratingsDB.push({
         userID: opinion.userID,
         name: rating.name,
         rating: rating.rating
       });
     }
-    return opinionDB;
+
+    return {
+      userId: opinion.userID,
+      productId: opinion.productID,
+      opinionRatings: opinionRatingsDB,
+      review: {userID: opinion.userID, text: opinion.review.text},
+      ratings: ratingsDB
+    };
   }
 
   OpinionDBToComponent(opinion : Opinion) : CompleteOpinionComponent {
@@ -177,9 +181,7 @@ export class OpinieComponent implements OnInit {
         'Accept': '*/*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        opinion : opinion
-      })
+      body: JSON.stringify(opinion)
     }).then(async response => {
       if (response.status === 200) {}
       if (response.status === 400) {}
@@ -187,16 +189,13 @@ export class OpinieComponent implements OnInit {
       console.error(err);
     });
   }
-  private DB_DeleteOpinion(opinion : Opinion) {
-    fetch(`http://localhost:3000/api/v1/opinie/delete`, {
-      method: 'POST',
+  private DB_DeleteOpinion(id : string) {
+    fetch(`http://localhost:3000/api/v1/opinie/remove/${id}`, {
+      method: 'DELETE',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        opinion : opinion
-      })
+      }
     }).then(async response => {
       if (response.status === 200) {}
       if (response.status === 400) {}
