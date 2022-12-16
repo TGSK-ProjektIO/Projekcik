@@ -36,8 +36,11 @@ export class OpinieComponent implements OnInit {
   constructor() {  }
 
   ngOnInit(): void {
-    this.GetProductOpinions();
-    this.ShowAllOpinions();
+    this.DB_GetOpinionsByProduct(this.productID).then(res => {
+      let completeOpinionArray = new Array<CompleteOpinionComponent>();
+      res.forEach(obj => {completeOpinionArray.push(this.OpinionDBToComponent(obj))});
+      this.ShowAllOpinions(completeOpinionArray);
+    });
 
     // Init opinion creator
     // --------------------
@@ -48,8 +51,7 @@ export class OpinieComponent implements OnInit {
     }
   }
 
-  GetProductOpinions() {
-    let opinionArray : Array<Opinion> = this.DB_GetOpinionsByProduct(this.productID);
+  GetProductOpinions(opinionArray : Array<Opinion>) {
     for (const opinion of opinionArray) {
       this.allOpinions.push(this.OpinionDBToComponent(opinion));
     }
@@ -67,22 +69,23 @@ export class OpinieComponent implements OnInit {
 
   GetOpinion(ID: string): CompleteOpinionComponent | undefined {
     let foundOpinion = this.DB_GetOpinionByID(ID);
+    console.log(foundOpinion);
     if(foundOpinion == undefined) return undefined;
     return this.OpinionDBToComponent(foundOpinion);
   }
 
-  GetUserOpinions(userID : string) : Array<CompleteOpinionComponent>{
+  /*GetUserOpinions(userID : string) : Array<CompleteOpinionComponent>{
     let opinionComponents : Array<CompleteOpinionComponent> = new Array<CompleteOpinionComponent>();
     let opinionArray : Array<Opinion> = this.DB_GetOpinionsByProduct(this.productID);
     for (const opinion of opinionArray) {
       opinionComponents.push(this.OpinionDBToComponent(opinion));
     }
     return opinionComponents
-  }
+  }*/
 
-  public ShowAllOpinions(): void {
+  public ShowAllOpinions(opinionArray : Array<CompleteOpinionComponent>): void {
     //viewContainerRef.clear();
-    for (const opinion of this.allOpinions) {
+    for (const opinion of opinionArray) {
       this.ShowOpinion(opinion);
     }
   }
@@ -203,45 +206,46 @@ export class OpinieComponent implements OnInit {
       console.error(err);
     });
   }
-  private DB_GetOpinionsByProduct(productID: string): Array<Opinion> | undefined {
-    let opinionArray : Array<Opinion> | undefined;
-    fetch(`http://localhost:3000/api/v1/opinie/getByProduct/${productID}`, {
+  private async DB_GetOpinionsByProduct(productID: string): Promise<Array<Opinion>> {
+    return await fetch(`http://localhost:3000/api/v1/opinie/getByProduct/${productID}`, {
       method: 'GET',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
       }
-    }).then(async response => {
-      if (response.status === 200) {
-        opinionArray = <Array<Opinion>>JSON.parse(await response.text());
-      }
-      if (response.status === 400) {
-
-      }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
     }).catch(err => {
       console.error(err);
     });
-    console.log(opinionArray);
-    return opinionArray;
   }
 
-  private DB_GetOpinionByID(id: string): Opinion | undefined {
-    let opinion: Opinion | undefined;
-    fetch(`http://localhost:3000/api/v1/opinie/getByProduct/${id}`, {
+  private DB_GetOpinionByID(id: string): Opinion {
+    const opinionPromise = fetch(`http://localhost:3000/api/v1/opinie/get/${id}`, {
       method: 'GET',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
       }
-    }).then(async response => {
-      if (response.status === 200) {
-        opinion = await response.json();
-      }
-      if (response.status === 400) {}
-    }).catch(err => {
+    }).then((response) => response.json()
+      ).then((result) => {
+        return result;
+      }).catch(err => {
       console.error(err);
     });
-    return opinion;
+
+    const getOpinion = () : Array<Opinion> => {
+      let opinionArray: Array<Opinion> = new Array<Opinion>();
+      opinionPromise.then((data: Opinion) => {
+        opinionArray.push(data);
+      })
+      return opinionArray;
+    }
+
+    let opinion = getOpinion();
+    console.log(opinion);
+    return opinion[0];
   }
   //endregion
 }
