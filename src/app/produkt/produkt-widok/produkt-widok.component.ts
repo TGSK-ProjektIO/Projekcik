@@ -11,31 +11,37 @@ import { ProduktService } from '../services/produkt.service';
 })
 export class ProduktWidokComponent implements OnInit {
 
+  id: string = '';
   name = 'name';
   description = 'description';
   tag = 'tag1, tag2';
   categoryName = 'drzewo';
   image = 'https://images.obi.pl/product/PL/415x415/679553_1.jpg';
 
+  path: string = window.location.href;
+  lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
   product: any;
-
-  private url: string = 'http://localhost:3000/api/v1/produkt/product/639ca9855ad5f7175f21f600';
-
+  modifyPath: string = '';
   constructor(private router: Router, private service: ProduktService) {
     }
 
     ngOnInit(): void {
-      this.service.getProduct()
+      this.service.getProduct(this.lastPath)
         .subscribe(response => {
           this.product = response;
         });
     }
 
     redirectToModify() {
-      this.router.navigateByUrl('/produkt-modyfikacja');
+      this.modifyPath = "/produkt/produkt-modyfikacja/" + this.lastPath;
+      this.router.navigateByUrl(this.modifyPath);
     }
 
 
+
+    deleteProduct() {
+
+    }
 
     getProductName(): string {return this.product.name}
     getProductDescription(): string {return this.product.description}
@@ -43,8 +49,4 @@ export class ProduktWidokComponent implements OnInit {
     getProductCategoryName(): string {return this.product.categoryName}
     getProductImage(): string {return this.product.image}
 
-
-    onSavePressed() {
-      console.log("jajajaja");
-    }
 }
