@@ -1,5 +1,5 @@
-<div class="profile-panel">
-  <div class="sub-panel">
+<div class="bg-dark text-white" style="width: 90%; margin: auto; padding: 1em 2em">
+  <div class="bg-white text-white bg-opacity-10" style="padding: 1em">
     <img width="200" height="200" style="border-radius: 100%" src="{{mock_user.profile_picture}}" alt="Zdjęcie profilowe"/>
     <h1 style="font-size: 40px"> {{mock_user.name}} </h1>
     <h1>
@@ -13,13 +13,14 @@
       {{mock_user.description}}
     </div>
     <br/>
-    <button [hidden]="!isCurrent" [routerLink]="['/panel-edycji']">Edytuj profil</button>
-    <button [hidden]="!mock_user.isAdmin || !isCurrent" [routerLink]="['/panel-administratora']">Panel administratora</button>
+    <button class="btn btn-primary" style="margin: 0 1em 0 0" [hidden]="!isCurrent" [routerLink]="['/panel-edycji/0']">Edytuj profil</button>
+    <button class="btn btn-primary" [hidden]="!mock_user.isAdmin || !isCurrent" [routerLink]="['/panel-administratora/0']">Panel administratora</button>
   </div>
-  <div class="sub-panel">
+  <div class="bg-white text-white bg-opacity-10" style="margin-top: 5em">
     <h3>Ocenione produkty</h3>
-    <div class="scroller-sub-panel">
-      <div class="sub-sub-panel" *ngFor="let opinion of mock_opinions">
+<!--      <app-opinie [pageType]=pageTypes id="639b7603f04872ad0164cf8a"></app-opinie>-->
+<!--    <div class="scroller-sub-panel">-->
+<!--      <div class="sub-sub-panel" *ngFor="let opinion of mock_opinions">
         <img width="100" height="100" style="border-radius: 20px" [src]="opinion.img" alt="Zdjęcie produktu"/>
         <h1>{{ opinion.product }}</h1>
         <div style="display: block">{{opinion.text}}</div>
@@ -27,7 +28,7 @@
         <button>Przejdź do produktu</button>
         <button>Like: {{opinion.likes}} </button>
         <button>Dislike: {{opinion.dislikes}}</button>
-      </div>
-    </div>
+      </div>-->
+<!--    </div>-->
   </div>
 </div>
