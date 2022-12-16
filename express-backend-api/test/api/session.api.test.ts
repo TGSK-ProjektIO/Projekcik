@@ -39,14 +39,14 @@ beforeEach(async () => {
 });
 
 describe('login', () => {
-  it('should return status 400, email is missing', async () => {
+  it('Tries to login without email parameter', async () => {
     const res = await request(app)
       .post(API_URI_LIR + '/session/login')
       .send({password: faker.internet.password()})
 
     expect(res.status).toEqual(400);
   });
-  it('should return status 400, password is missing', async () => {
+  it('Tries to login without password parameter', async () => {
     const res = await request(app)
       .post(API_URI_LIR + '/session/login')
       .send({email: faker.internet.email()})
