@@ -33,10 +33,16 @@ export class UserController {
      const email = request.params.email;
      try {
        const user = await this.userService.getUserByEmail(email);
-       await this.emailService.sendPasswordResetMail(user);
-       return response.status(200).send({
-         message: "Sent password reset email"
-       });
+       if (user.isEmailVerified) {
+         await this.emailService.sendPasswordResetMail(user);
+         return response.status(200).send({
+           message: "Sent password reset email"
+         });
+       } else {
+         return response.status(403).send({
+           message: "Cannot send reset password mail to unconfirmed user"
+         });
+       }
      } catch (e) {
        return response.status(404).send({
          error: "Cannot find user with given email"

@@ -12,6 +12,7 @@ export class ResetowanieComponent implements OnInit {
   isSuccessAlertOpen = false;
   isWarningAlertOpen = false;
   isFailureAlertOpen = false;
+  isConfirmedAlertOpen = false;
 
   constructor(
     private router: Router,
@@ -36,6 +37,8 @@ export class ResetowanieComponent implements OnInit {
       }).then(async response => {
         if (response.status === 200) {
           this.isSuccessAlertOpen = true;
+        } else if(response.status === 403) {
+          this.isConfirmedAlertOpen = true;
         } else {
           this.isWarningAlertOpen = true;
         }
@@ -55,5 +58,8 @@ export class ResetowanieComponent implements OnInit {
 
   onCloseFailureAlert() {
     this.isFailureAlertOpen = false;
+  }
+  onCloseConfirmedAlert() {
+    this.isConfirmedAlertOpen = false;
   }
 }

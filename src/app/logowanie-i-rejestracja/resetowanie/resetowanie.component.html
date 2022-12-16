@@ -20,6 +20,12 @@
                (onClosed)="onCloseWarningAlert()">
           <p class="text-center">User with given email does not exist</p>
         </alert>
+        <alert type="warning"
+               [dismissible]="true"
+               [isOpen]="isConfirmedAlertOpen"
+               (onClosed)="onCloseConfirmedAlert()">
+          <p class="text-center">This email is not confirmed</p>
+        </alert>
         <alert type="danger"
                [dismissible]="true"
                [isOpen]="isFailureAlertOpen"

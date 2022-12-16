@@ -161,29 +161,44 @@ describe('Confirm email', () => {
       })
     expect(response.status).toEqual(400);
   });
+});
+describe('Send reset password email', () => {
+  let unconfirmedUser: User;
+  let confirmedUser: User;
+  let validUserPartial: UserPartial;
+  let validUser2Partial: UserPartial;
 
-  describe('Send reset password email', () => {
-    let createdUser: User;
-    let validUserPartial: UserPartial;
+  beforeEach(async () => {
+    validUserPartial = {
+      username: faker.internet.userName(),
+      password: faker.internet.password(),
+      email: faker.internet.email()
+    };
+    validUser2Partial = {
+      username: faker.internet.userName(),
+      password: faker.internet.password(),
+      email: faker.internet.email()
+    };
+    unconfirmedUser = await userRepository.create(validUserPartial);
+    confirmedUser = await userRepository.create(validUser2Partial);
+    confirmedUser.isEmailVerified = true;
+    await userRepository.update(confirmedUser);
+  });
 
-    beforeEach(async () => {
-      validUserPartial = {
-        username: faker.internet.userName(),
-        password: faker.internet.password(),
-        email: faker.internet.email()
-      };
-      createdUser = await userRepository.create(validUserPartial);
-    });
-
-    it('Properly tries to reset password', async () => {
-      const response = await request(app)
-        .get(`${API_URI_LIR}/user/send-reset-password-email/${createdUser.email}`);
-      expect(response.status).toEqual(200);
-    });
-    it('Tries to reset password for non registered email', async () => {
-      const response = await request(app)
-        .get(`${API_URI_LIR}/user/send-reset-password-email/unknown@email.com`);
-      expect(response.status).toEqual(404);
-    });
+  it('Properly tries to reset password', async () => {
+    const response = await request(app)
+      .get(`${API_URI_LIR}/user/send-reset-password-email/${confirmedUser.email}`);
+    console.log(confirmedUser.isEmailVerified);
+    expect(response.status).toEqual(200);
+  });
+  it('Tries to reset password on unconfirmed account', async () => {
+    const response = await request(app)
+      .get(`${API_URI_LIR}/user/send-reset-password-email/${unconfirmedUser.email}`);
+    expect(response.status).toEqual(403);
+  });
+  it('Tries to reset password for non registered email', async () => {
+    const response = await request(app)
+      .get(`${API_URI_LIR}/user/send-reset-password-email/unknown@email.com`);
+    expect(response.status).toEqual(404);
   });
 });

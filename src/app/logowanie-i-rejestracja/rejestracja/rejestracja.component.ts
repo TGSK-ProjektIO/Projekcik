@@ -8,11 +8,12 @@ import {ValidationService} from "../services/validation.service";
   styleUrls: ['./rejestracja.component.css']
 })
 export class RejestracjaComponent implements OnInit {
-
   username=''
   email=''
   password=''
   confirmPassword=''
+  isWarningAlertOpen = false;
+  isFailureAlertOpen = false;
 
   constructor(
     private router: Router,
@@ -68,10 +69,19 @@ export class RejestracjaComponent implements OnInit {
       }).then(async response => {
         if (response.status === 201) {
           await this.router.navigateByUrl('/confirmation');
+        } else {
+          this.isWarningAlertOpen = true;
         }
       }).catch(err => {
-        console.error(err);
+        this.isFailureAlertOpen = true;
       });
     }
+  }
+  onCloseWarningAlert() {
+    this.isWarningAlertOpen = false;
+  }
+
+  onCloseFailureAlert() {
+    this.isFailureAlertOpen = false;
   }
 }
