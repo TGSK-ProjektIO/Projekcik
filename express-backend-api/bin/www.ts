@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import {UserRepository} from "../repository/user.repository";
-// import {DB_NAME, mongo, USER_COLLECTION_NAME} from "../config/mongo.config";
+import {DB_NAME, mongo, USER_COLLECTION_NAME} from "../config/mongo.config";
 
 /**
  * Module dependencies.

@@ -1,11 +1,13 @@
 import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
+import {EmailService} from "../services/email.service";
 
 
 @injectable()
 export class UserController {
- constructor(@inject(TYPES.UserService) private userService: UserService) {
+ constructor(@inject(TYPES.UserService) private userService: UserService,
+             @inject(TYPES.EmailService) private emailService : EmailService) {
  }
 
  public registerUser() {
@@ -13,9 +15,10 @@ export class UserController {
      let user = request.body;
      try {
        const registeredUser = await this.userService.registerUser(user);
+       await this.emailService.sendEmailConfirmationMail(registeredUser);
        response.status(201).send({
          message: "created",
-         id: registeredUser._id
+         _id: registeredUser._id
        });
      } catch (error) {
        response.status(400).send({
@@ -55,7 +58,7 @@ export class UserController {
        const result = await this.userService.confirmEmail(userId ,emailToken);
        if (result) {
          return response.status(200).send({
-           message: "email verified successfuly"
+           message: "email verified successfully"
          });
        } else {
          return response.status(400).send({
@@ -73,11 +76,6 @@ export class UserController {
  public getUser() {
    return async (request: any, response: any) => {
      let userId = request.params.id;
-     if (!userId) {
-       return response.status(400).send({
-         message: "Request is missing required 'userId' parameter"
-       });
-     }
 
      try {
        const user = await this.userService.getUser(userId);

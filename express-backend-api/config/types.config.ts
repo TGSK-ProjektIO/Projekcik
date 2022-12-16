@@ -18,6 +18,7 @@ const TYPES = {
 
   UserService: Symbol.for('UserService'),
   SessionService: Symbol.for('SessionService'),
+  EmailService: Symbol.for('EmailService'),
   ProfileService: Symbol.for('ProfileService'),
   OpinionService: Symbol.for('OpinionService')
 };
