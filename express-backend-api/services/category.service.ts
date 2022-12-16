@@ -13,7 +13,7 @@ export class CategoryService {
         return this.categoryRepository.create(category);
       }
 
-    public updateCategory(category: Category): Promise<Category>  {
+    public updateCategory(category: Category): Promise<void>  {
         return this.categoryRepository.update(category);
       }
 
@@ -21,15 +21,15 @@ export class CategoryService {
         return this.categoryRepository.read(id);
       }
   
-    public deleteCategory(id: string): Promise<Category> {
+    public deleteCategory(id: string): Promise<void> {
         return this.categoryRepository.delete(id);
       }
 
+    //for sure is wrong
     public getAllCategories(): Promise<Array<Category>> {
         return new Promise<Array<Category>>(async (resolve, reject) => {
           try {
             const categories = await this.categoryRepository.getAllCategories();
-            resolve(categories);
           } catch (error) {
             reject();
           }
