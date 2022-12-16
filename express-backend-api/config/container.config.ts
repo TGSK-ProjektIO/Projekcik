@@ -9,10 +9,14 @@ import {UserRouter} from "../router/user.router";
 import {SessionController} from "../controller/session.controller";
 import {SessionRouter} from "../router/session.router";
 import {SessionService} from "../services/session.service";
+
 import {ProfileRepository} from "../repository/profile.repository";
 import {ProfileService} from "../services/profile.service";
 import {ProfileController} from "../controller/profile.controller";
 import {ProfileRouter} from "../router/profile.router";
+
+import {OpinionRepository} from "../repository/opinion.repository";
+
 
 export const container = new Container();
 
@@ -31,6 +35,9 @@ container.bind<UserRepository>(TYPES.UserRepository)
   .inSingletonScope();
 container.bind<SessionRepository>(TYPES.SessionRepository)
   .to(SessionRepository)
+  .inSingletonScope();
+container.bind<OpinionRepository>(TYPES.OpinionRepository)
+  .to(OpinionRepository)
   .inSingletonScope();
 container.bind<ProfileRepository>(TYPES.ProfileRepository)
   .to(ProfileRepository)

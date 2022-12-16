@@ -1,0 +1,12 @@
+.Rating {
+  width: 150px;
+  border: #334465 1px outset;
+  border-radius: 5px;
+  justify-content: center;
+}
+
+.Content {
+  display: inline-block;
+  padding: 5px;
+  text-align: center;
+}
