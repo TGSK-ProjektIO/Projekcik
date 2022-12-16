@@ -65,7 +65,11 @@ export class ProductRepository {
             {_id: product._id},
             {
               $set: {
-                //atrybuty
+                name: product.name,
+                description: product.description,
+                tag: product.tag,
+                categoryId: product.categoryId,
+                attribute: product.attribute
               }
             },
             { upsert: false }
