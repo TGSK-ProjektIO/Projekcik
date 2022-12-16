@@ -76,4 +76,8 @@ export class ProfileService {
   public getProfileByNickname(nickname: string): Promise<Profile> {
     return this.profileRepository.readByNickname(nickname);
   }
+
+  public getAllProfiles(): Promise<Array<Profile>> {
+    return this.profileRepository.readAll();
+  }
 }

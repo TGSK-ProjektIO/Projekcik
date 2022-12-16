@@ -119,8 +119,7 @@ export class ProfileRepository {
     })
   }
 
-  // Not sure if this is right, but ok
-  public async readAll(_id: string): Promise<Array<Profile>> {
+  public async readAll(): Promise<Array<Profile>> {
     return new Promise<Array<Profile>>(async (resolve, reject) => {
       const client = this.createClient();
       try {
@@ -128,9 +127,6 @@ export class ProfileRepository {
         const collection = db.collection(PROFILE_COLLECTION_NAME);
         const cursor = collection.find<Profile>({});
         let response = (await cursor.toArray());
-        // let response = await collection.findOne<Profile>({
-        //   _id: new ObjectId(_id)
-        // });
         if (response !== null) {
           resolve(response);
         } else {
