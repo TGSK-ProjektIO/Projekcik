@@ -3,6 +3,7 @@ import {TYPES} from "./config/types.config";
 import {UserRouter} from "./router/user.router";
 import {SessionRouter} from "./router/session.router";
 import cors = require('cors');
+import {ReportRouter} from "./router/report.router";
 
 var express = require('express');
 var path = require('path');
@@ -32,8 +33,10 @@ app.use('/api/v1/wyszukiwanie', wyszukiwanie);
 
 const userRouter = container.get<UserRouter>(TYPES.UserRouter);
 const sessionRouter = container.get<SessionRouter>(TYPES.SessionRouter);
+const reportRouter = container.get<ReportRouter>(TYPES.ReportRouter);
 
 userRouter.addRoutes(app);
 sessionRouter.addRoutes(app);
+reportRouter.addRoutes(app);
 
 module.exports = app;
