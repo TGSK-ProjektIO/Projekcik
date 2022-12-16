@@ -54,7 +54,7 @@ export class CompleteOpinionComponent implements OnInit {
       let ratingRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
       ratingRef.rating = rating.rating;
       ratingRef.name = rating.name;
-      ratingRef.isReadonly = rating.isReadonly;
+      ratingRef.isReadonly = !this.canEdit;
       rating = ratingRef;
     }
   }
