@@ -2,17 +2,25 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
 /* Fuck white space at the bottom */
-html, body { min-height: 1000px; }
+html, body {
+  min-height: 100vh;
+  scrollbar-color: #ffffff77 #ffffff11;
+  scrollbar-width: thin;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.bg-dark {
+div {
+  scrollbar-color: #ffffff77 #ffffff11;
+  scrollbar-width: thin;
+}
+
+.bg-dark, .bg-white {
   border-radius: 1rem;
   padding: 0.1em;
 }
 
-.bg-white {
-  border-radius: 1rem;
-  padding: 0.1em;
+.bg-blue {
+  background-color: red;
 }
 
 button, input::file-selector-button{

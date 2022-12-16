@@ -67,8 +67,8 @@ body {
 .scroller-sub-panel {
   height: 450px;
   overflow-y: scroll;
-  scrollbar-color: #ffffff77 #ffffff11;
-  scrollbar-width: thin;
+  /*scrollbar-color: #ffffff77 #ffffff11;*/
+  /*scrollbar-width: thin;*/
 
   margin: 1em 0;
   padding: 0.5em;

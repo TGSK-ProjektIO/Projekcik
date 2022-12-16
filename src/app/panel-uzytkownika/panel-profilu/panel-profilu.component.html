@@ -1,6 +1,6 @@
 <html>
 <body>
-<div class="bg-dark text-white" style="width: 90%; margin: auto; padding: 1em; border-radius: 1rem" >
+<div class="bg-dark text-white" style="width: 90%; margin: auto; padding: 1em;">
   <div class="bg-white text-white bg-opacity-10" style="padding: 1em">
     <img width="200" height="200" style="border-radius: 100%" src="{{mock_user.profile_picture}}" alt="Zdjęcie profilowe"/>
     <h1 style="font-size: 40px"> {{mock_user.name}} </h1>
@@ -18,8 +18,8 @@
     <button style="margin: 0 1em 0 0" [hidden]="!isCurrent" (click)="redirectToEdit()">Edytuj profil</button>
     <button [hidden]="!mock_user.isAdmin || !isCurrent" (click)="redirectToAdmin()">Panel administratora</button>
   </div>
-  <div class="bg-white text-white bg-opacity-10" style="margin-top: 2em; padding-top: 1em">
-    <h2 style="margin-left: 1em">Ocenione produkty</h2>
+  <div class="bg-white text-white bg-opacity-10" style="margin-top: 1em">
+    <h2 style="margin: 0.5em 0 0.5em 1em">Ocenione produkty</h2>
     <app-opinie [pageType]=pageTypes id="639b7603f04872ad0164cf8a"></app-opinie>
 <!--    <div class="scroller-sub-panel">-->
 <!--      <div class="sub-sub-panel" *ngFor="let opinion of mock_opinions">
