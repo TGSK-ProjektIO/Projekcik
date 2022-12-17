@@ -15,8 +15,7 @@ export class RatingComponent implements OnInit {
 
   constructor(private parent : CompleteOpinionComponent) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   SetParent(newParent : CompleteOpinionComponent) { this.parent = newParent; }
 
