@@ -10,10 +10,13 @@ import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i-rejestracja.module";
-import {OpinieModule} from "./opinie/opinie.module";
+import {ProduktModule} from "./produkt/produkt.module";
 import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
 import {RouterOutlet} from "@angular/router";
+import { HttpClientModule } from '@angular/common/http';
+import { ProduktRoutingModule } from './produkt/produkt-routing.module';
+import {OpinieModule} from "./opinie/opinie.module";
 import {AlertConfig, AlertModule} from "ngx-bootstrap/alert";
 
 @NgModule({
@@ -31,6 +34,10 @@ import {AlertConfig, AlertModule} from "ngx-bootstrap/alert";
     PanelUzytkownikaModule,
     RouterOutlet,
     LogowanieIRejestracjaModule,
+    ProduktModule,
+    ProduktRoutingModule,
+    AppRoutingModule,
+    HttpClientModule,
     OpinieModule,
     AppRoutingModule,
     AlertModule
