@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WyszukiwanieComponent } from './wyszukiwanie.component';
-import { WyszukajProduktLubProfilComponent } from './wyszukaj-produkt-lub-profil/wyszukaj-produkt-lub-profil.component';
+import {
+  PolishPaginatorIntl,
+  WyszukajProduktLubProfilComponent
+} from './wyszukaj-produkt-lub-profil/wyszukaj-produkt-lub-profil.component';
 import {WyszukiwanieRoutingModule} from "./wyszukiwanie-routing.module";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
@@ -30,6 +33,7 @@ import {MatTableModule} from "@angular/material/table";
     FormsModule,
     MatSortModule,
     MatTableModule,
-  ]
+  ],
+  providers: [{ provide: MatPaginatorIntl, useClass: PolishPaginatorIntl}],
 })
 export class WyszukiwanieModule { }

@@ -16,7 +16,7 @@ export class PolishPaginatorIntl extends MatPaginatorIntl{
     super();
     this.nextPageLabel = 'Następna strona';
     this.previousPageLabel = 'Poprzednia strona';
-    this.itemsPerPageLabel = 'Produkty na stronie';
+    this.itemsPerPageLabel = 'Liczba wyników na stronie';
     this.lastPageLabel = 'Ostatnia strona';
     this.firstPageLabel = 'Pierwsza strona';
   }
@@ -32,9 +32,9 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     attribute: [],
     categoryName: "",
     description: "",
-    isVisible: false, name: "",
+    isVisible: false,
+    name: "",
     tag: []
-
   }
   fetchedProducts: Product[];
   productSearch: ProductSearch;
@@ -45,7 +45,7 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   productTags: string[] = [];   //zawiera tagi dla kategorii i wyszukiwania
   productTagsAll: string[] = [];  //zawiera tagi z wyszukiwania
   categories: string[] = [];
-  productSearchColumnsToDisplay: string[] = ['productId', 'productName', 'productTag', 'productDescription', 'categoryID', 'numberOfOpinions' ];
+  productSearchColumnsToDisplay: string[] = ['name', 'productTag', 'productDescription', 'categoryName', 'numberOfOpinions' ];
   productsDataSource : MatTableDataSource<Product> = new MatTableDataSource<Product>(this.searchedProducts);
 
 
@@ -59,7 +59,7 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   fetchedProfiles: Profile[];
   profileSearch : ProfileSearch;
   searchedProfiles: Profile[] = [];
-  profileSearchColumnsToDisplay: string[] = ['userId', 'nickname', 'numberOfOpinions', 'score']
+  profileSearchColumnsToDisplay: string[] = ['avatar', 'nickname', 'numberOfOpinions', 'score']
   profilesDataSource: MatTableDataSource<Profile> = new MatTableDataSource<Profile>(this.searchedProfiles);
 
   constructor(private router: Router, private service: WyszukiwanieService) { }
@@ -106,6 +106,12 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
         this.productTagsAll.push(this.searchedProducts[i].tag[j]);
       }
     }
+    this.productTags = this.productTags.filter((elem, index, self) => {
+      return index === self.indexOf(elem);
+    })
+    this.productTagsAll = this.productTagsAll.filter((elem, index, self) => {
+      return index === self.indexOf(elem);
+    })
   }
 
   applyCategory($event: any) {
@@ -121,6 +127,9 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
           this.productTags.push(this.searchedProducts[i].tag[j]);
         }
       }
+      this.productTags = this.productTags.filter((elem, index, self) => {
+        return index === self.indexOf(elem);
+      })
 
       if ($event.value.toLowerCase() == "all") {
         this.filteredData = this.searchedProducts;
@@ -128,8 +137,6 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
       }
     }
     this.productsDataSource.data = this.filteredData;
-
-
   }
 
   applyTagFilter(event: Event) {
