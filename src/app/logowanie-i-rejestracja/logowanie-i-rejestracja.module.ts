@@ -7,6 +7,11 @@ import { ResetowanieComponent } from './resetowanie/resetowanie.component';
 import { LogowanieIRejestracjaRoutingModule } from './logowanie-i-rejestracja-routing.module';
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
+import { ResetowaniePotwierdzenieComponent } from './resetowanie-potwierdzenie/resetowanie-potwierdzenie.component';
+import { WeryfikacjaPotwierdzenieComponent } from './weryfikacja-potwierdzenie/weryfikacja-potwierdzenie.component';
+import {AlertConfig, AlertModule} from "ngx-bootstrap/alert";
+import {AppComponent} from "../app.component";
+import {LogowanieIRejestracjaComponent} from "./logowanie-i-rejestracja.component";
 
 
 
@@ -15,19 +20,24 @@ import {FormsModule} from "@angular/forms";
         LogowanieComponent,
         RejestracjaComponent,
         PotwierdzenieComponent,
-        ResetowanieComponent
+        ResetowanieComponent,
+        ResetowaniePotwierdzenieComponent,
+        WeryfikacjaPotwierdzenieComponent
     ],
   exports: [
     RejestracjaComponent,
     PotwierdzenieComponent,
     ResetowanieComponent,
-    LogowanieComponent
+    LogowanieComponent,
+    ResetowaniePotwierdzenieComponent,
+    WeryfikacjaPotwierdzenieComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    LogowanieIRejestracjaRoutingModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        BrowserModule,
+        LogowanieIRejestracjaRoutingModule,
+        FormsModule,
+        AlertModule
+    ],
 })
 export class LogowanieIRejestracjaModule { }
