@@ -8,6 +8,18 @@
   <div class="container py-1 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <alert type="danger"
+               [dismissible]="true"
+               [isOpen]="isWarningAlertOpen"
+               (onClosed)="onCloseWarningAlert()">
+          <p class="text-center">User with given email already exists</p>
+        </alert>
+        <alert type="danger"
+                 [dismissible]="true"
+                 [isOpen]="isFailureAlertOpen"
+                 (onClosed)="onCloseFailureAlert()">
+            <p class="text-center">Unknown error has occurred</p>
+        </alert>
         <div class="card bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
 
@@ -19,26 +31,26 @@
               <div class="form-outline mb-4">
                 <input type="email" id="typeUsername" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="username">
                 <label class="form-label" for="typeUsername">Username</label>
-                <p class="text-danger" [hidden]="isUsernameValid()">Invalid username</p>
+                <p class="text-danger" [hidden]="isUsernameValid() || !username.length">Username should have more than 3 but less than 20 characters</p>
               </div>
 
               <div class="form-outline mb-4">
                 <input type="email" id="typeEmailRegister" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="email"/>
                 <label class="form-label" for="typeEmailRegister">E-mail</label>
-                <p class="text-danger" [hidden]="isEmailValid()">Invalid Email</p>
+                <p class="text-danger" [hidden]="isEmailValid() || !email.length">Invalid Email</p>
               </div>
 
               <div class="form-outline mb-4">
                 <input type="password" id="typePasswordRegister" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="password"/>
                 <label class="form-label" for="typePasswordRegister">Password</label>
-                <p class="text-danger" [hidden]="isPasswordValid()">Invalid Password</p>
+                <p class="text-danger" [hidden]="isPasswordValid() || !password.length">Password must have from 6 to 20 characters, at least one big letter and one number</p>
               </div>
 
               <div class="form-outline mb-4">
                 <input type="password" id="typeConfirmPasswordRegister" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="confirmPassword"/>
                 <label class="form-label" for="typeConfirmPasswordRegister">Confirm Password</label>
-                <p class="text-danger" [hidden]="isPasswordValid()">Invalid Password</p>
-                <p class="text-danger" [hidden]="arePasswordsEqual()">Passwords do not match</p>
+                <p class="text-danger" [hidden]="isPasswordValid() || !confirmPassword.length">Password must have from 6 to 20 characters, at least one big letter and one number</p>
+                <p class="text-danger" [hidden]="arePasswordsEqual() || !confirmPassword.length">Passwords do not match</p>
               </div>
 
               <button class="btn btn-outline-light btn-lg px-5" type="submit" (click)="onSignUpPressed()">Sign Up</button>

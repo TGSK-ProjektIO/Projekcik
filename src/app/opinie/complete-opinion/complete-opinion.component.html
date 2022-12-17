@@ -1,0 +1,32 @@
+<div class="card bg-dark text-white mx-auto my-2" style="
+display: block;
+border: #334465 2px outset;
+width: 95%;
+padding: 10px;
+overflow: hidden">
+  <div class="bg-dark text-white" style="
+  display: block;
+  margin-bottom: 10px;
+  font-size: 18px;">
+    <img src="{{userPicture}}"/>
+    <span class="badge badge-dark">{{userName}}</span>
+    <span class="badge badge-dark" style="margin-left: -10px;">@{{userID}}</span>
+    <button *ngIf="opinieParent.isUserType(UserTypes.admin)"
+            class="btn btn-default"
+            (click)="DestroyOpinion()">
+              <img style="width: 2em; border: none;" src="https://i.imgur.com/peujZRW.png" />
+    </button>
+  </div>
+  <div class="RatingsHost bg-dark text-white">
+    <span ratingsHost></span>
+  </div>
+  <div class="ReviewHost bg-dark text-white">
+    <span reviewHost></span>
+  </div>
+  <div class="OpinionRatingHost bg-dark text-white" style="
+    display: block;
+    font-size: 10px;">
+    <span opinionRatingHost></span>
+  </div>
+</div>
+

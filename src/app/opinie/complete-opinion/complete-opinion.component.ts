@@ -1,0 +1,104 @@
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component";
+import {RatingComponent} from "../rating/rating.component";
+import {ReviewComponent} from "../review/review.component";
+import {OpinieComponent, UserType} from "../opinie.component";
+import {OpinionRatingHostDirective, RatingsHostDirective, ReviewHostDirective} from "../opinion-host.directive";
+import {OpinionRating} from "../../../../express-backend-api/model/opinion.rating";
+
+@Component({
+  selector: 'app-complete-opinion',
+  templateUrl: './complete-opinion.component.html',
+  styleUrls: ['./complete-opinion.component.css']
+})
+export class CompleteOpinionComponent implements OnInit {
+  // TODO: get user type from session
+  UserTypes = UserType;
+  canEdit : boolean = false;
+
+  // Needed to pull [[ opinions ]] from database that are assigned to [[ product ]]
+  productID : string = "";
+  // Needed to identify singular [[ opinion ]]
+  ID : string = "";
+  // Needed to assign [[ user ]] to [[ opinion ]]
+  userID : string = "";
+
+  opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
+  review : ReviewComponent;
+  ratings : Array<RatingComponent> = [];
+
+  @ViewChild(RatingsHostDirective, {static: true}) ratingsHost!: RatingsHostDirective;
+  @ViewChild(ReviewHostDirective, {static: true}) reviewHost!: ReviewHostDirective;
+  @ViewChild(OpinionRatingHostDirective, {static: true}) opinionRatingHost!: OpinionRatingHostDirective;
+
+  // From UserProfile
+  // ----------------
+  userName : string = "Verified Customer"
+  userPicture : string = "https://i.imgur.com/tYkCX47.jpg"
+
+  //temp
+  opinieParent : OpinieComponent = new OpinieComponent();
+  SetParent(newParent : OpinieComponent) { this.opinieParent = newParent}
+
+  constructor() {
+    this.review = new ReviewComponent(this);
+  }
+
+  ngOnInit(): void {
+    this.SpawnRatings();
+    this.SpawnReview();
+    this.SpawnOpinionRating();
+  }
+
+  //region Spawners
+  SpawnRatings() {
+    for (let rating of this.ratings) {
+      let ratingRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
+      ratingRef.rating = rating.rating;
+      ratingRef.name = rating.name;
+      ratingRef.isReadonly = !this.canEdit;
+      rating = ratingRef;
+    }
+  }
+
+  SpawnReview() {
+    let reviewRef = this.reviewHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
+    reviewRef.text = this.review.text;
+    reviewRef.isReadonly = !this.canEdit;
+    this.review = reviewRef;
+  }
+
+  SpawnOpinionRating() {
+    let opinionRatingRef = this.opinionRatingHost.viewContainerRef.createComponent<OpinionRatingComponent>(OpinionRatingComponent).instance;
+    opinionRatingRef.ratingState = this.opinionRating.ratingState;
+    opinionRatingRef.isReadonly = this.canEdit;
+    opinionRatingRef.likes = this.opinionRating.likes;
+    opinionRatingRef.dislikes = this.opinionRating.dislikes;
+    this.opinionRating = opinionRatingRef;
+  }
+  //endregion
+
+  GetMeanRating() : number {
+    let result: number = 0;
+    for (const rating of this.ratings) {
+      result += rating.GetRating();
+    }
+    return result;
+  }
+
+  AddRating(name : string, value : number) : void {
+    let newRating: RatingComponent = new RatingComponent();
+    newRating.name = name;
+    newRating.rating = value;
+    newRating.isReadonly = !this.canEdit;
+    this.ratings.push(newRating);
+  }
+
+  DestroyOpinion() : void {
+    this.opinieParent.DeleteOpinion(this.ID);
+  }
+
+  protected CanEdit() : boolean { return this.canEdit; }
+
+  public ModifyOpinion() { this.opinieParent.ModifyOpinion(this); }
+}

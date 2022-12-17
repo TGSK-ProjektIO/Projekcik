@@ -1,5 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-html, body { height: 100%; }
+/* Fuck white space at the bottom */
+html, body {
+  min-height: 100vh;
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+*::-webkit-scrollbar {
+  width: 0.4em;
+  height: 0.4em;
+}
+*::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1);
+  background-color: #ffffff11;
+}
+
+*::-webkit-scrollbar-thumb
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1);
+  background-color: #ffffff77;
+}
+
+*::-webkit-scrollbar:hover {
+  width: 0.7em;
+}
+
+.bg-dark, .bg-white {
+  border-radius: 1rem;
+  padding: 0.1em;
+}
+
+.bg-blue {
+  background-color: red;
+}
+
+button, input::file-selector-button{
+  padding: 0.3em;
+  margin: 8px 4px 8px 0;
+  background-color: #ffffff33;
+  border-radius: 5px 5px 7px 7px;
+  border-color: #00000000;
+  color: #eeeeee;
+  box-shadow: 0 5px #00000055;
+  transition-duration: 0.3s;
+}
+
+button:hover, input::file-selector-button:hover {
+  background-color: #ffffff44;
+  transform: translateY(-1px);
+  box-shadow: 0 6px #22222255;
+  transition-duration: 0.1s;
+}
+
+button:active, input::file-selector-button:active {
+  background-color: #ffffff11;
+  transform: translateY(2px);
+  box-shadow: 0 3px #00000088;
+  transition-duration: 0.01s;
+}

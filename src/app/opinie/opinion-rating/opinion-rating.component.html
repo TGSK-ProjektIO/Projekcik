@@ -1,0 +1,7 @@
+<div>{{ GetRating() }}</div>
+<button *ngIf="!isReadonly" class="btn btn-default" (click)="ClickedLike()">
+  <img src="https://i.imgur.com/jhnnH71.png" width="10" /> like
+</button>
+<button *ngIf="!isReadonly" class="btn btn-default" (click)="ClickedDislike()">
+  <img src="https://i.imgur.com/3PRkszC.png" width="10" /> dislike
+</button>

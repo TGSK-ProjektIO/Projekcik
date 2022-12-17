@@ -1,0 +1,55 @@
+import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ReviewComponent} from "../review/review.component";
+import {OpinieComponent} from "../opinie.component";
+import {RatingComponent} from "../rating/rating.component";
+import {OpinionHostDirective} from "../opinion-host.directive";
+import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.component";
+
+@Component({
+  selector: 'app-opinion-creator',
+  templateUrl: './opinion-creator.component.html',
+  styleUrls: ['./opinion-creator.component.css'],
+  encapsulation: ViewEncapsulation.None
+})
+export class OpinionCreatorComponent implements AfterViewInit {
+
+  ratings : RatingComponent[] = [];
+  // @ts-ignore
+  review : ReviewComponent = new ReviewComponent();
+
+  @ViewChild(OpinionHostDirective, {static: true}) ratingsHost!: OpinionHostDirective;
+  parent : OpinieComponent;
+
+  constructor(parent : OpinieComponent) {
+    this.parent = parent;
+  }
+
+  ngAfterViewInit(): void {
+    this.review = this.ratingsHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
+    this.review.isReadonly = false;
+  }
+
+  AddRatings(ratingsList : string[]) : void {
+    for (const ratingName of ratingsList) {
+      const componentRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
+      componentRef.name = ratingName;
+      componentRef.isReadonly = false;
+      this.ratings.push(componentRef);
+    }
+  }
+
+  CreateOpinion() : void {
+    let newOpinion = new CompleteOpinionComponent();
+    newOpinion.userID = this.parent.userLoggedID;
+    newOpinion.review.text = this.review.text;
+    console.log(newOpinion.review.text)
+    newOpinion.ratings = this.ratings;
+    this.parent.CreateOpinion(newOpinion);
+
+    // clear fields
+    this.review.SetReview("");
+    for (const rating of this.ratings) {
+      rating.rating = 0;
+    }
+  }
+}

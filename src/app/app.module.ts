@@ -3,28 +3,26 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { LogowanieIRejestracjaComponent } from './logowanie-i-rejestracja/logowanie-i-rejestracja.component';
-import { OpinieComponent } from './opinie/opinie.component';
 import { PanelUzytkownikaComponent } from './panel-uzytkownika/panel-uzytkownika.component';
 import { ProduktComponent } from './produkt/produkt.component';
 import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i-zgloszenia.component';
 import { WyszukiwanieComponent } from './wyszukiwanie/wyszukiwanie.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i-rejestracja.module";
 import {ProduktModule} from "./produkt/produkt.module";
-
 import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
 import {RouterOutlet} from "@angular/router";
 import { HttpClientModule } from '@angular/common/http';
 import { ProduktRoutingModule } from './produkt/produkt-routing.module';
-
+import {OpinieModule} from "./opinie/opinie.module";
+import {AlertConfig, AlertModule} from "ngx-bootstrap/alert";
 
 @NgModule({
   declarations: [
     AppComponent,
     LogowanieIRejestracjaComponent,
-    OpinieComponent,
     PanelUzytkownikaComponent,
     ProduktComponent,
     SugestieIZgloszeniaComponent,
@@ -39,9 +37,12 @@ import { ProduktRoutingModule } from './produkt/produkt-routing.module';
     ProduktModule,
     ProduktRoutingModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    OpinieModule,
+    AppRoutingModule,
+    AlertModule
   ],
-  providers: [],
+  providers: [AlertConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
