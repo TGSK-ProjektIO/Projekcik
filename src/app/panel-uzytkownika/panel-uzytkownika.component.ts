@@ -10,19 +10,43 @@ import {ObjectId} from "mongodb";
 })
 export class PanelUzytkownikaComponent implements OnInit {
 
-  user: User | undefined;
-  profile: Profile | undefined;
+  public profile!: Profile;
+  public user!: User;
 
   constructor() { }
 
   ngOnInit(): void {
-
+    this.fetchProfile("639b832e65e32788ffb34dd3").then(res => {
+      this.profile = res;
+    }).then( res =>
+      {
+        this.fetchUser(this.profile.userId).then(res => {
+          this.user = res;
+        });
+      }
+    )
+    console.log(this.user._id)
   }
 
   // ---------- FETCH METHODS ----------
 
   private async fetchUser(id: string): Promise<User> {
     return await fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/${id}`, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+
+  private async fetchProfile(id: string): Promise<Profile> {
+    return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfile/${id}`, {
       method: 'GET',
       headers: {
         'Accept': '*/*',
