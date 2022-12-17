@@ -11,7 +11,10 @@ export class LogowanieComponent implements OnInit {
   email = '';
   password = '';
 
-  private invalidLoginFlag = false;
+  isAlertBadRequestOpened = false;
+  isAlertNotVerifiedEmailOpened = false;
+  isAlertWrongPasswordOpened = false;
+  isAlertUserNotFoundOpened = false;
 
   constructor(
     private router: Router,
@@ -41,30 +44,54 @@ export class LogowanieComponent implements OnInit {
     return this.validationService.validatePassword(this.password);
   }
 
-  doesAccountExist(): boolean {
-    return this.invalidLoginFlag;
+  onSignInPressed() {
+    if (this.isEmailValid() && this.isPasswordValid()) {
+      fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/session/login', {
+        method: 'POST',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "email": this.email,
+          "password": this.password
+        })
+      }).then(async response => {
+        if (response.status === 201) {
+          const body = await response.json();
+          localStorage.setItem('sessionId', body._id);
+          await this.router.navigateByUrl('/');
+        } else if (response.status === 400) {
+          this.isAlertBadRequestOpened = true;
+        } else if (response.status === 401) {
+          const body = await response.json();
+          if (body.error === 'Wrong password') {
+            this.isAlertWrongPasswordOpened = true;
+          } else {
+            this.isAlertNotVerifiedEmailOpened = true;
+          }
+        } else if (response.status === 404) {
+          this.isAlertUserNotFoundOpened = true;
+        }
+      }).catch(err => {
+        console.error(err);
+      });
+    }
   }
 
-  onSignInPressed() {
-    fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/session/login', {
-      method: 'POST',
-      headers: {
-        'Accept': '*/*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "email": this.email,
-        "password": this.password
-      })
-    }).then(async response => {
-      if (response.status === 201) {
-        await this.router.navigateByUrl('/');
-      }
-      if (response.status === 404) {
-        this.invalidLoginFlag = true;
-      }
-    }).catch(err => {
-      console.error(err);
-    });
+  onAlertBadRequestClose() {
+    this.isAlertBadRequestOpened = false;
+  }
+
+  onAlertNotVerifiedEmailClose() {
+    this.isAlertNotVerifiedEmailOpened = false;
+  }
+
+  onAlertWrongPasswordClose() {
+    this.isAlertWrongPasswordOpened = false;
+  }
+
+  onAlertUserNotFoundClose() {
+    this.isAlertUserNotFoundOpened = false;
   }
 }

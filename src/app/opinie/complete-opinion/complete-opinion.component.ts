@@ -1,9 +1,10 @@
-import {Component, Input, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component";
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
 import {OpinieComponent, UserType} from "../opinie.component";
-import {ObjectId} from "mongodb";
+import {OpinionRatingHostDirective, RatingsHostDirective, ReviewHostDirective} from "../opinion-host.directive";
+import {OpinionRating} from "../../../../express-backend-api/model/opinion.rating";
 
 @Component({
   selector: 'app-complete-opinion',
@@ -16,27 +17,67 @@ export class CompleteOpinionComponent implements OnInit {
   canEdit : boolean = false;
 
   // Needed to pull [[ opinions ]] from database that are assigned to [[ product ]]
-  @Input() productID : string = "";
+  productID : string = "";
   // Needed to identify singular [[ opinion ]]
-  @Input() ID : string = "";
+  ID : string = "";
   // Needed to assign [[ user ]] to [[ opinion ]]
-  @Input() userID : string = "";
+  userID : string = "";
 
   opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
-  review : ReviewComponent = new ReviewComponent;
+  review : ReviewComponent;
   ratings : Array<RatingComponent> = [];
+
+  @ViewChild(RatingsHostDirective, {static: true}) ratingsHost!: RatingsHostDirective;
+  @ViewChild(ReviewHostDirective, {static: true}) reviewHost!: ReviewHostDirective;
+  @ViewChild(OpinionRatingHostDirective, {static: true}) opinionRatingHost!: OpinionRatingHostDirective;
+
+  // From UserProfile
+  // ----------------
+  userName : string = "Verified Customer"
+  userPicture : string = "https://i.imgur.com/tYkCX47.jpg"
 
   //temp
   opinieParent : OpinieComponent = new OpinieComponent();
   SetParent(newParent : OpinieComponent) { this.opinieParent = newParent}
 
-  constructor() {}
+  constructor() {
+    this.review = new ReviewComponent(this);
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.SpawnRatings();
+    this.SpawnReview();
+    this.SpawnOpinionRating();
+  }
 
-  GetID() : string { return this.ID; }
-  GetUserID() : string { return this.userID; }
-  GetReview() : string { return this.review.GetReview(); }
+  //region Spawners
+  SpawnRatings() {
+    for (let rating of this.ratings) {
+      let ratingRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
+      ratingRef.rating = rating.rating;
+      ratingRef.name = rating.name;
+      ratingRef.isReadonly = !this.canEdit;
+      rating = ratingRef;
+    }
+  }
+
+  SpawnReview() {
+    let reviewRef = this.reviewHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
+    reviewRef.text = this.review.text;
+    reviewRef.isReadonly = !this.canEdit;
+    this.review = reviewRef;
+  }
+
+  SpawnOpinionRating() {
+    let opinionRatingRef = this.opinionRatingHost.viewContainerRef.createComponent<OpinionRatingComponent>(OpinionRatingComponent).instance;
+    opinionRatingRef.ratingState = this.opinionRating.ratingState;
+    opinionRatingRef.isReadonly = this.canEdit;
+    opinionRatingRef.likes = this.opinionRating.likes;
+    opinionRatingRef.dislikes = this.opinionRating.dislikes;
+    this.opinionRating = opinionRatingRef;
+  }
+  //endregion
+
   GetMeanRating() : number {
     let result: number = 0;
     for (const rating of this.ratings) {
@@ -44,14 +85,12 @@ export class CompleteOpinionComponent implements OnInit {
     }
     return result;
   }
-  SetReview(text : string) : void {
-    this.review.SetReview(text);
-    this.review.ngOnInit();
-  }
-  SetRating(name : string, value : number) : void {
-    let newRating: RatingComponent = new RatingComponent;
+
+  AddRating(name : string, value : number) : void {
+    let newRating: RatingComponent = new RatingComponent();
     newRating.name = name;
     newRating.rating = value;
+    newRating.isReadonly = !this.canEdit;
     this.ratings.push(newRating);
   }
 
@@ -59,9 +98,7 @@ export class CompleteOpinionComponent implements OnInit {
     this.opinieParent.DeleteOpinion(this.ID);
   }
 
-  protected CanEdit() : boolean {
-    // return (this.opinieParent.isUserType(UserType.logged) &&
-    //   this.userID == this.opinieParent.userLoggedID);
-    return this.canEdit;
-  }
+  protected CanEdit() : boolean { return this.canEdit; }
+
+  public ModifyOpinion() { this.opinieParent.ModifyOpinion(this); }
 }

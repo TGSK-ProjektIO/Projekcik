@@ -2,7 +2,8 @@ export const DATABASE_URi = `mongodb+srv://test:zBIcqGx4bfOpxY28@bazkidlainzynie
 export const DB_NAME = 'TEST';
 export const USER_COLLECTION_NAME = 'USERS';
 export const SESSION_COLLECTION_NAME = 'SESSIONS';
-
 export const REPORT_COLLECTION_NAME = 'REPORTS';
 export const OPINION_COLLECTION_NAME = 'OPINIONS';
 export const PROFILE_COLLECTION_NAME = 'PROFILES';
+export const CATEGORY_COLLECTION_NAME = 'CATEGORIES';
+export const PRODUCT_COLLECTION_NAME = 'PRODUCTS';

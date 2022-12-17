@@ -2,6 +2,9 @@ import {User} from "../model/user";
 import {DATABASE_URi, DB_NAME, USER_COLLECTION_NAME} from "../config/mongo.config";
 import {MongoClient, ObjectId} from "mongodb";
 import {injectable} from "inversify";
+import {UserPartial} from "../model/user.partial";
+// import {SHA256} from "crypto-ts";
+import {createHash, Hmac, randomBytes} from "crypto";
 
 @injectable()
 export class UserRepository {
@@ -28,22 +31,29 @@ export class UserRepository {
     });
  }
 
-  public async create(user: User): Promise<User> {
+  public async create(userParams: UserPartial): Promise<User> {
     return new Promise<User>(async (resolve, reject) => {
-      if (user._id) {
+      if (!userParams.username || !userParams.email || !userParams.password) {
         return reject();
       }
       const client = this.createClient();
       try {
         const db = client.db(DB_NAME);
         const collection = db.collection(USER_COLLECTION_NAME);
-        if (await collection.count({_id: user._id}) >= 1
-          || await collection.count({email: user.email}) >= 1) {
+        if (await collection.count({email: userParams.email}) >= 1) {
           return reject();
         }
-        const response = await collection.insertOne(user);
-        user._id = response.insertedId;
-        resolve(user);
+        const createdUser: any = {
+          username: userParams.username,
+          password: createHash('sha256').update(userParams.password).digest('hex'),
+          email: userParams.email,
+          emailToken: randomBytes(64).toString('hex'),
+          isAdministrator: false,
+          isEmailVerified: false
+        };
+        const response = await collection.insertOne(createdUser);
+        createdUser._id = response.insertedId;
+        resolve(createdUser);
       } catch (exception) {
         reject();
       } finally {
@@ -86,7 +96,6 @@ export class UserRepository {
         if (response !== null) {
           resolve(response);
         } else {
-          console.log("NOT FOUND")
           reject();
         }
       } catch (exception) {
@@ -97,7 +106,7 @@ export class UserRepository {
     });
   }
 
-  public async update(user: User): Promise<void> {
+  public async update(user: Partial<User>): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       if (!user._id) {
         return reject();
@@ -109,14 +118,7 @@ export class UserRepository {
         const response = await collection.updateOne(
           {_id: user._id},
           {
-            $set: {
-              username: user.username,
-              password: user.password,
-              email: user.email,
-              emailToken: user.emailToken,
-              isAdministrator: user.isAdministrator,
-              isEmailVerified: user.isEmailVerified
-            }
+            $set: user
           },
           { upsert: false }
         )
@@ -140,7 +142,7 @@ export class UserRepository {
           const db = client.db(DB_NAME);
           const collection = db.collection(USER_COLLECTION_NAME);
           const result = await collection.deleteOne({
-            _id: _id
+            _id: new ObjectId(_id)
           });
           if (result.deletedCount === 1) {
             resolve();

@@ -4,6 +4,8 @@ const TYPES = {
   UserController: Symbol.for('UserController'),
   SessionController: Symbol.for('SessionController'),
   ReportController: Symbol.for('ReportController'),
+  ProductController: Symbol.for('ProductController'),
+  CategoryController: Symbol.for('CategoryController'),
   ProfileController: Symbol.for('ProfileController'),
   OpinionController: Symbol.for('OpinionController'),
 
@@ -24,6 +26,14 @@ const TYPES = {
   ProfileService: Symbol.for('ProfileService'),
   OpinionService: Symbol.for('OpinionService'),
   ReportService: Symbol.for('ReportService')
+  ProductRepository: Symbol.for('ProductRepository'),
+  CategoryRepository: Symbol.for('CategoryRepository'),
+
+  ProductRouter: Symbol.for('ProductRouter'),
+  CategoryRouter: Symbol.for('CategoryRouter'),
+  ProductService: Symbol.for('ProductService'),
+  CategoryService: Symbol.for('CategoryService'),
+  EmailService: Symbol.for('EmailService'),
 };
 
 export { TYPES };

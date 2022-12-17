@@ -13,6 +13,7 @@ import {ReportRepository} from "../repository/report.repository";
 import {ReportService} from "../services/report.service";
 import {ReportController} from "../controller/report.controller";
 import {ReportRouter} from "../router/report.router";
+import {EmailService} from "../services/email.service";
 
 import {ProfileRepository} from "../repository/profile.repository";
 import {ProfileService} from "../services/profile.service";
@@ -25,6 +26,16 @@ import {OpinionRouter} from "../router/opinion.router";
 import {OpinionService} from "../services/opinion.service";
 
 
+import {ProductController} from "../controller/product.controller";
+import {ProductRouter} from "../router/product.router";
+import {ProductService} from "../services/product.service";
+import {ProductRepository} from "../repository/product.repository";
+
+import {CategoryController} from "../controller/category.controller";
+import {CategoryRouter} from "../router/category.router";
+import {CategoryService} from "../services/category.service";
+import {CategoryRepository} from "../repository/category.repository";
+
 export const container = new Container();
 
 container.bind<UserController>(TYPES.UserController)
@@ -35,6 +46,12 @@ container.bind<SessionController>(TYPES.SessionController)
   .inSingletonScope();
 container.bind<ReportController>(TYPES.ReportController)
   .to(ReportController)
+container.bind<ProductController>(TYPES.ProductController)
+  .to(ProductController)
+  .inSingletonScope();
+container.bind<CategoryController>(TYPES.CategoryController)
+  .to(CategoryController)
+  .inSingletonScope();
 container.bind<OpinionController>(TYPES.OpinionController)
   .to(OpinionController)
   .inSingletonScope();
@@ -50,6 +67,12 @@ container.bind<SessionRepository>(TYPES.SessionRepository)
   .inSingletonScope();
 container.bind<ReportRepository>(TYPES.ReportRepository)
   .to(ReportRepository)
+container.bind<ProductRepository>(TYPES.ProductRepository)
+  .to(ProductRepository)
+  .inSingletonScope();
+container.bind<CategoryRepository>(TYPES.CategoryRepository)
+  .to(CategoryRepository)
+  .inSingletonScope();
 container.bind<OpinionRepository>(TYPES.OpinionRepository)
   .to(OpinionRepository)
   .inSingletonScope();
@@ -65,6 +88,12 @@ container.bind<SessionRouter>(TYPES.SessionRouter)
   .inSingletonScope();
 container.bind<ReportRouter>(TYPES.ReportRouter)
   .to(ReportRouter)
+container.bind<ProductRouter>(TYPES.ProductRouter)
+  .to(ProductRouter)
+  .inSingletonScope();
+container.bind<CategoryRouter>(TYPES.CategoryRouter)
+  .to(CategoryRouter)
+  .inSingletonScope();
 container.bind<OpinionRouter>(TYPES.OpinionRouter)
   .to(OpinionRouter)
   .inSingletonScope();
@@ -80,6 +109,15 @@ container.bind<SessionService>(TYPES.SessionService)
   .inSingletonScope();
 container.bind<ReportService>(TYPES.ReportService)
   .to(ReportService)
+container.bind<ProductService>(TYPES.ProductService)
+  .to(ProductService)
+  .inSingletonScope();
+container.bind<CategoryService>(TYPES.CategoryService)
+  .to(CategoryService)
+  .inSingletonScope();
+container.bind<EmailService>(TYPES.EmailService)
+  .to(EmailService)
+  .inSingletonScope();
 container.bind<OpinionService>(TYPES.OpinionService)
   .to(OpinionService)
   .inSingletonScope();

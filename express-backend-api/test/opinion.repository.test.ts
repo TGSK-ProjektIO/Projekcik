@@ -51,12 +51,6 @@ test('Read Opinion positive test', async () => {
   expect(readOpinion).toEqual(opinionRep);
 });
 
-test('Read Opinion for productID = 2', async () => {
-  // @ts-ignore
-  let readOpinion = await opinionRepository.readByProduct("2");
-  expect(readOpinion).toHaveLength(2);
-});
-
 test('Delete Opinion positive test', async () => {
   let opinionRep = await opinionRepository.create(validOpinion);
   // @ts-ignore

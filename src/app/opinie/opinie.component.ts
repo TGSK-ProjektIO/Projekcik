@@ -6,6 +6,7 @@ import {OpinionCreatorComponent} from "./opinion-creator/opinion-creator.compone
 import {Opinion} from "../../../express-backend-api/model/opinion";
 import {OpinionRating} from "../../../express-backend-api/model/opinion.rating";
 import {Rating} from "../../../express-backend-api/model/rating";
+import {Profile} from "../../../express-backend-api/model/profile";
 
 
 // TODO: get user type from session
@@ -20,16 +21,16 @@ export enum PageType { product, profile}
 export class OpinieComponent implements OnInit {
   // TODO: get user type from session
   userType : UserType = UserType.logged;
-  userLoggedID = "2000";
+  userLoggedID = "639b7603f04872ad0164cf8a";
   isUserType(type : UserType) : boolean {
-    return this.userType == type;
+    return this.userType === type;
   }
   // Get productID from product/profile
-  @Input() id = "2";
+  @Input() id = "639b7603f04872ad0164cf8a";
   // TODO: get product attributes from product
   productAttributes : string[] = ["fajno", "niefajno", "zajefajno", "wydajność"];
 
-  @Input() pageType : PageType = PageType.product;
+  @Input() pageType : PageType = PageType.profile;
   allOpinions : CompleteOpinionComponent[] = [];
   allOpinionsRefs : CompleteOpinionComponent[] = [];
   opinionCreator : OpinionCreatorComponent = new OpinionCreatorComponent(this);
@@ -46,10 +47,20 @@ export class OpinieComponent implements OnInit {
   }
 
   ShowProductOpinions(productID : string) {
-    this.DB_GetOpinionsByProduct(productID).then(res => {
-      let completeOpinionArray = new Array<CompleteOpinionComponent>();
-      res.forEach(obj => {completeOpinionArray.push(this.OpinionDBToComponent(obj))});
-      this.ShowAllOpinions(completeOpinionArray);
+    this.DB_GetOpinionsByProduct(productID).then(opinionList =>
+    {
+      for (const opinion of opinionList) {
+        this.allOpinions.push(this.OpinionDBToComponent(opinion));
+      }
+    }).then(() =>
+    {
+      for (const opinion of this.allOpinions) {
+        this.DB_GetUserByID(opinion.userID).then(userProfile => {
+          opinion.userName = userProfile.nickname;
+          opinion.userPicture = userProfile.profilePicture;
+          this.ShowOpinion(opinion)
+        });
+      }
 
       // Init opinion creator
       // --------------------
@@ -59,6 +70,31 @@ export class OpinieComponent implements OnInit {
         this.opinionCreator.AddRatings(this.productAttributes);
       }
     });
+  }
+
+  ShowUserOpinions(userID : string) {
+    this.DB_GetOpinionsByUser(userID).then(opinionList =>
+    {
+      for (const opinion of opinionList) {
+        this.allOpinions.push(this.OpinionDBToComponent(opinion));
+      }
+    }).then(() =>
+    {
+      for (const opinion of this.allOpinions) {
+        this.DB_GetUserByID(opinion.userID).then(userProfile => {
+          opinion.userName = userProfile.nickname;
+          opinion.userPicture = userProfile.profilePicture;
+          this.ShowOpinion(opinion)
+        });
+      }
+    });
+  }
+
+  public ShowAllOpinions(): void {
+    //viewContainerRef.clear();
+    for (const opinion of this.allOpinions) {
+      this.ShowOpinion(opinion);
+    }
   }
 
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {
@@ -71,42 +107,36 @@ export class OpinieComponent implements OnInit {
     this.ShowOpinion(newOpinion, 1);
   }
 
-  ShowUserOpinions(userID : string){
-    this.DB_GetOpinionsByUser(userID).then(res => {
-      let completeOpinionArray = new Array<CompleteOpinionComponent>();
-      res.forEach(obj => {completeOpinionArray.push(this.OpinionDBToComponent(obj))});
-      this.ShowAllOpinions(completeOpinionArray);
-    });
-  }
-
-  public ShowAllOpinions(opinionArray : Array<CompleteOpinionComponent>): void {
-    //viewContainerRef.clear();
-    for (const opinion of opinionArray) {
-      this.ShowOpinion(opinion);
-    }
-  }
-
   private ShowOpinion(opinion : CompleteOpinionComponent, index: number = this.allOpinionsRefs.length) {
     const componentRef = this.opinionHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent, {index: index}).instance;
     componentRef.SetParent(this);
-    componentRef.canEdit = (opinion.userID == this.userLoggedID);
+    componentRef.canEdit = opinion.canEdit;
     componentRef.ID = opinion.ID;
     componentRef.userID = opinion.userID;
+    componentRef.productID = opinion.productID;
     componentRef.review = opinion.review;
     componentRef.ratings = opinion.ratings;
     componentRef.opinionRating = opinion.opinionRating;
+    componentRef.userName = opinion.userName;
+    componentRef.userPicture = opinion.userPicture;
     this.allOpinionsRefs.splice(index, 0, componentRef);
   }
 
-  ModifyOpinion(ID: string, ratings: RatingComponent[], text: string): void {
-    for (const opinion of this.allOpinions) {
-      if(opinion.ID == ID) {
-        opinion.ratings = ratings;
-        opinion.review.SetReview(text);
-        this.DB_ModifyOpinion(this.OpinionComponentToDB(opinion));
-        break;
+  ModifyOpinion(opinion : CompleteOpinionComponent): void {
+    //TODO: check
+    this.DB_GetOpinionByID(opinion.ID).then(res => {
+      res.review = { userID: opinion.userID, text: opinion.review.text };
+      let ratings: Array<Rating> = new Array<Rating>();
+      for (const rating of opinion.ratings) {
+        console.log(rating);
+        ratings.push({userID: res.userId, name: rating.name, rating: rating.rating});
       }
-    }
+      res.ratings = ratings;
+
+      res.opinionRatings.push({userID: this.userLoggedID, like: opinion.opinionRating.likes, dislike: opinion.opinionRating.dislikes});
+
+      this.DB_ModifyOpinion(res)
+    });
   }
 
   DeleteOpinion(ID: string): boolean {
@@ -132,6 +162,7 @@ export class OpinieComponent implements OnInit {
   // region Converters
   // ----------
   OpinionComponentToDB(opinion : CompleteOpinionComponent): Opinion {
+    //todo: populate list
     let opinionRatingsDB: Array<OpinionRating> = new Array<OpinionRating>();
     let ratingsDB: Array<Rating> = new Array<Rating>();
     for (const rating of opinion.ratings) {
@@ -157,9 +188,10 @@ export class OpinieComponent implements OnInit {
     // @ts-ignore
     opinionComponent.ID = opinion._id.toString();
     opinionComponent.userID = opinion.userId;
-    opinionComponent.SetReview(opinion.review.text);
+    opinionComponent.productID = opinion.productId;
+    opinionComponent.review.text = opinion.review.text;
     for (const rating of opinion.ratings) {
-      opinionComponent.SetRating(rating.name, rating.rating);
+      opinionComponent.AddRating(rating.name, rating.rating);
     }
     let likes = 0, dislikes = 0;
     for (const opinionRating of opinion.opinionRatings) {
@@ -168,6 +200,9 @@ export class OpinieComponent implements OnInit {
     }
     opinionComponent.opinionRating.likes = likes;
     opinionComponent.opinionRating.dislikes = dislikes;
+
+    opinionComponent.canEdit = (this.isUserType(UserType.logged) &&
+                                this.userLoggedID === opinion.userId);
     return opinionComponent;
   }
   //endregion
@@ -192,7 +227,7 @@ export class OpinieComponent implements OnInit {
 
   private DB_ModifyOpinion(opinion: Opinion) {
     fetch(`http://localhost:3000/api/v1/opinie/modify`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
@@ -264,6 +299,24 @@ export class OpinieComponent implements OnInit {
       console.error(err);
     });
   }
+
+  // UserProfile API
+  // ---------------
+  private async DB_GetUserByID(userID: string): Promise<Profile> {
+    return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfileByUserId/${userID}`, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+
   //endregion
 }
 
