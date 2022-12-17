@@ -30,7 +30,7 @@ const routes: Routes = [
         component: ResetowanieComponent
       },
       {
-        path: 'reset',
+        path: 'reset/:id/:emailToken',
         component: ResetowaniePotwierdzenieComponent
       },
       {

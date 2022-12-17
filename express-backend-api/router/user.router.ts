@@ -14,6 +14,7 @@ export class UserRouter {
     app.post('/api/v1/logowanie-i-rejestracja/user', this.userController.registerUser());
     app.get('/api/v1/logowanie-i-rejestracja/user/:id', this.userController.getUser());
     app.get('/api/v1/logowanie-i-rejestracja/user/send-reset-password-email/:email', this.userController.sendPasswordResetEmail());
+    app.put('/api/v1/logowanie-i-rejestracja/user/reset-password', this.userController.resetPassword());
   }
 }
 
