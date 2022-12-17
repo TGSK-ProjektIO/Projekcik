@@ -58,7 +58,6 @@ export class OpinieComponent implements OnInit {
         this.DB_GetUserByID(opinion.userID).then(userProfile => {
           opinion.userName = userProfile.nickname;
           opinion.userPicture = userProfile.profilePicture;
-          console.log(opinion);
           this.ShowOpinion(opinion)
         });
       }
@@ -85,7 +84,6 @@ export class OpinieComponent implements OnInit {
         this.DB_GetUserByID(opinion.userID).then(userProfile => {
           opinion.userName = userProfile.nickname;
           opinion.userPicture = userProfile.profilePicture;
-          console.log(opinion);
           this.ShowOpinion(opinion)
         });
       }
@@ -115,6 +113,7 @@ export class OpinieComponent implements OnInit {
     componentRef.canEdit = opinion.canEdit;
     componentRef.ID = opinion.ID;
     componentRef.userID = opinion.userID;
+    componentRef.productID = opinion.productID;
     componentRef.review = opinion.review;
     componentRef.ratings = opinion.ratings;
     componentRef.opinionRating = opinion.opinionRating;
@@ -124,7 +123,11 @@ export class OpinieComponent implements OnInit {
   }
 
   ModifyOpinion(opinion : CompleteOpinionComponent): void {
-    this.DB_ModifyOpinion(this.OpinionComponentToDB(opinion));
+    this.DB_GetOpinionByID(opinion.ID).then(res => {
+      res.review = { userID: opinion.userID, text: opinion.review.text };
+      // TODO: rest
+      this.DB_ModifyOpinion(res)
+    });
   }
 
   DeleteOpinion(ID: string): boolean {
@@ -150,6 +153,7 @@ export class OpinieComponent implements OnInit {
   // region Converters
   // ----------
   OpinionComponentToDB(opinion : CompleteOpinionComponent): Opinion {
+    //todo: populate list
     let opinionRatingsDB: Array<OpinionRating> = new Array<OpinionRating>();
     let ratingsDB: Array<Rating> = new Array<Rating>();
     for (const rating of opinion.ratings) {
@@ -190,7 +194,6 @@ export class OpinieComponent implements OnInit {
 
     opinionComponent.canEdit = (this.isUserType(UserType.logged) &&
                                 this.userLoggedID === opinion.userId);
-
     return opinionComponent;
   }
   //endregion
@@ -214,8 +217,9 @@ export class OpinieComponent implements OnInit {
   }
 
   private DB_ModifyOpinion(opinion: Opinion) {
+    console.log(opinion);
     fetch(`http://localhost:3000/api/v1/opinie/modify`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'

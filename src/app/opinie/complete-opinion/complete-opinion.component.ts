@@ -24,7 +24,7 @@ export class CompleteOpinionComponent implements OnInit {
   userID : string = "";
 
   opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
-  review : ReviewComponent = new ReviewComponent;
+  review : ReviewComponent;
   ratings : Array<RatingComponent> = [];
 
   @ViewChild(RatingsHostDirective, {static: true}) ratingsHost!: RatingsHostDirective;
@@ -40,7 +40,9 @@ export class CompleteOpinionComponent implements OnInit {
   opinieParent : OpinieComponent = new OpinieComponent();
   SetParent(newParent : OpinieComponent) { this.opinieParent = newParent}
 
-  constructor() {}
+  constructor() {
+    this.review = new ReviewComponent(this);
+  }
 
   ngOnInit(): void {
     this.SpawnRatings();
@@ -85,7 +87,7 @@ export class CompleteOpinionComponent implements OnInit {
   }
 
   AddRating(name : string, value : number) : void {
-    let newRating: RatingComponent = new RatingComponent;
+    let newRating: RatingComponent = new RatingComponent();
     newRating.name = name;
     newRating.rating = value;
     newRating.isReadonly = !this.canEdit;
