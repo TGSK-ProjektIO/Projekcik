@@ -23,7 +23,7 @@ export class CompleteOpinionComponent implements OnInit {
   // Needed to assign [[ user ]] to [[ opinion ]]
   userID : string = "";
 
-  opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
+  opinionRating : OpinionRatingComponent;
   review : ReviewComponent;
   ratings : Array<RatingComponent> = [];
 
@@ -42,6 +42,7 @@ export class CompleteOpinionComponent implements OnInit {
 
   constructor() {
     this.review = new ReviewComponent(this);
+    this.opinionRating = new OpinionRatingComponent();
   }
 
   ngOnInit(): void {
@@ -54,6 +55,7 @@ export class CompleteOpinionComponent implements OnInit {
   SpawnRatings() {
     for (let rating of this.ratings) {
       let ratingRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
+      ratingRef.SetParent(this);
       ratingRef.rating = rating.rating;
       ratingRef.name = rating.name;
       ratingRef.isReadonly = !this.canEdit;
@@ -87,7 +89,7 @@ export class CompleteOpinionComponent implements OnInit {
   }
 
   AddRating(name : string, value : number) : void {
-    let newRating: RatingComponent = new RatingComponent();
+    let newRating: RatingComponent = new RatingComponent(this);
     newRating.name = name;
     newRating.rating = value;
     newRating.isReadonly = !this.canEdit;
@@ -101,4 +103,11 @@ export class CompleteOpinionComponent implements OnInit {
   protected CanEdit() : boolean { return this.canEdit; }
 
   public ModifyOpinion() { this.opinieParent.ModifyOpinion(this); }
+  //TODO: why tf binding doesnt work and I have to resort to this monstrosity
+  public ModifyRating(name : string, value : number) {
+    for (let rating of this.ratings) {
+      if(rating.name == name) { rating.rating = value; break; }
+    }
+    this.opinieParent.ModifyOpinion(this);
+  }
 }

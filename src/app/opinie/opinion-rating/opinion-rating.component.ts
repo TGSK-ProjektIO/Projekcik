@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-enum OpinionRatingState { None, Liked, Disliked }
+export enum OpinionRatingState { None, Liked, Disliked }
 
 @Component({
   selector: 'app-opinion-rating',

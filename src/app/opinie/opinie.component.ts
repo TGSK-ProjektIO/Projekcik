@@ -7,6 +7,7 @@ import {Opinion} from "../../../express-backend-api/model/opinion";
 import {OpinionRating} from "../../../express-backend-api/model/opinion.rating";
 import {Rating} from "../../../express-backend-api/model/rating";
 import {Profile} from "../../../express-backend-api/model/profile";
+import {OpinionRatingComponent, OpinionRatingState} from "./opinion-rating/opinion-rating.component";
 
 
 // TODO: get user type from session
@@ -39,6 +40,10 @@ export class OpinieComponent implements OnInit {
   constructor() {  }
 
   ngOnInit(): void {
+    // TODO: delet
+    this.id = "93887";
+    this.userLoggedID = "93887";
+
     switch (this.pageType) {
       case PageType.product: this.ShowProductOpinions(this.id); break;
       case PageType.profile: this.ShowUserOpinions(this.id); break;
@@ -123,18 +128,34 @@ export class OpinieComponent implements OnInit {
   }
 
   ModifyOpinion(opinion : CompleteOpinionComponent): void {
+    console.log(opinion);
     //TODO: check
     this.DB_GetOpinionByID(opinion.ID).then(res => {
       res.review = { userID: opinion.userID, text: opinion.review.text };
       let ratings: Array<Rating> = new Array<Rating>();
       for (const rating of opinion.ratings) {
-        console.log(rating);
         ratings.push({userID: res.userId, name: rating.name, rating: rating.rating});
+        console.log({userID: res.userId, name: rating.name, rating: rating.rating});
       }
       res.ratings = ratings;
 
-      res.opinionRatings.push({userID: this.userLoggedID, like: opinion.opinionRating.likes, dislike: opinion.opinionRating.dislikes});
-
+      let foundUser = false;
+      for (const opinionRating of res.opinionRatings) {
+        if(opinionRating.userID == this.userLoggedID) {
+          switch(opinion.opinionRating.ratingState) {
+            case OpinionRatingState.Liked: opinionRating.like++; break;
+            case OpinionRatingState.Disliked: opinionRating.dislike++; break;
+          }
+          foundUser = true;
+          break;
+        }
+      }
+      if(!foundUser)
+        res.opinionRatings.push(
+          {userID: this.userLoggedID,
+            like: opinion.opinionRating.likes,
+            dislike: opinion.opinionRating.dislikes});
+      console.log(res);
       this.DB_ModifyOpinion(res)
     });
   }
