@@ -7,8 +7,9 @@ import { OpinionRatingComponent } from './opinion-rating/opinion-rating.componen
 import { RatingModule } from "ngx-bootstrap/rating";
 import { FormsModule } from "@angular/forms";
 import { CompleteOpinionComponent } from "./complete-opinion/complete-opinion.component";
-import { OpinionHostDirective } from './opinion-host.directive';
+import { OpinionHostDirective, RatingsHostDirective, ReviewHostDirective, OpinionRatingHostDirective } from './opinion-host.directive';
 import { OpinionCreatorComponent } from "./opinion-creator/opinion-creator.component";
+import { OpinieRoutingModule } from "./opinie-routing.module";
 
 
 
@@ -20,7 +21,10 @@ import { OpinionCreatorComponent } from "./opinion-creator/opinion-creator.compo
     OpinionRatingComponent,
     CompleteOpinionComponent,
     OpinionHostDirective,
-    OpinionCreatorComponent
+    OpinionCreatorComponent,
+    RatingsHostDirective,
+    ReviewHostDirective,
+    OpinionRatingHostDirective
   ],
   exports: [
     OpinieComponent,
@@ -29,7 +33,8 @@ import { OpinionCreatorComponent } from "./opinion-creator/opinion-creator.compo
   imports: [
     CommonModule,
     RatingModule,
-    FormsModule
+    FormsModule,
+    OpinieRoutingModule
   ]
 })
 export class OpinieModule {

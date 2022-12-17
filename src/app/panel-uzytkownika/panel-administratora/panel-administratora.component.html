@@ -1,7 +1,9 @@
-<div class="admin-dashboard-panel">
-  <div class="sub-panel">
+<html>
+<body>
+<div class="bg-dark text-white" style="width: 90%; margin: auto; padding: 1em; border-radius: 1rem">
+  <div class="bg-white text-white bg-opacity-10" style="padding: 1em">
     <h2>Nierozpatrzone sugestie</h2>
-      <div class="scroller-sub-panel">
+      <div style="height: 50vh; overflow-y: scroll">
         <div class="sub-sub-panel" *ngFor="let suggestion of mock_suggestions">
           <h3>{{suggestion.type}}</h3>
           Produkt: {{ suggestion.product }} <br/>
@@ -12,9 +14,9 @@
         </div>
       </div>
   </div>
-  <div class="sub-panel">
+  <div class="bg-white text-white bg-opacity-10" style="margin-top: 1em; padding: 1em">
     <h2>Zarządzanie produktami</h2>
-      <div class="scroller-sub-panel">
+      <div style="height: 50vh; overflow-y: scroll">
         <div class="sub-sub-panel" *ngFor="let product of mock_products">
           <h2>{{product.name}}</h2>
           <h3>Kategoria: {{product.category}}</h3>
@@ -25,26 +27,30 @@
           <button>Usuń produkt</button>
         </div>
       </div>
-    <button>Dodaj nowy produkt</button>
+    <br/>
+    <button style="margin: 0 0 1em 1em">Dodaj nowy produkt</button>
   </div>
-  <div class="sub-panel">
+  <div class="bg-white text-white bg-opacity-10" style="margin-top: 1em; padding: 1em">
     <h2>Zarządzanie kategoriami</h2>
-    <div class="scroller-sub-panel">
+    <div style="height: 50vh; overflow-y: scroll">
       <div class="sub-sub-panel" *ngFor="let category of mock_categories">
         <h3>{{category.name}}</h3>
         <button>Edytuj kategorię</button>
         <button>Usuń kategorię</button>
       </div>
     </div>
-    <button>Nowa kategoria</button>
+    <br/>
+    <button style="margin: 0 0 1em 1em">Nowa kategoria</button>
   </div>
-  <div class="sub-panel">
+  <div class="bg-white text-white bg-opacity-10" style="margin-top: 1em; padding: 1em">
     <h2>Zablokuj użytkownika</h2>
     Pseudonim <br/>
     <input type="text" style="width: 20em;" placeholder="Pseudonim"> <br/> <br/>
     Powód blokady <br/>
     <textarea style="width: 25em;" placeholder="Powód"></textarea> <br/>
-    <button (click)="banUser()">Zablokuj użytkownika</button>
+    <button (click)="banUser()" style="margin: 0 0 1em 1em">Zablokuj użytkownika</button>
   </div>
-  <button [routerLink]="['/']" style="margin: 0 0 1em 1em">Wróć</button>
+  <button (click)="redirectToProfile()" style="margin: 0 0 1em 1em">Wróć</button>
 </div>
+</body>
+</html>

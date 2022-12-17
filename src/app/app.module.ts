@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { LogowanieIRejestracjaComponent } from './logowanie-i-rejestracja/logowanie-i-rejestracja.component';
-import { OpinieComponent } from './opinie/opinie.component';
 import { PanelUzytkownikaComponent } from './panel-uzytkownika/panel-uzytkownika.component';
 import { ProduktComponent } from './produkt/produkt.component';
 import { SugestieIZgloszeniaComponent } from './sugestie-i-zgloszenia/sugestie-i-zgloszenia.component';
@@ -12,9 +11,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {LogowanieIRejestracjaModule} from "./logowanie-i-rejestracja/logowanie-i-rejestracja.module";
 import {OpinieModule} from "./opinie/opinie.module";
+import {ProduktModule} from "./produkt/produkt.module";
 import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
 import {RouterOutlet} from "@angular/router";
+import { HttpClientModule } from '@angular/common/http';
+import { ProduktRoutingModule } from './produkt/produkt-routing.module';
+import {AlertConfig, AlertModule} from "ngx-bootstrap/alert";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
@@ -28,7 +31,6 @@ import {MatOptionModule} from "@angular/material/core";
   declarations: [
     AppComponent,
     LogowanieIRejestracjaComponent,
-    OpinieComponent,
     PanelUzytkownikaComponent,
     ProduktComponent,
     SugestieIZgloszeniaComponent,
@@ -40,8 +42,13 @@ import {MatOptionModule} from "@angular/material/core";
     PanelUzytkownikaModule,
     RouterOutlet,
     LogowanieIRejestracjaModule,
-    AppRoutingModule,
+    ProduktModule,
+    ProduktRoutingModule,
     OpinieModule,
+    AppRoutingModule,
+    HttpClientModule,
+    AppRoutingModule,
+    AlertModule,
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
@@ -52,7 +59,7 @@ import {MatOptionModule} from "@angular/material/core";
     MatCheckboxModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AlertConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

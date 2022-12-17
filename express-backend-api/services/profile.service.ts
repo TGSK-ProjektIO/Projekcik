@@ -69,41 +69,15 @@ export class ProfileService {
     return this.profileRepository.read(userId);
   }
 
+  public getProfileByUserId(userId: string): Promise<Profile> {
+    return this.profileRepository.readByUserId(userId);
+  }
+
   public getProfileByNickname(nickname: string): Promise<Profile> {
     return this.profileRepository.readByNickname(nickname);
   }
 
-  // TODO: Phonk about stuff here
-/*  public getNickname(id: string): Promise<boolean> {
-    return new Promise<boolean>(async (resolve, reject) => {
-      try {
-        const profile = await this.profileRepository.read(id);
-        resolve(profile.nickname === null);
-      } catch (error) {
-        reject();
-      }
-    });
+  public getAllProfiles(): Promise<Array<Profile>> {
+    return this.profileRepository.readAll();
   }
-
-  private getProfilePicture(profilePicture: string): Promise<boolean> {
-    return new Promise<boolean>(async (resolve) => {
-      try {
-        await this.profileRepository.readByEmail(email);
-        resolve(true);
-      } catch (error) {
-        resolve(false);
-      }
-    });
-  }
-
-  private isEmailCorrect(email: string): Promise<boolean> {
-    return new Promise<boolean>(async (resolve) => {
-      try {
-        await this.userRepository.readByEmail(email);
-        resolve(true);
-      } catch (error) {
-        resolve(false);
-      }
-    });
-  }*/
 }

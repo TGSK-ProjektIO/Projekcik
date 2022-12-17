@@ -8,6 +8,30 @@
     <div class="container py-1 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <alert type="warning"
+                 [dismissible]="true"
+                 [isOpen]="isAlertBadRequestOpened"
+                 (onClosed)="onAlertBadRequestClose()">
+            <p class="text-center">Bad request was sent to backend</p>
+          </alert>
+          <alert type="warning"
+                 [dismissible]="true"
+                 [isOpen]="isAlertNotVerifiedEmailOpened"
+                 (onClosed)="onAlertNotVerifiedEmailClose()">
+            <p class="text-center">Email was not verified for this account</p>
+          </alert>
+          <alert type="warning"
+                 [dismissible]="true"
+                 [isOpen]="isAlertWrongPasswordOpened"
+                 (onClosed)="onAlertWrongPasswordClose()">
+            <p class="text-center">Password is incorrect</p>
+          </alert>
+          <alert type="warning"
+                 [dismissible]="true"
+                 [isOpen]="isAlertUserNotFoundOpened"
+                 (onClosed)="onAlertUserNotFoundClose()">
+            <p class="text-center">User with given email does not exist</p>
+          </alert>
           <div class="card bg-dark text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
 
@@ -16,19 +40,17 @@
                 <h2 class="fw-bold mb-2 text-uppercase">Sign In</h2>
                 <p class="text-white-50 mb-5">Please enter your e-mail and password!</p>
 
-                <p class="text-danger" [hidden]="!doesAccountExist()">Wrong credentials!</p>
-
                 <div class="form-outline mb-4">
                   <input type="email" id="typeEmailLogin" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="email"/>
                   <label class="form-label" for="typeEmailLogin">E-mail</label>
-                  <p class="text-danger" [hidden]="isEmailValid()">Invalid username</p>
+                  <p class="text-danger" [hidden]="(isEmailValid() || !email.length)">Invalid e-mail</p>
 
                 </div>
 
                 <div class="form-outline mb-4">
                   <input type="password" id="typePasswordLogin" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="password"/>
                   <label class="form-label" for="typePasswordLogin">Password</label>
-                  <p class="text-danger" [hidden]="isPasswordValid()">Invalid password</p>
+                  <p class="text-danger" [hidden]="isPasswordValid() || !password.length">Password must have from 6 to 20 characters, at least one big letter and one number</p>
 
                 </div>
 

@@ -3,16 +3,6 @@
   font-family: "Helvetica";
 }
 
-.OpinionsWindow {
+app-complete-opinion {
   display: block;
-  background-color: #293752;
-  width: 95%;
-  margin: auto;
-  border: #334465 2px outset;
-  border-radius: 5px;
-  padding: 10px;
-}
-
-table {
-  width: 100%;
 }

@@ -12,13 +12,13 @@ form {
   border-radius: 5px;
 }
 
-.creator > app-review {
+app-review {
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.creator > app-rating {
+app-rating {
   display: inline-block;
   margin-right: 2px;
   margin-left: 2px;

@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import {UserRepository} from "../repository/user.repository";
 import {TYPES} from "../config/types.config";
 import {User} from "../model/user";
+import {UserPartial} from "../model/user.partial";
 
 @injectable()
 export class UserService {
@@ -9,7 +10,7 @@ export class UserService {
 
   }
 
-  public registerUser(user: User): Promise<User> {
+  public registerUser(user: UserPartial): Promise<User> {
     return this.userRepository.create(user);
   }
 
@@ -18,8 +19,10 @@ export class UserService {
       try {
         const user = await this.userRepository.read(userId);
         if (user.emailToken === emailToken) {
-          user.isEmailVerified = true;
-          await this.userRepository.update(user);
+          await this.userRepository.update({
+            _id: user._id,
+            isEmailVerified: true
+          });
           resolve(true);
         } else {
           resolve(false);

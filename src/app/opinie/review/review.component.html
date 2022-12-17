@@ -6,6 +6,7 @@
             placeholder="Enter review"
             [value]="GetReview()"
             #inputText name="inputText"
-            (input)="SetReview(inputText.value)"></textarea>
+            (input)="SetReview(inputText.value)"
+            (blur)="OnModify()"></textarea>
 </div>
 
