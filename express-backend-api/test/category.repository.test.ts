@@ -35,17 +35,17 @@ beforeEach(async () => {
 
 });
 
-test('Create Product positive test', async () => {
+test('Create Category positive test', async () => {
   const createdCategory = await categoryRepository.create(category1);
   expect(createdCategory._id).not.toBeNaN();
 });
 
-test('Create Product negative test', async () => {
+test('Create Category negative test', async () => {
   await expect(categoryRepository.create(category2)).rejects.toBeUndefined();
 });
 
 
-test('Get Product positive test', async () => {
+test('Get Category positive test', async () => {
   const createdCategory = await categoryRepository.create(category1);
   // @ts-ignore
   let getCategory = await categoryRepository.read(createdCategory._id);
@@ -54,7 +54,7 @@ test('Get Product positive test', async () => {
 
 
 jest.setTimeout(10000);
-test('Delete Product positive test', async () => {
+test('Delete Category positive test', async () => {
     const createdCategory = await categoryRepository.create(category3);
   // @ts-ignore
   await expect(categoryRepository.delete(createdCategory._id)).resolves.toBeUndefined();
@@ -63,7 +63,7 @@ test('Delete Product positive test', async () => {
 });
 
 //dziala?
-test('Update Product positive test', async () => {
+test('Update Category positive test', async () => {
   let createdCategory = await categoryRepository.create(category3);
   createdCategory.attribute.push({at3: "example"});
   // @ts-ignore

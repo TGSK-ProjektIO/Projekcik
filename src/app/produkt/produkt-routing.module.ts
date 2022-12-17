@@ -5,6 +5,7 @@ import {ProduktDodanieComponent} from "./produkt-dodanie/produkt-dodanie.compone
 import {ProduktModyfikacjaComponent} from "./produkt-modyfikacja/produkt-modyfikacja.component";
 import {ProduktWidokComponent} from "./produkt-widok/produkt-widok.component";
 import {ProduktComponent} from "./produkt.component";
+import { ProduktListaComponent } from './produkt-lista/produkt-lista.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: 'produkt-widok/:id',
         component: ProduktWidokComponent
+      },
+      {
+        path: 'produkt-lista',
+        component: ProduktListaComponent
       },
     ]
   }
