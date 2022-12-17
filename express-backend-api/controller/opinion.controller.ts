@@ -59,13 +59,12 @@ export class OpinionController {
    */
   public modifyOpinion() {
     return async (request: any, response: any) => {
-      let opinion = request.body;
+      let opinion : Opinion = request.body;
       try {
-
         await this.opinionService.updateOpinion(opinion);
         response.status(201).send({
           message: "updated",
-          id: opinion.id
+          id: opinion._id
         });
       } catch (error) {
         response.status(400).send({

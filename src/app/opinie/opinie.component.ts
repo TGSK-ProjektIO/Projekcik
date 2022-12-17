@@ -217,7 +217,6 @@ export class OpinieComponent implements OnInit {
   }
 
   private DB_ModifyOpinion(opinion: Opinion) {
-    console.log(opinion);
     fetch(`http://localhost:3000/api/v1/opinie/modify`, {
       method: 'PUT',
       headers: {
