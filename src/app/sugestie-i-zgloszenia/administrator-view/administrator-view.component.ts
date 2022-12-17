@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 
 import {ReportPartial} from "../../../../express-backend-api/model/report.partial";
+import {Report} from "../../../../express-backend-api/model/report";
 
 @Component({
   selector: 'administrator-view',
@@ -30,19 +31,13 @@ export class AdministratorViewComponent implements OnInit {
   }
 
   onPressed(): void {
-    const report: ReportPartial = {
-      type: this.type,
-      description: this.description,
-      status: 1,
-      idProduct: "1",
-      idUser: "1"
-    };
+    let reports: Array<Report>
     fetch('http://localhost:3000/api/v1/sugestie-i-zgloszenia/report', {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(report)
+      body: JSON.stringify(reports)
     }).then(async response => {
       if (response.status === 201) {}
       if (response.status === 400) {}
