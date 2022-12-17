@@ -152,7 +152,7 @@ export class UserRepository {
         } catch (exception) {
           reject();
         } finally {
-          await client.close();
+          client.close();
         }
     });
   }
