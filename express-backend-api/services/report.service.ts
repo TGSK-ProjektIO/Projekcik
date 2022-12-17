@@ -9,14 +9,15 @@ export class ReportService {
   }
 
   public sendReport(report: Report): Promise<Report> {
-    return this.reportRepository.createReport(report);
+    return this.reportRepository.create(report);
   }
 
   public getReportsByCategory(category: number): Promise<Array<Report>> {
     return this.reportRepository.findByCategory(category);
   }
 
-  public getReports(): Promise<Array<Report>> {
+  public getAllReports(): Promise<Array<Report>> {
     return this.reportRepository.findAll();
   }
+
 }

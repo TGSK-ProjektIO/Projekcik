@@ -45,11 +45,10 @@ export class ReportController {
     }
   }
 
-  public getReports() {
+  public getAllReports() {
     return async (request: any, response: any) => {
-
       try {
-        const reports = await this.reportService.getReports();
+        const reports = await this.reportService.getAllReports();
         return response.status(200).send(reports);
       } catch (error) {
         return response.status(404).send({

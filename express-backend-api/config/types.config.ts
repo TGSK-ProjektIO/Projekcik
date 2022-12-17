@@ -4,7 +4,7 @@ const TYPES = {
   UserController: Symbol.for('UserController'),
   SessionController: Symbol.for('SessionController'),
   ReportController: Symbol.for('ReportController'),
-  
+  ProfileController: Symbol.for('ProfileController'),
   OpinionController: Symbol.for('OpinionController'),
 
   UserRepository: Symbol.for('UserRepository'),
@@ -22,8 +22,8 @@ const TYPES = {
   UserService: Symbol.for('UserService'),
   SessionService: Symbol.for('SessionService'),
   ProfileService: Symbol.for('ProfileService'),
-  OpinionService: Symbol.for('OpinionService')
-  ReportService: Symbol.for('ReportService'),
+  OpinionService: Symbol.for('OpinionService'),
+  ReportService: Symbol.for('ReportService')
 };
 
 export { TYPES };

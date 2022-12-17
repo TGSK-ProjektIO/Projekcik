@@ -28,7 +28,7 @@ export class ReportRepository {
     });
   }
 
-  public async createReport(report: Report): Promise<Report> {
+  public async create(report: Report): Promise<Report> {
     return new Promise<Report>(async (resolve, reject) => {
       if (report.id) {
         return reject();
@@ -37,7 +37,7 @@ export class ReportRepository {
       try {
         const db = client.db(DB_NAME);
         const collection = db.collection(REPORT_COLLECTION_NAME);
-        if (await collection.count({_id: report.id}) >= 1) {
+        if (await collection.count({id: report.id}) >= 1) {
           return reject();
         }
         const response = await collection.insertOne(report);
@@ -46,7 +46,7 @@ export class ReportRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -115,7 +115,7 @@ export class ReportRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
