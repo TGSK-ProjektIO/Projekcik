@@ -3,6 +3,7 @@ import {TYPES} from "../config/types.config";
 import {OpinionService} from "../services/opinion.service";
 import {SessionService} from "../services/session.service";
 import {Opinion} from "../model/opinion";
+import {ObjectId} from "mongodb";
 
 @injectable()
 export class OpinionController {
@@ -58,12 +59,12 @@ export class OpinionController {
    */
   public modifyOpinion() {
     return async (request: any, response: any) => {
-      let opinion = request.body;
+      let opinion : Opinion = request.body;
       try {
         await this.opinionService.updateOpinion(opinion);
         response.status(201).send({
           message: "updated",
-          id: opinion.id
+          id: opinion._id
         });
       } catch (error) {
         response.status(400).send({

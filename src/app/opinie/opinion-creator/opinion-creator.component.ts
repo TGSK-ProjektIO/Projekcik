@@ -14,6 +14,7 @@ import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.com
 export class OpinionCreatorComponent implements AfterViewInit {
 
   ratings : RatingComponent[] = [];
+  // @ts-ignore
   review : ReviewComponent = new ReviewComponent();
 
   @ViewChild(OpinionHostDirective, {static: true}) ratingsHost!: OpinionHostDirective;
