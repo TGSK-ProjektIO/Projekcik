@@ -2,7 +2,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
 import {EmailService} from "../services/email.service";
-
+import {createHash} from "crypto";
 
 @injectable()
 export class UserController {
@@ -95,6 +95,46 @@ export class UserController {
      } catch (error) {
        return response.status(404).send({
          message: "User not found"
+       });
+     }
+   }
+ }
+
+ public resetPassword() {
+   return async (request: any, response: any) => {
+     const userId = request.body.userId;
+     const emailToken = request.body.emailToken;
+     const newPassword = createHash('sha256').update(request.body.newPassword).digest('hex');
+     if (!userId) {
+       return response.status(400).send({
+         error: "Missing required 'userId' parameter"
+       });
+     }
+     if (!emailToken) {
+       return response.status(400).send({
+         error: "Missing required 'email' parameter"
+       });
+     }
+     if (!newPassword) {
+       return response.status(400).send({
+         error: "Missing required 'newPassword' parameter"
+       });
+     }
+
+     try {
+       const user = await this.userService.getUser(userId);
+       if (user.emailToken !== emailToken) {
+         return response.status(400).send({
+           error: "Given emailToken is invalid"
+         });
+       }
+       await this.userService.updatePassword(userId, newPassword);
+       return response.status(200).send({
+         message: "Password changed successfully"
+       });
+     } catch (error) {
+       return response.status(404).send({
+         error: "User not found"
        });
      }
    }
