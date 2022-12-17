@@ -27,15 +27,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 0.7em;
 }
 
-.bg-dark, .bg-white {
-  border-radius: 1rem;
-  padding: 0.1em;
-}
-
-.bg-blue {
-  background-color: red;
-}
-
 button, input::file-selector-button{
   padding: 0.3em;
   margin: 8px 4px 8px 0;
