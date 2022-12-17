@@ -7,17 +7,20 @@ import {ProduktRoutingModule} from './produkt-routing.module';
 
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
+import { ProduktListaComponent } from './produkt-lista/produkt-lista.component';
 
 @NgModule({
   declarations: [
     ProduktDodanieComponent,
     ProduktModyfikacjaComponent,
-    ProduktWidokComponent
+    ProduktWidokComponent,
+    ProduktListaComponent
   ],
   exports: [
     ProduktDodanieComponent,
     ProduktModyfikacjaComponent,
-    ProduktWidokComponent
+    ProduktWidokComponent,
+    ProduktListaComponent
   ],
   imports: [
     CommonModule,
