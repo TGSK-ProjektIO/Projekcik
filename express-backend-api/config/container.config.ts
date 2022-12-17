@@ -21,7 +21,6 @@ import {OpinionController} from "../controller/opinion.controller";
 import {OpinionRouter} from "../router/opinion.router";
 import {OpinionService} from "../services/opinion.service";
 
-
 import {ProductController} from "../controller/product.controller";
 import {ProductRouter} from "../router/product.router";
 import {ProductService} from "../services/product.service";

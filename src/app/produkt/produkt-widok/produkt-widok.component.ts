@@ -37,8 +37,6 @@ export class ProduktWidokComponent implements OnInit {
       this.router.navigateByUrl(this.modifyPath);
     }
 
-
-
     deleteProduct() {
 
     }

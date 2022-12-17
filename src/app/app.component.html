@@ -1,17 +1,11 @@
-<html>
-  <body>
-    <section class="background min-vh-100 vw-1">
-        <nav class="navbar bg-dark py-1 h-100">
-          <div class="container-fluid bg-dark">
-            <a class="navbar-brand text-white">OpinionCollector</a>
-            <form class="d-flex" role="search">
-              <button class="btn btn-outline-light btn-lg px-5" type="submit" routerLink="/login">Search</button>
-              <button class="btn btn-outline-light btn-lg px-5" type="submit" routerLink="/login">Log In</button>
-              <button class="btn btn-outline-light btn-lg px-5" type="submit" routerLink="/register">Sign Up</button>
-            </form>
-          </div>
-        </nav>
-    </section>
-  </body>
-  <router-outlet></router-outlet>
-</html>
+<nav class="navbar bg-dark py-1 h-100 mb-5" style="border-radius: 25px">
+    <div class="container-fluid bg-dark" style="border-radius: 25px">
+      <a class="navbar-brand text-white">OpinionCollector</a>
+      <form class="d-flex">
+        <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/search">Search</button>
+        <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/login">Log In</button>
+        <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/register">Sign Up</button>
+      </form>
+    </div>
+</nav>
+<router-outlet></router-outlet>

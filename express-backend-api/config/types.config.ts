@@ -28,7 +28,7 @@ const TYPES = {
   CategoryService: Symbol.for('CategoryService'),
   EmailService: Symbol.for('EmailService'),
   ProfileService: Symbol.for('ProfileService'),
-  OpinionService: Symbol.for('OpinionService')
+  OpinionService: Symbol.for('OpinionService'),
 };
 
 export { TYPES };

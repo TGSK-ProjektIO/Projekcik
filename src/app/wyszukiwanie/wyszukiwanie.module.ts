@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WyszukiwanieComponent } from './wyszukiwanie.component';
 import {
   PolishPaginatorIntl,
   WyszukajProduktLubProfilComponent
@@ -13,8 +12,6 @@ import {MatSelectModule} from "@angular/material/select";
 import {FormsModule} from "@angular/forms";
 import {MatSortModule} from "@angular/material/sort";
 import {MatTableModule} from "@angular/material/table";
-
-
 
 @NgModule({
   declarations: [
