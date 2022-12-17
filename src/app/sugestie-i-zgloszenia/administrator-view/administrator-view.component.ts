@@ -3,6 +3,9 @@ import {Router} from "@angular/router";
 
 import {ReportPartial} from "../../../../express-backend-api/model/report.partial";
 import {Report} from "../../../../express-backend-api/model/report";
+import {Opinion} from "../../../../express-backend-api/model/opinion";
+import {CompleteOpinionComponent} from "../../opinie/complete-opinion/complete-opinion.component";
+import {UserReportComponent} from "../user-report/user-report.component";
 
 @Component({
   selector: 'administrator-view',
@@ -22,25 +25,21 @@ export class AdministratorViewComponent implements OnInit {
   //  this.reports = this.interface.getReportsByCategory(TypeOfReport.ErrorInDescription);
   //}
 
-  description: string = "lol"
-  type: number = 1;
-
   constructor(
     private router: Router
   ) {
   }
 
-  onPressed(): void {
-    let reports: Array<Report>
-    fetch('http://localhost:3000/api/v1/sugestie-i-zgloszenia/report', {
+  private async onPressed(): Promise<Array<Report>> {
+    return await fetch(`http://localhost:3000/api/v1/sugestie-i-zgloszenia/getReports`, {
       method: 'GET',
       headers: {
+        'Accept': '*/*',
         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(reports)
-    }).then(async response => {
-      if (response.status === 201) {}
-      if (response.status === 400) {}
+      }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
     }).catch(err => {
       console.error(err);
     });
