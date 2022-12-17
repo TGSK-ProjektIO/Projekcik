@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PageType} from "../../opinie/opinie.component";
 import {Router} from "@angular/router";
+import {PanelUzytkownikaComponent} from "../panel-uzytkownika.component";
 
 @Component({
   selector: 'app-panel-profilu',
@@ -11,7 +12,11 @@ export class PanelProfiluComponent implements OnInit {
 
   pageTypes: PageType = PageType.profile
 
-  constructor(private router: Router) { }
+  showEditButton: boolean = false
+  showAdminButton: boolean = false
+  showBanned: boolean = false
+
+  constructor(private router: Router, public mainComp: PanelUzytkownikaComponent) { }
 
   ngOnInit(): void {
 
