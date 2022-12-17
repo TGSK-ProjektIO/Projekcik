@@ -123,9 +123,18 @@ export class OpinieComponent implements OnInit {
   }
 
   ModifyOpinion(opinion : CompleteOpinionComponent): void {
+    //TODO: check
     this.DB_GetOpinionByID(opinion.ID).then(res => {
       res.review = { userID: opinion.userID, text: opinion.review.text };
-      // TODO: rest
+      let ratings: Array<Rating> = new Array<Rating>();
+      for (const rating of opinion.ratings) {
+        console.log(rating);
+        ratings.push({userID: res.userId, name: rating.name, rating: rating.rating});
+      }
+      res.ratings = ratings;
+
+      res.opinionRatings.push({userID: this.userLoggedID, like: opinion.opinionRating.likes, dislike: opinion.opinionRating.dislikes});
+
       this.DB_ModifyOpinion(res)
     });
   }
