@@ -46,7 +46,6 @@ test('Create Report negative test', async () => {
 
 test('Read Report positive test', async () => {
   let createdReport = await reportRepository.create(validReport);
-  //console.log(createdReport.id.toString());
   let readReport = await reportRepository.read(createdReport._id.toString());
   expect(readReport).toEqual(createdReport);
 });
@@ -61,7 +60,7 @@ test("Update Report positive test", async () => {
   await expect(reportRepository.read(createdReport._id.toString())).resolves.toEqual(createdReport);
 })
 
-test('Read all Profile positive test', async () => {
+test('Read all Reports positive test', async () => {
   let createdProfile = await reportRepository.create(validReport);
   let readProfile = await reportRepository.readAll();
   expect(readProfile).toContainEqual(createdProfile);

@@ -6,14 +6,30 @@
 <section class="container-fluid min-vh-100 vw-100">
   <div class="container py-1 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+      <div class="col-12 col-md-10 col-lg-10 col-xl-8">
 
         <div class="card bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
             <div class="mb-md-5 mt-md-4 pb-2">
 
+              <!--
               <h2 class="fw-bold mb-2 text-uppercase">ADMINISTRATOR VIEW</h2>
-              <button class="btn btn-outline-light btn-lg px-5" (click)="onPressed()">Wyświetl sugestie</button>
+              <button class="btn btn-outline-light btn-lg px-5" (click)="onPressedShowSingle()">Wyświetl sugestie</button>
+              <p>{{id}}</p>
+              <p>{{type}}</p>
+              <p>{{description}}</p>
+              <p>{{status}}</p>
+              <p>{{userId}}</p>
+              <p>{{productId}}</p>
+              -->
+
+              <button class="btn btn-outline-light btn-lg px-5" (click)="onPressedShowAll()">Wyświetl wszystkie sugestie</button>
+
+              <p>{{indicator}}</p>
+
+              <div *ngFor="let report of reports">
+                <p>HELLO THERE</p>
+              </div>
 
             </div>
           </div>

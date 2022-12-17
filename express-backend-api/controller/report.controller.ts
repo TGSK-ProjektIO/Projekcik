@@ -12,13 +12,6 @@ export class ReportController {
 
   public sendReport() {
     return async (request: any, response: any) => {
-      //const report: ReportPartial = {
-      //  description: request.body.description,
-      //  status: request.body.status,
-      //  type: request.body.type,
-      //  idProduct: request.body.idProduct,
-      //  idUser: request.body.idProduct
-      //};
       let report = request.body;
       try {
         const sentReport = await this.reportService.sendReport(report);
@@ -29,6 +22,28 @@ export class ReportController {
       } catch (error) {
         response.status(400).send({
           message: "Invalid params"
+        });
+      }
+    }
+  }
+
+  public readReport() {
+    return async (request: any, response: any) => {
+      let id = request.params.id;
+      if (!id) {
+        return response.status(400).send({
+          message: "Request is missing required 'id' parameter"
+        });
+      }
+
+      try {
+        const report = await this.reportService.readReportById(id);
+        return response.status(200).send(
+          report
+        );
+      } catch (error) {
+        return response.status(404).send({
+          message: "Report not found"
         });
       }
     }

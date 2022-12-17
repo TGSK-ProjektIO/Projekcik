@@ -13,6 +13,10 @@ export class ReportService {
     return this.reportRepository.create(report);
   }
 
+  public readReportById(id: string): Promise<Report> {
+    return this.reportRepository.read(id);
+  }
+
   public getReportsByCategory(category: number): Promise<Array<Report>> {
     return this.reportRepository.findByCategory(category);
   }
