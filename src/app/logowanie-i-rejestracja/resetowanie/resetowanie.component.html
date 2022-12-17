@@ -8,6 +8,30 @@
   <div class="container py-1 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <alert type="success"
+               [dismissible]="true"
+               [isOpen]="isSuccessAlertOpen"
+               (onClosed)="onCloseSuccessAlert()">
+          <p class="text-center">We have sent password reset email message for given address</p>
+        </alert>
+        <alert type="warning"
+               [dismissible]="true"
+               [isOpen]="isWarningAlertOpen"
+               (onClosed)="onCloseWarningAlert()">
+          <p class="text-center">User with given email does not exist</p>
+        </alert>
+        <alert type="warning"
+               [dismissible]="true"
+               [isOpen]="isConfirmedAlertOpen"
+               (onClosed)="onCloseConfirmedAlert()">
+          <p class="text-center">This email is not confirmed</p>
+        </alert>
+        <alert type="danger"
+               [dismissible]="true"
+               [isOpen]="isFailureAlertOpen"
+               (onClosed)="onCloseFailureAlert()">
+          <p class="text-center">Unknown error has occurred</p>
+        </alert>
         <div class="card bg-dark text-white" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
 
@@ -17,11 +41,13 @@
               <p class="text-white-50 mb-5">Please enter your user account's verified email address</p>
 
               <div class="form-outline mb-4">
-                <input type="email" id="typeEmailReset" class="form-control form-control-lg bg-dark text-white" />
+                <input type="email" id="typeEmailReset" class="form-control form-control-lg bg-dark text-white" [(ngModel)]="email"/>
                 <label class="form-label" for="typeEmailReset">E-mail</label>
+                <p class="text-danger" [hidden]="(isEmailValid() || !email.length)">Invalid e-mail</p>
+
               </div>
 
-              <button class="btn btn-outline-light btn-lg px-5" type="submit">Send password reset e-mail</button>
+              <button class="btn btn-outline-light btn-lg px-5" type="submit" (click)="resetPassword()">Send password reset e-mail</button>
 
             </div>
 

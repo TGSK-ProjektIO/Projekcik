@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./weryfikacja-potwierdzenie.component.css']
 })
 export class WeryfikacjaPotwierdzenieComponent implements OnInit {
+  message = 'Waiting for server response...';
 
   constructor(
     private router: Router,
@@ -26,7 +27,17 @@ export class WeryfikacjaPotwierdzenieComponent implements OnInit {
         "userId": id,
         "emailToken": token
       })
-    })
+    }).then(response => {
+      if (response.status === 404) {
+        this.message = 'User is already verified';
+      } else if (response.status === 400) {
+        this.message = 'Given email token is invalid';
+      } else {
+        this.message = 'Email verified successfully';
+      }
+    }).catch(e => {
+      this.message = 'Internal server error';
+    });
   }
 
   redirectToMainPage() {
