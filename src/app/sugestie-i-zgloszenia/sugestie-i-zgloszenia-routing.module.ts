@@ -5,6 +5,9 @@ import {AdministratorViewComponent} from "./administrator-view/administrator-vie
 import {UserViewComponent} from "./user-view/user-view.component";
 import {UserReportComponent} from "./user-report/user-report.component";
 import {SugestieIZgloszeniaComponent} from "./sugestie-i-zgloszenia.component";
+import {AllReportsAdminComponent} from "./administrator-view/all-reports-admin/all-reports-admin.component";
+import {AllReportsUserComponent} from "./user-view/all-reports-user/all-reports-user.component";
+import {UserReportFormComponent} from "./user-report/user-report-form/user-report-form.component";
 
 const routes: Routes = [
   {
@@ -13,15 +16,33 @@ const routes: Routes = [
     children: [
       {
         path: 'administrator-view',
-        component: AdministratorViewComponent
+        component: AdministratorViewComponent,
+        children: [
+          {
+            path: 'all-reports-admin',
+            component: AllReportsAdminComponent
+          }
+        ]
       },
       {
         path: 'user-view',
-        component: UserViewComponent
+        component: UserViewComponent,
+        children: [
+          {
+            path: 'all-reports-user',
+            component: AllReportsUserComponent
+          }
+        ]
       },
       {
         path: 'user-report',
-        component: UserReportComponent
+        component: UserReportComponent,
+        children: [
+          {
+            path: 'user-report-form',
+            component: UserReportFormComponent
+          }
+        ]
       }
     ]
   }
