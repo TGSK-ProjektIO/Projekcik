@@ -1,10 +1,19 @@
 import {Session} from "../model/session"
 import {DATABASE_URi, DB_NAME, SESSION_COLLECTION_NAME} from "../config/mongo.config";
 import {MongoClient, ObjectId} from "mongodb";
-import {injectable} from "inversify";
+import {inject, injectable} from "inversify";
+import {SessionPartial} from "../model/session.partial";
+import {SESSION_DURATION} from "../config/session.config";
+import moment from "moment";
+import {TYPES} from "../config/types.config";
+import {UserRepository} from "./user.repository";
 
 @injectable()
 export class SessionRepository {
+  constructor(@inject(TYPES.UserRepository) private userRepository: UserRepository) {
+
+  }
+
   private createClient(): MongoClient {
     return new MongoClient(DATABASE_URi);
   }
@@ -28,22 +37,23 @@ export class SessionRepository {
     });
   }
 
-  public async create(session: Session): Promise<Session> {
+  public async create(sessionParams: SessionPartial): Promise<Session> {
     return new Promise<Session>(async (resolve, reject) => {
-      if (session._id) {
-        return reject();
-      }
       const client = this.createClient();
       try {
+        // Check if user exists in database
+        await this.userRepository.read(sessionParams.userId.toString());
         const db = client.db(DB_NAME);
         const collection = db.collection(SESSION_COLLECTION_NAME);
-        if (await collection.count({_id: session._id}) >= 1
-        || session.startDate >= session.expireDate) {
-          reject();
-        }
-        const response = await collection.insertOne(session);
-        session._id = response.insertedId;
-        resolve(session);
+        const createdSession: any = {
+          startDate: sessionParams.startDate,
+          expireDate: moment(sessionParams.startDate).add(SESSION_DURATION, 'm').toDate(),
+          invalidated: false,
+          userId: sessionParams.userId
+        };
+        const response = await collection.insertOne(createdSession);
+        createdSession._id = response.insertedId;
+        resolve(createdSession);
       } catch (exception) {
         reject();
       } finally {
@@ -74,10 +84,19 @@ export class SessionRepository {
     });
   }
 
-  public async update(session: Session): Promise<void> {
+  public async update(session: Partial<Session>): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
-      if (!session._id) {
+      if (!session._id || session.userId) {
         return reject();
+      }
+      if (session.expireDate || session.startDate) {
+        const currentSession = await this.read(session._id.toString());
+        if (session.startDate && session.startDate > currentSession.expireDate) {
+            return reject();
+        }
+        if (session.expireDate && currentSession.startDate > session.expireDate) {
+          return reject();
+        }
       }
       const client = this.createClient();
       try {
@@ -86,9 +105,7 @@ export class SessionRepository {
         const response = await collection.updateOne(
           {_id: session._id},
           {
-            $set: {
-              invalidated: session.invalidated
-            }
+            $set: session
           },
           { upsert: false }
         )
@@ -112,7 +129,7 @@ export class SessionRepository {
         const db = client.db(DB_NAME);
         const collection = db.collection(SESSION_COLLECTION_NAME);
         const result = await collection.deleteOne({
-          _id: _id
+          _id: new ObjectId(_id)
         });
         if (result.deletedCount === 1) {
           resolve();

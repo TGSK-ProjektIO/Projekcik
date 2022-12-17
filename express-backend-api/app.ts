@@ -43,3 +43,4 @@ opinionRouter.addRoutes(app);
 profileRouter.addRoutes(app);
 
 module.exports = app;
+export default app;

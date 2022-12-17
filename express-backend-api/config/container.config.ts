@@ -9,6 +9,7 @@ import {UserRouter} from "../router/user.router";
 import {SessionController} from "../controller/session.controller";
 import {SessionRouter} from "../router/session.router";
 import {SessionService} from "../services/session.service";
+import {EmailService} from "../services/email.service";
 
 import {ProfileRepository} from "../repository/profile.repository";
 import {ProfileService} from "../services/profile.service";
@@ -67,6 +68,9 @@ container.bind<UserService>(TYPES.UserService)
   .inSingletonScope();
 container.bind<SessionService>(TYPES.SessionService)
   .to(SessionService)
+  .inSingletonScope();
+container.bind<EmailService>(TYPES.EmailService)
+  .to(EmailService)
   .inSingletonScope();
 container.bind<OpinionService>(TYPES.OpinionService)
   .to(OpinionService)

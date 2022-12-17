@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
 import {SessionService} from "../services/session.service";
+import {createHash} from "crypto";
 
 @injectable()
 export class SessionController {
@@ -11,8 +12,8 @@ export class SessionController {
 
   public login() {
     return async (request: any, response: any) => {
-      const email = request.body.email;
-      const password = request.body.password;
+      const email = request.body?.email;
+      const password = request.body?.password;
 
       if (!email) {
         return response.status(400).send({
@@ -26,11 +27,22 @@ export class SessionController {
 
       try {
         const user = await this.userService.getUserByEmail(email);
-        const session = await this.sessionService.createSession(user);
-        return response.status(201).send(session);
+        if (!user.isEmailVerified) {
+          return response.status(401).send({
+            error: "User email is not verified"
+          });
+        }
+        if(user.password == createHash('sha256').update(password).digest('hex')) {
+          const session = await this.sessionService.createSession(user);
+          return response.status(201).send(session);
+        } else {
+          return response.status(401).send({
+            error: "Wrong password"
+          });
+        }
       } catch (error) {
         return response.status(404).send({
-          message: "User not found"
+          error: "User not found"
         });
       }
     }
@@ -45,20 +57,20 @@ export class SessionController {
   public logout() {
     return async (request: any, response: any) => {
       const sessionId = request.params.id;
-      if (!sessionId) {
-        return response.status(400).send({
-          message: "Request is missing required 'id' parameter"
-        });
-      }
-
       try {
-        await this.sessionService.invalidateSession(sessionId);
-        return response.status(200).send({
-          message: "Logged out successfully"
-        });
+        const ok = await this.sessionService.invalidateSession(sessionId);
+        if (ok) {
+          return response.status(200).send({
+            message: "Logged out successfully"
+          });
+        } else {
+          return response.status(404).send({
+            error: "Session not found"
+          });
+        }
       } catch (error) {
-        return response.status(404).send({
-          message: "Session not found"
+        return response.status(400).send({
+          error: "Session is already invalidated"
         });
       }
     }
@@ -67,12 +79,7 @@ export class SessionController {
   public changePassword() {
     return async (request: any, response: any) => {
       const sessionId = request.params.id;
-      const newPassword = request.body.newPassword;
-      if (!sessionId) {
-        return response.status(400).send({
-          message: "Request is missing required 'id' parameter"
-        });
-      }
+      const newPassword = createHash('sha256').update(request.body.newPassword).digest('hex');
       try {
         const session = await this.sessionService.getSession(sessionId);
         let userId = session.userId;
@@ -91,16 +98,15 @@ export class SessionController {
   public hasExpired() {
     return async (request: any, response: any) => {
       const sessionId = request.params.id;
-      if (!sessionId) {
-        return response.status(400).send({
-          message: "Request is missing required 'id' parameter"
-        });
-      }
       try {
         const session = await this.sessionService.getSession(sessionId);
         if (session.expireDate < new Date()) {
           return response.status(200).send({
-            message: "Session has expired"
+            expired: true
+          });
+        } else {
+          return response.status(200).send({
+            expired: false
           });
         }
       } catch (error) {
@@ -114,11 +120,6 @@ export class SessionController {
   public getSession() {
     return async (request: any, response: any) => {
       const sessionId = request.params.id;
-      if (!sessionId) {
-        return response.status(400).send({
-          message: "Request is missing required 'id' parameter"
-        });
-      }
 
       try {
         const session = await this.sessionService.getSession(sessionId);

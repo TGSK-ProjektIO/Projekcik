@@ -1,11 +1,13 @@
 import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
-
+import {EmailService} from "../services/email.service";
+import {createHash} from "crypto";
 
 @injectable()
 export class UserController {
- constructor(@inject(TYPES.UserService) private userService: UserService) {
+ constructor(@inject(TYPES.UserService) private userService: UserService,
+             @inject(TYPES.EmailService) private emailService : EmailService) {
  }
 
  public registerUser() {
@@ -13,9 +15,10 @@ export class UserController {
      let user = request.body;
      try {
        const registeredUser = await this.userService.registerUser(user);
+       await this.emailService.sendEmailConfirmationMail(registeredUser);
        response.status(201).send({
          message: "created",
-         id: registeredUser._id
+         _id: registeredUser._id
        });
      } catch (error) {
        response.status(400).send({
@@ -25,16 +28,28 @@ export class UserController {
    }
  }
 
- // public resetPassword() {
- //   return (request: any, response: any) => {
- //     let email = request.body?.email;
- //     if (!email) {
- //       return response.status(400).send({
- //         error: "Missing 'email' parameter"
- //       });
- //     }
- //   }
- // }
+ public sendPasswordResetEmail() {
+   return async (request: any, response: any) => {
+     const email = request.params.email;
+     try {
+       const user = await this.userService.getUserByEmail(email);
+       if (user.isEmailVerified) {
+         await this.emailService.sendPasswordResetMail(user);
+         return response.status(200).send({
+           message: "Sent password reset email"
+         });
+       } else {
+         return response.status(403).send({
+           message: "Cannot send reset password mail to unconfirmed user"
+         });
+       }
+     } catch (e) {
+       return response.status(404).send({
+         error: "Cannot find user with given email"
+       });
+     }
+   }
+ }
 
  public confirmEmail() {
    return async (request: any, response: any) => {
@@ -55,7 +70,7 @@ export class UserController {
        const result = await this.userService.confirmEmail(userId ,emailToken);
        if (result) {
          return response.status(200).send({
-           message: "email verified successfuly"
+           message: "email verified successfully"
          });
        } else {
          return response.status(400).send({
@@ -73,11 +88,6 @@ export class UserController {
  public getUser() {
    return async (request: any, response: any) => {
      let userId = request.params.id;
-     if (!userId) {
-       return response.status(400).send({
-         message: "Request is missing required 'userId' parameter"
-       });
-     }
 
      try {
        const user = await this.userService.getUser(userId);
@@ -85,6 +95,46 @@ export class UserController {
      } catch (error) {
        return response.status(404).send({
          message: "User not found"
+       });
+     }
+   }
+ }
+
+ public resetPassword() {
+   return async (request: any, response: any) => {
+     const userId = request.body.userId;
+     const emailToken = request.body.emailToken;
+     const newPassword = createHash('sha256').update(request.body.newPassword).digest('hex');
+     if (!userId) {
+       return response.status(400).send({
+         error: "Missing required 'userId' parameter"
+       });
+     }
+     if (!emailToken) {
+       return response.status(400).send({
+         error: "Missing required 'email' parameter"
+       });
+     }
+     if (!newPassword) {
+       return response.status(400).send({
+         error: "Missing required 'newPassword' parameter"
+       });
+     }
+
+     try {
+       const user = await this.userService.getUser(userId);
+       if (user.emailToken !== emailToken) {
+         return response.status(400).send({
+           error: "Given emailToken is invalid"
+         });
+       }
+       await this.userService.updatePassword(userId, newPassword);
+       return response.status(200).send({
+         message: "Password changed successfully"
+       });
+     } catch (error) {
+       return response.status(404).send({
+         error: "User not found"
        });
      }
    }

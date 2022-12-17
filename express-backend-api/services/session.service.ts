@@ -4,6 +4,7 @@ import {TYPES} from "../config/types.config";
 import {Session} from "../model/session";
 import {User} from "../model/user";
 import moment from "moment";
+import {ObjectId} from "mongodb";
 
 @injectable()
 export class SessionService {
@@ -28,12 +29,17 @@ export class SessionService {
     return this.sessionRepository.create(newSession);
   }
 
-  public invalidateSession(id: string): Promise<boolean> {
-    return new Promise<boolean>(async (resolve) => {
+  public invalidateSession(_id: string): Promise<boolean> {
+    return new Promise<boolean>(async (resolve, reject) => {
       try {
-        const session = await this.sessionRepository.read(id);
-        session.invalidated = true;
-        await this.sessionRepository.update(session);
+        const session = await this.sessionRepository.read(_id);
+        if (session.invalidated) {
+          return reject();
+        }
+        await this.sessionRepository.update({
+          _id: session._id,
+          invalidated: true
+        });
         resolve(true);
       } catch (error) {
         resolve(false);
