@@ -1,6 +1,8 @@
 import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {ReportService} from "../services/report.service";
+import {Report} from "../model/report";
+import {ReportPartial} from "../model/report.partial";
 
 
 @injectable()
@@ -10,12 +12,19 @@ export class ReportController {
 
   public sendReport() {
     return async (request: any, response: any) => {
+      //const report: ReportPartial = {
+      //  description: request.body.description,
+      //  status: request.body.status,
+      //  type: request.body.type,
+      //  idProduct: request.body.idProduct,
+      //  idUser: request.body.idProduct
+      //};
       let report = request.body;
       try {
         const sentReport = await this.reportService.sendReport(report);
         response.status(201).send({
           message: "created",
-          id: sentReport.id
+          _id: sentReport._id
         });
       } catch (error) {
         response.status(400).send({

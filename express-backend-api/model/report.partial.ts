@@ -1,7 +1,4 @@
-import {ObjectId} from "mongodb";
-
-export interface Report {
-  _id: ObjectId;
+export interface ReportPartial {
   type: number;
   description: string;
   status: number;

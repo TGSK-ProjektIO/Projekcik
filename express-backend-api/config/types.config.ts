@@ -25,7 +25,7 @@ const TYPES = {
   SessionService: Symbol.for('SessionService'),
   ProfileService: Symbol.for('ProfileService'),
   OpinionService: Symbol.for('OpinionService'),
-  ReportService: Symbol.for('ReportService')
+  ReportService: Symbol.for('ReportService'),
   ProductRepository: Symbol.for('ProductRepository'),
   CategoryRepository: Symbol.for('CategoryRepository'),
 
