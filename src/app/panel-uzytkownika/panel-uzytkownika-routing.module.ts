@@ -8,24 +8,35 @@ import { PanelEdycjiComponent } from './panel-edycji/panel-edycji.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import {OpinieModule} from "../opinie/opinie.module";
 import {PanelUzytkownikaComponent} from "./panel-uzytkownika.component";
-import {PanelUzytkownikaRoutingModule} from "./panel-uzytkownika-routing.module";
+
+
+const appRoute: Routes = [
+  {
+    path: ``,
+    component: PanelUzytkownikaComponent,
+    children: [
+      {
+        path: '',
+        component: PanelProfiluComponent
+      },
+      {
+        path: 'panel-edycji',
+        component: PanelEdycjiComponent
+      },
+      {
+        path: 'panel-administratora',
+        component: PanelAdministratoraComponent
+      }
+    ]
+  }
+]
 
 @NgModule({
-  declarations: [
-    PanelAdministratoraComponent,
-    PanelProfiluComponent,
-    PanelEdycjiComponent
+  imports: [
+    RouterModule.forRoot(appRoute),
   ],
   exports: [
-    PanelProfiluComponent,
-    PanelAdministratoraComponent,
-    PanelEdycjiComponent
-  ],
-  imports: [
-    CommonModule,
-    MatTabsModule,
-    PanelUzytkownikaRoutingModule,
-    OpinieModule
+    RouterModule
   ]
 })
-export class PanelUzytkownikaModule { }
+export class PanelUzytkownikaRoutingModule { }

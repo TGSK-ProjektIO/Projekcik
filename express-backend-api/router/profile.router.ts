@@ -17,7 +17,8 @@ export class ProfileRouter {
     app.post('/api/v1/panel-uzytkownika/profile/banUser/:id', this.profileController.banUser());
     app.post('/api/v1/panel-uzytkownika/profile/unbanUser/:id', this.profileController.unbanUser());
     app.get('/api/v1/panel-uzytkownika/profile/getProfile/:id', this.profileController.getProfileById());
-    app.get('/api/v1/panel-uzytkownika/profile/getProfile/:nickname', this.profileController.getProfileByNickname());
+    app.get('/api/v1/panel-uzytkownika/profile/getProfileByUserId/:userId', this.profileController.getProfileByUserId());
+    app.get('/api/v1/panel-uzytkownika/profile/getProfileByNickname/:nickname', this.profileController.getProfileByNickname());
     app.get('/api/v1/panel-uzytkownika/profile/getAllProfiles', this.profileController.getAllProfiles());
   }
 }

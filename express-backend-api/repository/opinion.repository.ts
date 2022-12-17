@@ -45,7 +45,7 @@ export class OpinionRepository {
             return reject();
           }
         }
-        const response = await collection.insertOne(opinion);
+        const response = await collection.insertOne(<Opinion>opinion);
         opinion._id = response.insertedId;
         resolve(opinion);
       } catch (exception) {
@@ -111,7 +111,6 @@ export class OpinionRepository {
         let response = await collection.findOne<Opinion>({
           _id: new ObjectId(_id)
         });
-        console.log(response);
         if (response !== null) {
           resolve(response);
         } else {
@@ -166,7 +165,7 @@ export class OpinionRepository {
         const db = client.db(DB_NAME);
         const collection = db.collection(OPINION_COLLECTION_NAME);
         const result = await collection.deleteOne({
-          _id: _id
+          _id: new ObjectId(_id)
         });
         if (result.deletedCount === 1) {
           resolve();
