@@ -43,7 +43,10 @@ export class ProduktListaComponent implements OnInit {
       this.router.navigateByUrl(this.modifyPath);
     }
 
-
+    redirectToDodanie() {
+      this.modifyPath = "/produkt/produkt-dodanie";
+      this.router.navigateByUrl(this.modifyPath);
+    }
 
     deleteProduct() {
 
