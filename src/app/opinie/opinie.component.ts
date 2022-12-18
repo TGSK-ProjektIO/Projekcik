@@ -81,6 +81,9 @@ export class OpinieComponent implements OnInit {
       if(userLogged.isAdministrator) this.userType = UserType.admin;
       else this.userType = UserType.logged;
 
+      // TODO: DELETE
+      this.userType = UserType.logged;
+
     // Get logged user profile
     // -----------------------
     }).then(() => {
@@ -120,6 +123,7 @@ export class OpinieComponent implements OnInit {
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {
     newOpinion.userID = this.userLogged.userId;
     newOpinion.productID = this.id;
+    newOpinion.canEdit = true;
 
     this.DB_CreateOpinion(this.OpinionComponentToDB(newOpinion));
 

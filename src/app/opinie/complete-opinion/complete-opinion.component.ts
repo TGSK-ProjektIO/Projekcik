@@ -72,7 +72,7 @@ export class CompleteOpinionComponent implements OnInit {
   SpawnOpinionRating() {
     let opinionRatingRef = this.opinionRatingHost.viewContainerRef.createComponent<OpinionRatingComponent>(OpinionRatingComponent).instance;
     opinionRatingRef.ratingState = this.opinionRating.ratingState;
-    opinionRatingRef.isReadonly = this.canEdit && this.opinieParent.userType == UserType.logged;
+    opinionRatingRef.isReadonly = this.canEdit || !this.opinieParent.isUserType(UserType.logged);
     opinionRatingRef.likes = this.opinionRating.likes;
     opinionRatingRef.dislikes = this.opinionRating.dislikes;
     this.opinionRating = opinionRatingRef;
