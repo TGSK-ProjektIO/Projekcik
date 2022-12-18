@@ -2,7 +2,6 @@ import {inject, injectable} from "inversify";
 import {ProductRepository} from "../repository/product.repository";
 import {TYPES} from "../config/types.config";
 import {Product} from "../model/product";
-import moment from "moment";
 
 @injectable()
 export class ProductService {
@@ -32,5 +31,5 @@ export class ProductService {
   public deleteAllProducts(): Promise<void> {
     return this.productRepository.deleteAll();
   }
-  
+
 }

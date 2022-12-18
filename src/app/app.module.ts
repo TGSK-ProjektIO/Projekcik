@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+
+import {RouterOutlet} from "@angular/router";
+import {SugestieIZgloszeniaModule} from "./sugestie-i-zgloszenia/sugestie-i-zgloszenia.module";
 import { LogowanieIRejestracjaComponent } from './logowanie-i-rejestracja/logowanie-i-rejestracja.component';
 import { PanelUzytkownikaComponent } from './panel-uzytkownika/panel-uzytkownika.component';
 import { ProduktComponent } from './produkt/produkt.component';
@@ -14,7 +17,6 @@ import {OpinieModule} from "./opinie/opinie.module";
 import {ProduktModule} from "./produkt/produkt.module";
 import { AppRoutingModule } from './app-routing.module';
 import {PanelUzytkownikaModule} from "./panel-uzytkownika/panel-uzytkownika.module";
-import {RouterOutlet} from "@angular/router";
 import { HttpClientModule } from '@angular/common/http';
 import { ProduktRoutingModule } from './produkt/produkt-routing.module';
 import {AlertConfig, AlertModule} from "ngx-bootstrap/alert";
@@ -41,8 +43,11 @@ import {WyszukiwanieModule} from "./wyszukiwanie/wyszukiwanie.module";
     BrowserModule,
     BrowserAnimationsModule,
     PanelUzytkownikaModule,
+    SugestieIZgloszeniaModule,
     RouterOutlet,
     LogowanieIRejestracjaModule,
+    OpinieModule,
+    AppRoutingModule,
     ProduktModule,
     ProduktRoutingModule,
     OpinieModule,

@@ -6,7 +6,6 @@ import {OpinionCreatorComponent} from "../opinion-creator/opinion-creator.compon
   selector: 'app-rating',
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.component.css']
-
 })
 export class RatingComponent implements OnInit {
 

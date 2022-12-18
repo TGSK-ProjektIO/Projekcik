@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProduktService } from '../services/produkt.service';
-
+import {PageType} from "../../opinie/opinie.component";
 
 @Component({
   selector: 'app-produkt-widok',
@@ -11,6 +11,7 @@ import { ProduktService } from '../services/produkt.service';
 })
 export class ProduktWidokComponent implements OnInit {
 
+  pageTypes: PageType = PageType.product;
   id: string = '';
   name = 'name';
   description = 'description';
@@ -37,10 +38,11 @@ export class ProduktWidokComponent implements OnInit {
       this.router.navigateByUrl(this.modifyPath);
     }
 
-
-
     deleteProduct() {
-
+      this.service.deleteProduct(this.lastPath)
+      .subscribe(response => {
+        this.product = response;
+      });
     }
 
     getProductName(): string {return this.product.name}

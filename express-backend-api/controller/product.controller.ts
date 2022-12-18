@@ -2,14 +2,12 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {ProductService} from "../services/product.service";
 import {Product} from "../model/product";
+import {json} from "express";
 
 @injectable()
 export class ProductController {
   constructor(@inject(TYPES.ProductService) private productService: ProductService) {
   }
-
-
-
 
 public getProduct() {
   return async (request: any, response: any) => {
@@ -64,7 +62,7 @@ public addProduct() {
           message: "Added new product",
           id: newProduct._id
         });
-      } 
+      }
       catch (error) {
         response.status(400).send({
           message: "Invalid params"
@@ -93,7 +91,6 @@ public deleteProduct() {
 
 public getAllProducts() {
   return async (request: any, response: any) => {
-    let productId : string = request.params.id;
     try {
       let products : Array<Product> = await this.productService.getAllProducts();
       response.status(200).send(products);
@@ -107,7 +104,6 @@ public getAllProducts() {
 
 public deleteAllProducts() {
   return async (request: any, response: any) => {
-    const productId = request.params.id;
     try {
       await this.productService.deleteAllProducts();
       response.status(201).send({
@@ -120,5 +116,4 @@ public deleteAllProducts() {
     }
   }
 }
-
 }
