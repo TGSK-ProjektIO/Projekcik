@@ -2,7 +2,7 @@
 
 body {
   color: #eeeeee;
-  background-color: #1a1c1d;
+  background-image: url("src/assets/gradient_background.jpg");
 }
 
 .top-panel {

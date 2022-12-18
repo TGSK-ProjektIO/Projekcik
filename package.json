@@ -1,6 +1,6 @@
 {
-  "name": "projekcik",
-  "version": "0.0.0",
+  "name": "OpinionCollector",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

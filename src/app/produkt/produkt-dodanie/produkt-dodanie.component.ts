@@ -16,15 +16,19 @@ export class ProduktDodanieComponent implements OnInit {
   categoryName = '';
   image = '';
 
+  modifyPath: string = '';
+
   constructor(private router: Router) {
     }
 
     ngOnInit(): void {
     }
 
-    redirectToMainPage() {
-      this.router.navigateByUrl('/');
+    redirectToProductList() {
+      this.modifyPath = "/produkt/produkt-lista";
+      this.router.navigateByUrl(this.modifyPath);
     }
+
   
     onSavePressed() {
       fetch('http://localhost:3000/api/v1/produkt/product', {

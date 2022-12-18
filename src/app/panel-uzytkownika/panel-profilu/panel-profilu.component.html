@@ -1,9 +1,9 @@
 <html>
 <body>
-<div class="bg-dark text-white" style="width: 90%; margin: auto; padding: 1em;">
+<div class="bg-dark text-white bg-opacity-75" style="width: 90%; margin: auto; padding: 1em;">
   <div class="bg-white text-white bg-opacity-10" style="padding: 1em">
-    <img width="200" height="200" style="border-radius: 100%" src="{{mock_user.profile_picture}}" alt="Zdjęcie profilowe"/>
-    <h1 style="font-size: 40px"> {{mock_user.name}} </h1>
+    <img width="200" height="200" style="border-radius: 100%" src="{{mainComp.profile.profilePicture}}" alt="Zdjęcie profilowe"/>
+    <h1 style="font-size: 40px"> {{mainComp.profile.nickname}} </h1>
     <h1>
       <div [hidden]="!mock_user.isBanned" style="color: red">
         [KONTO ZABLOKOWANE]
@@ -12,7 +12,7 @@
     <br/>
     <div style="display: inline-block; margin-bottom: 1em;">
       <h3><i>O mnie</i></h3>
-      {{mock_user.description}}
+      {{mainComp.profile.description}}
     </div>
     <br/>
     <button style="margin: 0 1em 0 0" [hidden]="!isCurrent" (click)="redirectToEdit()">Edytuj profil</button>
@@ -20,7 +20,7 @@
   </div>
   <div class="bg-white text-white bg-opacity-10" style="margin-top: 1em">
     <h2 style="margin: 0.5em 0 0.5em 1em">Ocenione produkty</h2>
-    <app-opinie [pageType]=pageTypes id="639b7603f04872ad0164cf8a"></app-opinie>
+    <app-opinie [pageType]=pageTypes id="73020"></app-opinie>
 <!--    <div class="scroller-sub-panel">-->
 <!--      <div class="sub-sub-panel" *ngFor="let opinion of mock_opinions">
         <img width="100" height="100" style="border-radius: 20px" [src]="opinion.img" alt="Zdjęcie produktu"/>
