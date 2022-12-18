@@ -22,5 +22,9 @@ export class ProduktService {
   modifyProduct(last: string, product: Product) {
     return this.httpClient.put<Product>(this.url + last, product);
   }
+
+  deleteProduct(last: string){
+    return this.httpClient.delete(this.url + last);
+  }
    
 }
