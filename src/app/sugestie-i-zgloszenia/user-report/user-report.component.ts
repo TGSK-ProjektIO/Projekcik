@@ -14,7 +14,7 @@ export class UserReportComponent implements OnInit {
   //@Input() user: User = new User("null");
   //@Input() product: Product = new Product("null","null","null","null");
 
-  description: string = "lol";
+  description: string = "Błędna kategoria";
   type: number = 1; // cannot be 0 same for status!
   productId: string = "639ddb4eadc75cbdf635ab95";
   userId: string = "639b97aaf0e7e2226b1dc592"
