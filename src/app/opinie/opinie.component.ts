@@ -258,6 +258,7 @@ export class OpinieComponent implements OnInit {
   // region Opinion API
   // ------------------
   private DB_CreateOpinion(opinion: Opinion) {
+    console.log(opinion);
     fetch(`http://localhost:3000/api/v1/opinie/add`, {
       method: 'POST',
       headers: {
