@@ -13,7 +13,7 @@ export class RatingComponent implements OnInit {
   @Input() name: string = "";
   @Input() rating: number = 0;
   @Input() isReadonly = true;
-  parent : CompleteOpinionComponent | OpinionCreatorComponent | undefined;
+  parent : CompleteOpinionComponent | undefined;
 
   constructor() { }
 

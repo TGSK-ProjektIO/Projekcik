@@ -34,16 +34,8 @@ export class OpinionCreatorComponent implements AfterViewInit {
       const componentRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
       componentRef.name = ratingName;
       componentRef.isReadonly = false;
-      componentRef.parent = this;
       this.ratings.push(componentRef);
     }
-  }
-
-  public ModifyRating(name : string, value : number) {
-    console.log(this.ratings);
-    // for (let rating of this.ratings) {
-    //   if(rating.name == name) { rating.rating = value; break; }
-    // }
   }
 
   CreateOpinion() : void {
