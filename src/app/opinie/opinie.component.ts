@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CompleteOpinionComponent} from "./complete-opinion/complete-opinion.component";
-import {OpinionHostDirective} from "./opinion-host.directive";
+import {OpinionCreatorHostDirective, OpinionHostDirective} from "./opinion-host.directive";
 import {OpinionCreatorComponent} from "./opinion-creator/opinion-creator.component";
 import {Opinion} from "../../../express-backend-api/model/opinion";
 import {OpinionRating} from "../../../express-backend-api/model/opinion.rating";
@@ -37,6 +37,7 @@ export class OpinieComponent implements OnInit {
   allOpinionsRefs : CompleteOpinionComponent[] = [];
   opinionCreator : OpinionCreatorComponent = new OpinionCreatorComponent(this);
   @ViewChild(OpinionHostDirective, {static: true}) opinionHost!: OpinionHostDirective;
+  @ViewChild(OpinionCreatorHostDirective, {static: true}) opinionCreatorHost!: OpinionCreatorHostDirective;
 
   constructor() {  }
 
@@ -84,23 +85,18 @@ export class OpinieComponent implements OnInit {
     //  and show it
     // ----------------------------------------------------------------
     }).then(() => {
-      let userProfilePromises = []
       for (const opinion of this.allOpinions) {
-        userProfilePromises.push(this.DB_GetProfileByID(opinion.userID));
-      }
-      return userProfilePromises;
-    }).then(promises => { return Promise.all(promises);
-    }).then(userProfiles => {
-      for (let i = 0; i < this.allOpinions.length; i++) {
-        this.allOpinions[i].userName = userProfiles[i].nickname;
-        this.allOpinions[i].userPicture = userProfiles[i].profilePicture;
-        this.ShowOpinion(this.allOpinions[i]);
+        this.DB_GetProfileByID(opinion.userID).then(userProfile => {
+          opinion.userName = userProfile.nickname;
+          opinion.userPicture = userProfile.profilePicture;
+          this.ShowOpinion(opinion)
+        });
       }
     }).then(() => {
       // Init opinion creator
       // --------------------
       if(addOpinionCreator && this.userType == UserType.logged) {
-        this.opinionCreator = this.opinionHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent, {index: 0}).instance;
+        this.opinionCreator = this.opinionCreatorHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent, {index: 0}).instance;
         this.opinionCreator.parent = this;
         this.opinionCreator.AddRatings(this.productAttributes);
       }
