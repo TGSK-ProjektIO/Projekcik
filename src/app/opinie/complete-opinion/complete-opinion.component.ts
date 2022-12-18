@@ -4,7 +4,6 @@ import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
 import {OpinieComponent, UserType} from "../opinie.component";
 import {OpinionRatingHostDirective, RatingsHostDirective, ReviewHostDirective} from "../opinion-host.directive";
-import {OpinionRating} from "../../../../express-backend-api/model/opinion.rating";
 
 @Component({
   selector: 'app-complete-opinion',
@@ -41,7 +40,7 @@ export class CompleteOpinionComponent implements OnInit {
   SetParent(newParent : OpinieComponent) { this.opinieParent = newParent}
 
   constructor() {
-    this.review = new ReviewComponent(this);
+    this.review = new ReviewComponent();
     this.opinionRating = new OpinionRatingComponent();
   }
 
@@ -73,7 +72,7 @@ export class CompleteOpinionComponent implements OnInit {
   SpawnOpinionRating() {
     let opinionRatingRef = this.opinionRatingHost.viewContainerRef.createComponent<OpinionRatingComponent>(OpinionRatingComponent).instance;
     opinionRatingRef.ratingState = this.opinionRating.ratingState;
-    opinionRatingRef.isReadonly = this.canEdit;
+    opinionRatingRef.isReadonly = this.canEdit && this.opinieParent.userType == UserType.logged;
     opinionRatingRef.likes = this.opinionRating.likes;
     opinionRatingRef.dislikes = this.opinionRating.dislikes;
     this.opinionRating = opinionRatingRef;
@@ -89,7 +88,7 @@ export class CompleteOpinionComponent implements OnInit {
   }
 
   AddRating(name : string, value : number) : void {
-    let newRating: RatingComponent = new RatingComponent(this);
+    let newRating: RatingComponent = new RatingComponent();
     newRating.name = name;
     newRating.rating = value;
     newRating.isReadonly = !this.canEdit;

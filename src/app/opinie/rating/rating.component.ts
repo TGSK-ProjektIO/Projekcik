@@ -12,8 +12,9 @@ export class RatingComponent implements OnInit {
   @Input() name: string = "";
   @Input() rating: number = 0;
   @Input() isReadonly = true;
+  parent : CompleteOpinionComponent | undefined;
 
-  constructor(private parent : CompleteOpinionComponent) { }
+  constructor() { }
 
   ngOnInit(): void { }
 
@@ -27,6 +28,6 @@ export class RatingComponent implements OnInit {
     return this.name;
   }
 
-  OnEdit() { this.parent.ModifyRating(this.name, this.rating); }
+  OnEdit() { this.parent?.ModifyRating(this.name, this.rating); }
 
 }
