@@ -28,7 +28,7 @@ export class OpinieComponent implements OnInit {
     return this.userType === type;
   }
   // Get productID from product/profile
-  @Input() id = "639b7603f04872ad0164cf8a";
+  @Input() id = "4";
   // TODO: get product attributes from product
   productAttributes : string[] = ["fajno", "niefajno", "zajefajno", "wydajność"];
 
@@ -50,13 +50,12 @@ export class OpinieComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // switch (this.pageType) {
-    //   case PageType.product:
-    //     this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
-    //   case PageType.profile: this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByUser); break;
-    //   default: break;
-    // }
-    this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "3", true);
+    switch (this.pageType) {
+      case PageType.product:
+        this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
+      case PageType.profile: this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByUser); break;
+      default: break;
+    }
   }
 
   RetrieveAndSetupOpinions(getOpinionsFunction : (id:string) => Promise<Opinion[]>,
@@ -81,9 +80,6 @@ export class OpinieComponent implements OnInit {
       if(userLogged.isAdministrator) this.userType = UserType.admin;
       else this.userType = UserType.logged;
 
-      // TODO: DELETE
-      this.userType = UserType.logged;
-
     // Get logged user profile
     // -----------------------
     }).then(() => {
@@ -93,7 +89,7 @@ export class OpinieComponent implements OnInit {
     // Init opinion creator
     // --------------------
     }).then(() => {
-      if(addOpinionCreator /*&& this.userType == UserType.logged*/) {
+      if(addOpinionCreator && this.userType == UserType.logged) {
         this.opinionCreator = this.opinionCreatorHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent).instance;
         this.opinionCreator.parent = this;
         this.opinionCreator.AddRatings(this.productAttributes);
@@ -261,6 +257,7 @@ export class OpinieComponent implements OnInit {
   // region Opinion API
   // ------------------
   private async DB_CreateOpinion(opinion: Opinion): Promise<boolean> {
+    console.log(opinion);
     let success: boolean;
     return await fetch(`http://localhost:3000/api/v1/opinie/add`, {
       method: 'POST',
@@ -270,10 +267,9 @@ export class OpinieComponent implements OnInit {
       },
       body: JSON.stringify(opinion)
     }).then(async response => {
-      if (response.status === 200) { success = true; }
+
+      if (response.status === 201) { success = true; }
       if (response.status === 400) { success = false; }
-    }).catch(err => {
-      console.error(err);
     }).then(() => {return success});
   }
 

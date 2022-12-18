@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component";
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
-import {OpinieComponent, UserType} from "../opinie.component";
+import {OpinieComponent, PageType, UserType} from "../opinie.component";
 import {OpinionRatingHostDirective, RatingsHostDirective, ReviewHostDirective} from "../opinion-host.directive";
 
 @Component({
@@ -78,6 +78,13 @@ export class CompleteOpinionComponent implements OnInit {
     this.opinionRating = opinionRatingRef;
   }
   //endregion
+
+  ShowID(): string {
+    switch (this.opinieParent.pageType) {
+      case PageType.product: return "@"+this.userID;
+      case PageType.profile: return "ProductID: "+this.productID;
+    }
+  }
 
   GetMeanRating() : number {
     let result: number = 0;
