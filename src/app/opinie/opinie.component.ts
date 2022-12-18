@@ -23,7 +23,7 @@ export enum PageType { product, profile}
 export class OpinieComponent implements OnInit {
   // TODO: get user type and ID from session
   userType : UserType = UserType.logged;
-  userLoggedID = "639b7603f04872ad0164cf8a";
+  userLogged : Profile;
   isUserType(type : UserType) : boolean {
     return this.userType === type;
   }
@@ -39,7 +39,15 @@ export class OpinieComponent implements OnInit {
   @ViewChild(OpinionHostDirective, {static: true}) opinionHost!: OpinionHostDirective;
   @ViewChild(OpinionCreatorHostDirective, {static: true}) opinionCreatorHost!: OpinionCreatorHostDirective;
 
-  constructor() {  }
+  constructor() {
+    this.userLogged = {
+      userId: "6669",
+      nickname: "Verified User",
+      profilePicture: "https://i.imgur.com/tYkCX47.jpg",
+      description: "",
+      isBanned: false
+    }
+  }
 
   ngOnInit(): void {
     // switch (this.pageType) {
@@ -64,8 +72,8 @@ export class OpinieComponent implements OnInit {
     // ---------------------------------------------------------------
     this.DB_GetSessionByID(sessionId)
     .then(userSession => {
-      this.userLoggedID = userSession.userId.toString();
-    }).then(() => this.DB_GetUserByID(this.userLoggedID)
+      this.userLogged.userId = userSession.userId.toString();
+    }).then(() => this.DB_GetUserByID(this.userLogged.userId)
 
     // Set user type
     // -------------
@@ -73,9 +81,15 @@ export class OpinieComponent implements OnInit {
       if(userLogged.isAdministrator) this.userType = UserType.admin;
       else this.userType = UserType.logged;
 
+    // Get logged user profile
+    // -----------------------
+    }).then(() => {
+      return this.DB_GetProfileByID(this.userLogged.userId);
+    }).then(profile => { this.userLogged = profile;
+
     // Get user opinions
     // -----------------
-    }).then(() => getOpinionsFunction(parameterID || this.userLoggedID)
+    }).then(() => getOpinionsFunction(parameterID || this.userLogged.userId)
     ).then(opinionList => {
       for (const opinion of opinionList) {
         this.allOpinions.push(this.OpinionDBToComponent(opinion));
@@ -96,7 +110,7 @@ export class OpinieComponent implements OnInit {
       // Init opinion creator
       // --------------------
       if(addOpinionCreator && this.userType == UserType.logged) {
-        this.opinionCreator = this.opinionCreatorHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent, {index: 0}).instance;
+        this.opinionCreator = this.opinionCreatorHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent).instance;
         this.opinionCreator.parent = this;
         this.opinionCreator.AddRatings(this.productAttributes);
       }
@@ -104,13 +118,13 @@ export class OpinieComponent implements OnInit {
   }
 
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {
-    newOpinion.userID = this.userLoggedID;
+    newOpinion.userID = this.userLogged.userId;
     newOpinion.productID = this.id;
 
     this.DB_CreateOpinion(this.OpinionComponentToDB(newOpinion));
 
     this.allOpinions.unshift(newOpinion);
-    this.ShowOpinion(newOpinion, 1);
+    this.ShowOpinion(newOpinion, 0);
   }
 
   private ShowOpinion(opinion : CompleteOpinionComponent, index: number = this.allOpinionsRefs.length) {
@@ -125,7 +139,7 @@ export class OpinieComponent implements OnInit {
     componentRef.opinionRating = opinion.opinionRating;
     componentRef.userName = opinion.userName;
     componentRef.userPicture = opinion.userPicture;
-    this.allOpinionsRefs.splice(index, 0, componentRef);
+    this.allOpinionsRefs.push(componentRef);
   }
 
   ModifyOpinion(opinion : CompleteOpinionComponent): void {
@@ -140,7 +154,7 @@ export class OpinieComponent implements OnInit {
 
       let foundUser = false;
       for (const opinionRating of res.opinionRatings) {
-        if(opinionRating.userID == this.userLoggedID) {
+        if(opinionRating.userID == this.userLogged.userId) {
           switch(opinion.opinionRating.ratingState) {
             case OpinionRatingState.Liked: opinionRating.like++; break;
             case OpinionRatingState.Disliked: opinionRating.dislike++; break;
@@ -151,7 +165,7 @@ export class OpinieComponent implements OnInit {
       }
       if(!foundUser)
         res.opinionRatings.push(
-          {userID: this.userLoggedID,
+          {userID: this.userLogged.userId,
             like: opinion.opinionRating.likes,
             dislike: opinion.opinionRating.dislikes});
       this.DB_ModifyOpinion(res);
@@ -229,7 +243,7 @@ export class OpinieComponent implements OnInit {
     opinionComponent.opinionRating.ratingState = ratingState;
 
     opinionComponent.canEdit = (this.isUserType(UserType.logged) &&
-                                this.userLoggedID === opinion.userId);
+                                this.userLogged.userId === opinion.userId);
     return opinionComponent;
   }
   //endregion

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.component";
+import {OpinionCreatorComponent} from "../opinion-creator/opinion-creator.component";
 
 @Component({
   selector: 'app-rating',
@@ -12,7 +13,7 @@ export class RatingComponent implements OnInit {
   @Input() name: string = "";
   @Input() rating: number = 0;
   @Input() isReadonly = true;
-  parent : CompleteOpinionComponent | undefined;
+  parent : CompleteOpinionComponent | OpinionCreatorComponent | undefined;
 
   constructor() { }
 

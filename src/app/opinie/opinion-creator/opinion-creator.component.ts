@@ -34,16 +34,28 @@ export class OpinionCreatorComponent implements AfterViewInit {
       const componentRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
       componentRef.name = ratingName;
       componentRef.isReadonly = false;
+      componentRef.parent = this;
       this.ratings.push(componentRef);
     }
   }
 
+  public ModifyRating(name : string, value : number) {
+    console.log(this.ratings);
+    // for (let rating of this.ratings) {
+    //   if(rating.name == name) { rating.rating = value; break; }
+    // }
+  }
+
   CreateOpinion() : void {
     let newOpinion = new CompleteOpinionComponent();
-    newOpinion.userID = this.parent.userLoggedID;
+    newOpinion.userID = this.parent.userLogged.userId;
+    newOpinion.userName = this.parent.userLogged.nickname;
+    newOpinion.userPicture = this.parent.userLogged.profilePicture;
     newOpinion.review.text = this.review.text;
-    console.log(newOpinion.review.text)
-    newOpinion.ratings = this.ratings;
+    for (const rating of this.ratings) {
+      let ratingCopy = Object.assign({}, rating);
+      newOpinion.ratings.push(ratingCopy);
+    }
     this.parent.CreateOpinion(newOpinion);
 
     // clear fields
