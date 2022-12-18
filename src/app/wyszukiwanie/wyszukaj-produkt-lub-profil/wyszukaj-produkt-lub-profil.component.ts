@@ -1,11 +1,8 @@
-import {AfterViewInit, Component, Injectable, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Injectable, ViewChild} from '@angular/core';
 import {Product} from "../../../../express-backend-api/model/product";
-import {ProductSearch} from "./ProductSearch";
-import {MatTableDataSource} from "@angular/material/table";
 import {Profile} from "../../../../express-backend-api/model/profile";
-import {ProfileSearch} from "./ProfileSearch";
+import {MatTableDataSource} from "@angular/material/table";
 import {Router} from "@angular/router";
-import {WyszukiwanieService} from "../services/wyszukiwanie.service";
 import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 
@@ -37,7 +34,7 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     tag: []
   }
   fetchedProducts: Product[];
-  productSearch: ProductSearch;
+  productSearch: Product[];
   searchedProducts: Product[] = [];
   filteredData: Product[] = [];
   selected = 'all';
@@ -57,12 +54,12 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     userId: "",
   };
   fetchedProfiles: Profile[];
-  profileSearch : ProfileSearch;
+  profileSearch : Profile[];
   searchedProfiles: Profile[] = [];
   profileSearchColumnsToDisplay: string[] = ['avatar', 'nickname', 'numberOfOpinions', 'score']
   profilesDataSource: MatTableDataSource<Profile> = new MatTableDataSource<Profile>(this.searchedProfiles);
 
-  constructor(private router: Router, private service: WyszukiwanieService) { }
+  constructor(private router: Router) { }
 
   @ViewChild('productPaginator', {static : true}) productPaginator: MatPaginator;
   @ViewChild('profilePaginator', {static : true}) profilePaginator: MatPaginator;
@@ -70,16 +67,34 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   @ViewChild('profileMatSort') profileSort: MatSort;
 
   ngAfterViewInit()  {
-    this.service.getAllProfiles()
-      .subscribe(response => {
-        this.fetchedProfiles = response as Profile[];
-        this.profileSearch = new ProfileSearch(this.fetchedProfiles);
-      });
-    this.service.getAllProducts()
-      .subscribe(response => {
-        this.fetchedProducts = response as Product[];
-        this.productSearch = new ProductSearch(this.fetchedProducts);
-      })
+    fetch('http://localhost:3000/api/v1/panel-uzytkownika/profile/getAllProfiles', {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+    }).then(async response => {
+      const body = await response.json();
+      this.fetchedProfiles = (<Profile[]>body);
+      this.profileSearch = this.fetchedProfiles;
+    }).catch(err => {
+      console.error(err);
+    });
+
+    fetch('http://localhost:3000/api/v1/produkt/getAllProducts', {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+    }).then(async response => {
+      const body = await response.json();
+      this.fetchedProducts = (<Product[]>body);
+      this.productSearch = this.fetchedProducts;
+    }).catch(err => {
+      console.error(err);
+    });
+
     this.productsDataSource.paginator = this.productPaginator;
     this.profilesDataSource.paginator = this.profilePaginator;
     this.productsDataSource.sort = this.productSort;
@@ -87,7 +102,7 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   }
 
   searchProducts() {
-    this.searchedProducts = this.productSearch.getSearchResults(this.productModel.name.toLowerCase());
+    this.searchedProducts = this.getProductsSearchResults(this.productModel.name.toLowerCase());
     this.productsDataSource.data = this.searchedProducts;
     this.profilesDataSource.data.splice(0);
 
@@ -163,7 +178,7 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   }
 
   searchProfiles() {
-    this.searchedProfiles = this.profileSearch.getSearchResults(this.profileModel.nickname.toLowerCase());
+    this.searchedProfiles = this.getProfilesSearchResults(this.profileModel.nickname.toLowerCase());
     this.profilesDataSource.data = this.searchedProfiles;
     this.productsDataSource.data.splice(0);
   }
@@ -176,4 +191,11 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     console.log(profile._id);
   }
 
+  getProductsSearchResults(phrase: string): Product[] {
+    return this.fetchedProducts.filter(product => product.name.toLocaleLowerCase().includes(phrase));
+  }
+
+  getProfilesSearchResults(phrase: string): Profile[] {
+    return this.fetchedProfiles.filter(profile => profile.nickname.toLocaleLowerCase().includes(phrase));
+  }
 }

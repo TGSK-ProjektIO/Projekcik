@@ -1,13 +1,5 @@
-import {AfterViewInit, Component, Injectable, NgModule, OnInit, ViewChild} from '@angular/core';
-import {MatSort} from "@angular/material/sort";
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {Product} from "../../../express-backend-api/model/product";
-import {ProductSearch} from "./wyszukaj-produkt-lub-profil/ProductSearch";
-import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
-import {Profile} from "../../../express-backend-api/model/profile";
-import {ProfileSearch} from "./wyszukaj-produkt-lub-profil/ProfileSearch";
-import {WyszukiwanieService} from "./services/wyszukiwanie.service";
-import {Router} from "@angular/router";
+import {Component, Injectable, OnInit} from '@angular/core';
+import {MatPaginatorIntl} from "@angular/material/paginator";
 
 @Injectable()
 export class PolishPaginatorIntl extends MatPaginatorIntl{
