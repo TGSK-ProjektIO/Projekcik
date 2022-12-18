@@ -9,14 +9,6 @@ span {
   padding:10px;
 }
 
-::ng-deep .mat-select-value {
-  color: white;
-}
-
-::ng-deep .dropdown-menu-dark {
-  color: red;
-}
-
 .mat-row .mat-cell {
   border-bottom: 1px solid transparent;
   cursor: pointer;

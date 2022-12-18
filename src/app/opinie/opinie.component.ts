@@ -10,7 +10,6 @@ import {OpinionRatingState} from "./opinion-rating/opinion-rating.component";
 import {Session} from "../../../express-backend-api/model/session";
 import {User} from "../../../express-backend-api/model/user";
 
-
 // TODO: get user type from session
 export enum UserType { anon, logged, admin}
 export enum PageType { product, profile}
@@ -50,6 +49,10 @@ export class OpinieComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // TODO: delet
+    this.id = "93887";
+    this.userLoggedID = "93887";
+
     switch (this.pageType) {
       case PageType.product:
         this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
@@ -57,7 +60,7 @@ export class OpinieComponent implements OnInit {
       default: break;
     }
   }
-
+  
   RetrieveAndSetupOpinions(getOpinionsFunction : (id:string) => Promise<Opinion[]>,
                            parameterID?: string,
                            addOpinionCreator?: boolean) {
@@ -96,7 +99,6 @@ export class OpinieComponent implements OnInit {
         this.opinionCreator.parent = this;
         this.opinionCreator.AddRatings(this.productAttributes);
       }
-
     // Get user opinions
     // -----------------
     }).then(() => getOpinionsFunction(parameterID || this.userLogged.userId)

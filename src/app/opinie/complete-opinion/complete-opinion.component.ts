@@ -95,7 +95,7 @@ export class CompleteOpinionComponent implements OnInit {
   }
 
   AddRating(name : string, value : number) : void {
-    let newRating: RatingComponent = new RatingComponent();
+    let newRating: RatingComponent = new RatingComponent(this);
     newRating.name = name;
     newRating.rating = value;
     newRating.isReadonly = !this.canEdit;

@@ -15,7 +15,7 @@ export class RatingComponent implements OnInit {
   @Input() isReadonly = true;
   parent : CompleteOpinionComponent | undefined;
 
-  constructor() { }
+  constructor(private parent : CompleteOpinionComponent) { }
 
   ngOnInit(): void { }
 
