@@ -19,7 +19,6 @@ export class OpinionController {
     return async (request: any, response: any) => {
       let opinion = request.body;
       try {
-        opinion.id = new ObjectId();
         const createdOpinion = await this.opinionService.addOpinion(opinion);
         response.status(201).send({
           message: "created",
