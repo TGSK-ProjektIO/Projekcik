@@ -14,8 +14,10 @@ export class UserReportComponent implements OnInit {
   //@Input() user: User = new User("null");
   //@Input() product: Product = new Product("null","null","null","null");
 
-  description: string = "lol"
-  type: number = 1;
+  description: string = "lol";
+  type: number = 1; // cannot be 0 same for status!
+  productId: string = "639ddb4eadc75cbdf635ab95";
+  userId: string = "639b97aaf0e7e2226b1dc592"
 
   constructor(
     private router: Router
@@ -26,8 +28,8 @@ export class UserReportComponent implements OnInit {
       type: this.type,
       description: this.description,
       status: 1,
-      idProduct: "1",
-      idUser: "1"
+      idProduct: this.productId,
+      idUser: this.userId
     };
     fetch('http://localhost:3000/api/v1/sugestie-i-zgloszenia/report', {
       method: 'POST',

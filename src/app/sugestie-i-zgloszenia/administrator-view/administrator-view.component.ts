@@ -28,7 +28,7 @@ export class AdministratorViewComponent implements OnInit {
 
   reports: Report[] = [];
 
-  indicator: string = "not working!";
+  indicies: string = "";
 
   id: string = "639df78018e2ae539822a179";
   userId: string = "";
@@ -68,18 +68,8 @@ export class AdministratorViewComponent implements OnInit {
     }).then(async response => {
       if (response.status === 200) {
         const retrievedReports = await response.json();
-        this.indicator = "working!";
+        this.indicies = retrievedReports.length.toString();
         this.reports = retrievedReports;
-        //for (let i = 0; i < retrievedReports.length; i++) {
-          //this.reports[i]._id = retrievedReports[i]._id;
-
-        //}
-        //this.id = report._id;
-        //this.type = report.type;
-        //this.description = report.description;
-        //this.status = report.status;
-        //this.userId = report.userId;
-        //this.productId = report.productId;
       }
       else if(response.status === 400) {}
       else if(response.status === 404) {}
@@ -87,36 +77,7 @@ export class AdministratorViewComponent implements OnInit {
       console.log("administrator-view:onPressedShowAll-fetch ERROR");
     });
   }
-
-  //redirectToProfile() {
-  //  this.router.navigateByUrl('');
-  //}
-
   ngOnInit(): void {
   }
-
-
-  //onSignInPressed() {
-  //  fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/session/login', {
-  //    method: 'POST',
-  //    headers: {
-  //      'Accept': '*/*',
-  //      'Content-Type': 'application/json'
-  //    },
-  //    body: JSON.stringify({
-  //      "email": this.email,
-  //      "password": this.password
-  //    })
-  //  }).then(async response => {
-  //    if (response.status === 201) {
-  //      await this.router.navigateByUrl('/');
-  //   }
-  //    if (response.status === 404) {
-  //      this.invalidLoginFlag = true;
-  //    }
-  //  }).catch(err => {
-  //    console.error(err);
-  //  });
-  //}
 
 }
