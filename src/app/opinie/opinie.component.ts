@@ -67,6 +67,8 @@ export class OpinieComponent implements OnInit {
     // Database calls order:
     // SESSION > USERS > OPINIONS > PROFILES
 
+    //TODO: there is no defined behaviour for anon user
+    
     // Get session [needed to retrieve userType and userLoggedID info]
     // ---------------------------------------------------------------
     this.DB_GetSessionByID(sessionId)
