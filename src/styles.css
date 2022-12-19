@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-/* Fuck white space at the bottom */
+body {
+  background-image: url("src/assets/gradient_background.jpg");
+}
+
 html, body {
   min-height: 100vh;
 }
