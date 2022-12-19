@@ -1,13 +1,13 @@
-<div class="container-fluid min-vh-100 vw-100">
+<section title="Wyszukiwanie">
   <div class="container py-1 h-100">
     <div class="card bg-dark text-white w-100" style="border-radius: 1rem;">
-      <div class="row">
+      <div class="row mx-1">
         <div class="col">
           <h2 class=" mb-3" >Wyszukaj produkt:</h2>
           <div class="row">
             <form (ngSubmit)="searchProducts()" #productForm="ngForm" class="form-floating">
               <input type="text" class="form-control form-control-lg bg-dark text-white" id="phrase-product" placeholder="Nazwa produktu" [(ngModel)]="productModel.name" name="productName" required>
-              <label for="phrase-product">Nazwa Produktu</label>
+              <label for="phrase-product" class="mx-2">Nazwa Produktu</label>
               <button type="submit" class="btn btn-outline-light float-end mt-2"
                       [disabled]="!productForm.form.valid">Wyszukaj produkt</button>
             </form>
@@ -16,7 +16,7 @@
                 <mat-form-field appearance="fill">
                   <mat-label class="bg-dark text-white">Wybierz kategorie</mat-label>
                   <mat-select [(ngModel)]="selected" name="categoryID" (selectionChange)="applyCategory($event)">
-                    <mat-option value="all">Wszystkie kategorie</mat-option>
+                    <mat-option value="all">Wszystkie</mat-option>
                     <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -29,7 +29,7 @@
           <div class="row">
             <form (ngSubmit)="searchProfiles()" #userForm="ngForm" class="form-floating" style="padding-bottom: 20px">
               <input type="text" class="form-control form-control-lg bg-dark text-white" id="phrase-user" placeholder="Nazwa użytkownika" [(ngModel)]="profileModel.nickname" name="nickname" required>
-              <label for="phrase-user">Nazwa użytkownika</label>
+              <label for="phrase-user" class="mx-2">Nazwa użytkownika</label>
               <button type="submit" class="btn  btn-outline-light float-end mt-2"
                       [disabled]="!userForm.form.valid">Wyszukaj profil użytkownika</button>
             </form>
@@ -110,4 +110,4 @@
       </div>
     </div>
   </div>
-</div>
+</section>

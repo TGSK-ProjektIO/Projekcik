@@ -1,5 +1,4 @@
 import {ObjectId} from "mongodb";
-import {Category} from "../model/category";
 import {Attribute} from "./attribute";
 
 export interface Product {
@@ -9,6 +8,6 @@ export interface Product {
     tag: Array<string>;
     categoryName: string;
     attribute: Array<Attribute>;
-    image?: string;
+    image: string;
     isVisible: boolean;
 }

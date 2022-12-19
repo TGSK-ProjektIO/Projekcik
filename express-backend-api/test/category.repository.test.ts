@@ -3,8 +3,6 @@ import {TYPES} from "../config/types.config";
 import {container} from "../config/container.config";
 import {Category} from "../model/category";
 import {ObjectId} from "mongodb";
-import {faker} from "@faker-js/faker";
-import {create} from "domain";
 
 const categoryRepository = container.get<CategoryRepository>(TYPES.CategoryRepository);
 
@@ -19,18 +17,21 @@ beforeAll(async () => {
 beforeEach(async () => {
   category1 = {
     name: "mebel",
-    attribute: [{wymiary: "example",material: "example"}],
+    isVisible: true,
+    attribute: [{wymiary: "example", material: "example"}],
   };
 
   category2 = {
     _id: new ObjectId(),
     name: "category2",
+    isVisible: true,
     attribute: [{at1: "at1", at2: "at2"}],
   };
 
   category3 = {
     name: "category3",
-    attribute: [{at1: "example",at2: "example"}],
+    isVisible: true,
+    attribute: [{at1: "example", at2: "example"}],
   };
 
 });

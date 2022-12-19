@@ -63,12 +63,13 @@ export class RejestracjaComponent implements OnInit {
       fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/user', {
         method: 'POST',
         headers: {
+          'Accept': '*/*',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(user)
       }).then(async response => {
         if (response.status === 201) {
-          await this.router.navigateByUrl('/confirmation');
+          await this.router.navigateByUrl('/confirm-email');
         } else {
           this.isWarningAlertOpen = true;
         }

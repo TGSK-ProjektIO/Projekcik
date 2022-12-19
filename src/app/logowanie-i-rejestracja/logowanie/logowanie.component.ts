@@ -77,6 +77,8 @@ export class LogowanieComponent implements OnInit {
         console.error(err);
       });
     }
+
+
   }
 
   onAlertBadRequestClose() {

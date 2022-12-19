@@ -18,7 +18,6 @@ import {
 import { OpinieRoutingModule } from "./opinie-routing.module";
 
 
-
 @NgModule({
     declarations: [
         OpinieComponent,
@@ -35,7 +34,6 @@ import { OpinieRoutingModule } from "./opinie-routing.module";
     ],
   exports: [
     OpinieComponent,
-    CompleteOpinionComponent
   ],
   imports: [
     CommonModule,
@@ -44,6 +42,4 @@ import { OpinieRoutingModule } from "./opinie-routing.module";
     OpinieRoutingModule
   ]
 })
-export class OpinieModule {
-
-}
+export class OpinieModule {}

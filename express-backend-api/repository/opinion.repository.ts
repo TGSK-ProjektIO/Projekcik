@@ -2,6 +2,7 @@ import {Opinion} from "../model/opinion";
 import {DATABASE_URi, DB_NAME, OPINION_COLLECTION_NAME} from "../config/mongo.config";
 import {MongoClient, ObjectId} from "mongodb";
 import {injectable} from "inversify";
+import {Product} from "../model/product";
 
 @injectable()
 export class OpinionRepository {
@@ -79,18 +80,17 @@ export class OpinionRepository {
     })
   }
 
-  public async readByUser(userId: string): Promise<Array<Opinion>> {
-    return new Promise<Array<Opinion>>(async (resolve, reject) => {
+  public async readByUser(userId: string): Promise<Opinion[]> {
+    return new Promise<Opinion[]>(async (resolve, reject) => {
       const client = this.createClient();
       try {
         const db = client.db(DB_NAME);
         const collection = db.collection(OPINION_COLLECTION_NAME);
         let response = await collection.find<Opinion>({
           userId: userId
-        });
-        let responseArray = await response.toArray();
-        if (responseArray.length != 0) {
-          resolve(responseArray);
+        }).toArray();
+        if (response.length != 0) {
+          resolve(response);
         } else {
           reject();
         }

@@ -5,11 +5,11 @@ import {NgModule} from "@angular/core";
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'search',
     component: WyszukiwanieComponent,
     children: [
       {
-        path: 'search',
+        path: '',
         component: WyszukajProduktLubProfilComponent
       }
     ]

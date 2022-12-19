@@ -47,7 +47,7 @@ export class ProductRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -83,7 +83,7 @@ export class ProductRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -106,7 +106,7 @@ export class ProductRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -129,7 +129,7 @@ export class ProductRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -149,7 +149,7 @@ export class ProductRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
@@ -170,7 +170,7 @@ export class ProductRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }
