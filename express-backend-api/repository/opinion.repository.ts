@@ -37,7 +37,7 @@ export class OpinionRepository {
       try {
         const db = client.db(DB_NAME);
         const collection = db.collection(OPINION_COLLECTION_NAME);
-        if (await collection.count({_id: opinion._id}) >= 1) {
+        if (await collection.count({_id: new ObjectId(opinion._id)}) >= 1) {
           return reject();
         }
         else {
