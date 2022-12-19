@@ -4,10 +4,8 @@ import { OpinieComponent } from './opinie.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'opinie',
     component: OpinieComponent,
-    children: [
-    ]
   }
 ]
 

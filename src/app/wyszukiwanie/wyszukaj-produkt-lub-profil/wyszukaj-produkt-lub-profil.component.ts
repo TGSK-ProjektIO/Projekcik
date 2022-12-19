@@ -5,7 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {Router} from "@angular/router";
 import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-
+import {ObjectId} from "mongodb";
 
 @Injectable()
 export class PolishPaginatorIntl extends MatPaginatorIntl{
@@ -31,10 +31,10 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     description: "",
     isVisible: false,
     name: "",
-    tag: []
+    tag: [],
+    image: ""
   }
   fetchedProducts: Product[];
-  productSearch: Product[];
   searchedProducts: Product[] = [];
   filteredData: Product[] = [];
   selected = 'all';
@@ -45,8 +45,8 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   productSearchColumnsToDisplay: string[] = ['name', 'productTag', 'productDescription', 'categoryName', 'numberOfOpinions' ];
   productsDataSource : MatTableDataSource<Product> = new MatTableDataSource<Product>(this.searchedProducts);
 
-
   profileModel : Profile = {
+    _id: ObjectId.createFromHexString(""),
     nickname: '',
     description: '',
     isBanned: false,
@@ -54,7 +54,6 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     userId: "",
   };
   fetchedProfiles: Profile[];
-  profileSearch : Profile[];
   searchedProfiles: Profile[] = [];
   profileSearchColumnsToDisplay: string[] = ['avatar', 'nickname', 'numberOfOpinions', 'score']
   profilesDataSource: MatTableDataSource<Profile> = new MatTableDataSource<Profile>(this.searchedProfiles);
@@ -76,7 +75,6 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     }).then(async response => {
       const body = await response.json();
       this.fetchedProfiles = (<Profile[]>body);
-      this.profileSearch = this.fetchedProfiles;
     }).catch(err => {
       console.error(err);
     });
@@ -90,7 +88,6 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     }).then(async response => {
       const body = await response.json();
       this.fetchedProducts = (<Product[]>body);
-      this.productSearch = this.fetchedProducts;
     }).catch(err => {
       console.error(err);
     });
@@ -104,7 +101,6 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   searchProducts() {
     this.searchedProducts = this.getProductsSearchResults(this.productModel.name.toLowerCase());
     this.productsDataSource.data = this.searchedProducts;
-    this.profilesDataSource.data.splice(0);
 
     this.searchedProducts.forEach(product => {
       this.categories.push(product.categoryName)
@@ -180,15 +176,14 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   searchProfiles() {
     this.searchedProfiles = this.getProfilesSearchResults(this.profileModel.nickname.toLowerCase());
     this.profilesDataSource.data = this.searchedProfiles;
-    this.productsDataSource.data.splice(0);
   }
 
   goToProduct(product: Product) {
-    this.router.navigate(['/produkt/produkt-widok/' + product._id]);
+    this.router.navigate(['/produkt/produkt-widok/', product._id]);
   }
 
   goToProfile(profile: Profile) {
-    console.log(profile._id);
+    this.router.navigate(['/profil/panel-profilu']);
   }
 
   getProductsSearchResults(phrase: string): Product[] {

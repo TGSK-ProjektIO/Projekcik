@@ -79,7 +79,7 @@ export class SessionRepository {
       } catch (exception) {
         reject();
       } finally {
-        client.close();
+        await client.close();
       }
     });
   }

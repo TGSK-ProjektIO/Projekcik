@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {ProduktComponent} from '../produkt.component';
 
 @Component({
   selector: 'app-produkt-dodanie',
@@ -16,20 +15,15 @@ export class ProduktDodanieComponent implements OnInit {
   categoryName = '';
   image = '';
 
-  modifyPath: string = '';
-
-  constructor(private router: Router) {
-    }
+  constructor(private router: Router) {}
 
     ngOnInit(): void {
     }
 
     redirectToProductList() {
-      this.modifyPath = "/produkt/produkt-lista";
-      this.router.navigateByUrl(this.modifyPath);
+      this.router.navigateByUrl("/produkt/produkt-lista");
     }
 
-  
     onSavePressed() {
       fetch('http://localhost:3000/api/v1/produkt/product', {
         method: 'POST',
@@ -54,5 +48,4 @@ export class ProduktDodanieComponent implements OnInit {
         console.error(err);
       });
     }
-
 }

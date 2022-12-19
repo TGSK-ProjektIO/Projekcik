@@ -1,11 +1,13 @@
 <nav class="navbar bg-dark py-1 h-100 mb-5" style="border-radius: 25px">
-    <div class="container-fluid bg-dark" style="border-radius: 25px">
-      <a class="navbar-brand text-white">OpinionCollector</a>
-      <form class="d-flex">
-        <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/search">Search</button>
-        <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/login">Log In</button>
-        <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/register">Sign Up</button>
-      </form>
-    </div>
+  <div class="container-fluid bg-dark" style="border-radius: 25px">
+    <a class="navbar-brand nav-link text-white" href="">OpinionCollector</a>
+    <form class="d-flex">
+      <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/search">Search</button>
+      <button class="btn btn-outline-light btn-lg px-10" type="submit" [hidden]=!userLoggedIn (click)=navigateToProfile()>Profile</button>
+      <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/login" [hidden]="userLoggedIn">Log In</button>
+      <button class="btn btn-outline-light btn-lg px-10" type="submit" routerLink="/register" [hidden]="userLoggedIn">Sign Up</button>
+      <button class="btn btn-outline-light btn-lg px-10" type="submit" [hidden]="!userLoggedIn" (click)=signOut()>Sign Out</button>
+    </form>
+  </div>
 </nav>
 <router-outlet></router-outlet>

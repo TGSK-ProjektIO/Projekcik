@@ -22,10 +22,8 @@ export class SessionService {
       startDate: currentDate,
       expireDate: moment(currentDate).add(30, 'm').toDate(),
       invalidated: false,
-      // @ts-ignore
       userId: user._id
     }
-    // @ts-ignore
     return this.sessionRepository.create(newSession);
   }
 

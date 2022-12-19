@@ -45,6 +45,7 @@ container.bind<SessionController>(TYPES.SessionController)
   .inSingletonScope();
 container.bind<ReportController>(TYPES.ReportController)
   .to(ReportController)
+  .inSingletonScope();
 container.bind<ProductController>(TYPES.ProductController)
   .to(ProductController)
   .inSingletonScope();
@@ -66,6 +67,7 @@ container.bind<SessionRepository>(TYPES.SessionRepository)
   .inSingletonScope();
 container.bind<ReportRepository>(TYPES.ReportRepository)
   .to(ReportRepository)
+  .inSingletonScope();
 container.bind<ProductRepository>(TYPES.ProductRepository)
   .to(ProductRepository)
   .inSingletonScope();
@@ -87,6 +89,7 @@ container.bind<SessionRouter>(TYPES.SessionRouter)
   .inSingletonScope();
 container.bind<ReportRouter>(TYPES.ReportRouter)
   .to(ReportRouter)
+  .inSingletonScope();
 container.bind<ProductRouter>(TYPES.ProductRouter)
   .to(ProductRouter)
   .inSingletonScope();
@@ -108,6 +111,7 @@ container.bind<SessionService>(TYPES.SessionService)
   .inSingletonScope();
 container.bind<ReportService>(TYPES.ReportService)
   .to(ReportService)
+  .inSingletonScope();
 container.bind<ProductService>(TYPES.ProductService)
   .to(ProductService)
   .inSingletonScope();

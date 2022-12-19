@@ -49,10 +49,6 @@ export class OpinieComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO: delet
-    this.id = "93887";
-    this.userLoggedID = "93887";
-
     switch (this.pageType) {
       case PageType.product:
         this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
@@ -60,7 +56,7 @@ export class OpinieComponent implements OnInit {
       default: break;
     }
   }
-  
+
   RetrieveAndSetupOpinions(getOpinionsFunction : (id:string) => Promise<Opinion[]>,
                            parameterID?: string,
                            addOpinionCreator?: boolean) {
@@ -71,7 +67,7 @@ export class OpinieComponent implements OnInit {
     // SESSION > USERS > OPINIONS > PROFILES
 
     //TODO: there is no defined behaviour for anon user
-    
+
     // Get session [needed to retrieve userType and userLoggedID info]
     // ---------------------------------------------------------------
     this.DB_GetSessionByID(sessionId)
@@ -103,8 +99,8 @@ export class OpinieComponent implements OnInit {
     // -----------------
     }).then(() => getOpinionsFunction(parameterID || this.userLogged.userId)
     ).then(opinionList => {
-      for (const opinion of opinionList) {
-        this.allOpinions.push(this.OpinionDBToComponent(opinion));
+      for (let i=0; i<opinionList.length; i++) {
+        this.allOpinions.push(this.OpinionDBToComponent(opinionList[i]));
       }
 
     // Get user nickname & picture from profile, attach them to opinion
@@ -118,6 +114,8 @@ export class OpinieComponent implements OnInit {
           this.ShowOpinion(opinion)
         });
       }
+    }).catch(err => {
+      console.error(err);
     });
   }
 
@@ -271,7 +269,6 @@ export class OpinieComponent implements OnInit {
       },
       body: JSON.stringify(opinion)
     }).then(async response => {
-
       if (response.status === 201) { success = true; }
       if (response.status === 400) { success = false; }
     }).then(() => {return success});
@@ -307,8 +304,9 @@ export class OpinieComponent implements OnInit {
       console.error(err);
     });
   }
+
   private async DB_GetOpinionsByProduct(productID: string): Promise<Array<Opinion>> {
-    return await fetch(`http://localhost:3000/api/v1/opinie/getByProduct/${productID}`, {
+    return await fetch(`http://localhost:3000/api/v1/opinie/getByProduct/` + productID, {
       method: 'GET',
       headers: {
         'Accept': '*/*',
@@ -322,8 +320,8 @@ export class OpinieComponent implements OnInit {
     });
   }
 
-  private async DB_GetOpinionsByUser(userID: string): Promise<Array<Opinion>> {
-    return await fetch(`http://localhost:3000/api/v1/opinie/getByUser/${userID}`, {
+  private async DB_GetOpinionsByUser(userID: string): Promise<Opinion[]> {
+    return await fetch(`http://localhost:3000/api/v1/opinie/getByUser/` + userID, {
       method: 'GET',
       headers: {
         'Accept': '*/*',

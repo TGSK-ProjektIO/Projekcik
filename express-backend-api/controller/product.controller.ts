@@ -2,7 +2,6 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {ProductService} from "../services/product.service";
 import {Product} from "../model/product";
-import {json} from "express";
 
 @injectable()
 export class ProductController {

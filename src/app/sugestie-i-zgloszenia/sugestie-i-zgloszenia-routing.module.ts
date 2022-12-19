@@ -11,7 +11,7 @@ import {UserReportFormComponent} from "./user-report/user-report-form/user-repor
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'sugg',
     component: SugestieIZgloszeniaComponent,
     children: [
       {
