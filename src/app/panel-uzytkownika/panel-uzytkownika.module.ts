@@ -7,6 +7,7 @@ import { PanelAdministratoraComponent } from './panel-administratora/panel-admin
 import { PanelEdycjiComponent } from './panel-edycji/panel-edycji.component';
 import {OpinieModule} from "../opinie/opinie.module";
 import {PanelUzytkownikaRoutingModule} from "./panel-uzytkownika-routing.module";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {PanelUzytkownikaRoutingModule} from "./panel-uzytkownika-routing.module"
     MatTabsModule,
     PanelUzytkownikaRoutingModule,
     OpinieModule,
+    FormsModule,
   ]
 })
 export class PanelUzytkownikaModule { }

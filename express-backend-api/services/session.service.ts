@@ -4,7 +4,6 @@ import {TYPES} from "../config/types.config";
 import {Session} from "../model/session";
 import {User} from "../model/user";
 import moment from "moment";
-import {ObjectId} from "mongodb";
 
 @injectable()
 export class SessionService {

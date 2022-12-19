@@ -5,7 +5,6 @@ import {MatTableDataSource} from "@angular/material/table";
 import {Router} from "@angular/router";
 import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {ObjectId} from "mongodb";
 
 @Injectable()
 export class PolishPaginatorIntl extends MatPaginatorIntl{
@@ -46,7 +45,6 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   productsDataSource : MatTableDataSource<Product> = new MatTableDataSource<Product>(this.searchedProducts);
 
   profileModel : Profile = {
-    _id: ObjectId.createFromHexString(""),
     nickname: '',
     description: '',
     isBanned: false,
@@ -174,7 +172,7 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   }
 
   searchProfiles() {
-    this.searchedProfiles = this.getProfilesSearchResults(this.profileModel.nickname.toLowerCase());
+    // this.searchedProfiles = this.getProfilesSearchResults(this.profileModel.nickname.toLowerCase());
     this.profilesDataSource.data = this.searchedProfiles;
   }
 
