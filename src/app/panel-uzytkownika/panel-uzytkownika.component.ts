@@ -18,7 +18,6 @@ export class PanelUzytkownikaComponent implements OnInit {
   }
 
   // ---------- FETCH METHODS ----------
-
   private async fetchProfileByNickname(nickname: string): Promise<Profile> {
     return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfile/${nickname}`, {
       method: 'GET',
