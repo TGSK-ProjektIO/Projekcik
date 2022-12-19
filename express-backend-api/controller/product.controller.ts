@@ -8,6 +8,9 @@ export class ProductController {
   constructor(@inject(TYPES.ProductService) private productService: ProductService) {
   }
 
+
+
+
 public getProduct() {
   return async (request: any, response: any) => {
     const productId = request.params.id;
@@ -61,7 +64,7 @@ public addProduct() {
           message: "Added new product",
           id: newProduct._id
         });
-      }
+      } 
       catch (error) {
         response.status(400).send({
           message: "Invalid params"
@@ -90,6 +93,7 @@ public deleteProduct() {
 
 public getAllProducts() {
   return async (request: any, response: any) => {
+    let productId : string = request.params.id;
     try {
       let products : Array<Product> = await this.productService.getAllProducts();
       response.status(200).send(products);
@@ -103,6 +107,7 @@ public getAllProducts() {
 
 public deleteAllProducts() {
   return async (request: any, response: any) => {
+    const productId = request.params.id;
     try {
       await this.productService.deleteAllProducts();
       response.status(201).send({
@@ -115,4 +120,5 @@ public deleteAllProducts() {
     }
   }
 }
+
 }

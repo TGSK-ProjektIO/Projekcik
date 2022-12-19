@@ -1,27 +1,6 @@
 * {
   color: #adadad;
-}
-
-.OpinionContainer {
-  display: block;
-  width: 95%;
-  margin: auto;
-  padding: 10px;
-
-  height: 80vh;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.OpinionContainer {
-  display: block;
-  width: 95%;
-  margin: auto;
-  padding: 10px;
-
-  height: 80vh;
-  max-height: 80vh;
-  overflow-y: auto;
+  font-family: "Helvetica";
 }
 
 app-complete-opinion {

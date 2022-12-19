@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {Product} from "../../../../express-backend-api/model/product";
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ProduktService } from '../services/produkt.service';
+
 
 @Component({
   selector: 'app-produkt-lista',
@@ -10,45 +12,50 @@ import {Product} from "../../../../express-backend-api/model/product";
 export class ProduktListaComponent implements OnInit {
 
   id: string = '';
-  name = '';
-  description = '';
-  tag = ['', ''];
-  categoryName = '';
+  name = 'name';
+  description = 'description';
+  tag = 'tag1, tag2';
+  categoryName = 'drzewo';
   image = 'https://images.obi.pl/product/PL/415x415/679553_1.jpg';
 
-  products: Product[];
+  path: string = window.location.href;
+  lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
+  products: any;
+  modifyPath: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private service: ProduktService) {
+    }
 
     ngOnInit(): void {
-      fetch(`http://localhost:3000/api/v1/produkt/product/getAllProducts`, {
-        method: 'GET',
-        headers: {
-          'Accept': '*/*',
-          'Content-Type': 'application/json'
-        },
-      }).then(async response => {
-        this.products = await response.json();
-      }).catch(err => {
-        console.error(err);
-      });
+      this.service.getProducts()
+        .subscribe(response => {
+          this.products = response;
+        });
     }
 
     redirectToModify() {
-      this.router.navigateByUrl("/produkt/produkt-modyfikacja/" );
+      this.modifyPath = "/produkt/produkt-modyfikacja/" + this.lastPath;
+      this.router.navigateByUrl(this.modifyPath);
     }
 
     redirectToWidok(id: string) {
-      this.router.navigate(['/produkt/produkt-widok/', id]);
+      this.modifyPath = "/produkt/produkt-widok/" + id;
+      this.router.navigateByUrl(this.modifyPath);
     }
 
     redirectToDodanie() {
-      this.router.navigateByUrl("/produkt/produkt-dodanie");
+      this.modifyPath = "/produkt/produkt-dodanie";
+      this.router.navigateByUrl(this.modifyPath);
+    }
+
+    deleteProduct() {
+
     }
 
     getProductName(): string {return this.name}
     getProductDescription(): string {return this.description}
-    getProductTags(): string[] {return this.tag}
+    getProductTags(): string {return this.tag}
     getProductCategoryName(): string {return this.categoryName}
     getProductImage(): string {return this.image}
+
 }

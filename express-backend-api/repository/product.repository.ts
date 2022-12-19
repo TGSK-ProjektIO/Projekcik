@@ -1,4 +1,5 @@
 import {Product} from "../model/product";
+import {Category} from "../model/category";
 import {DATABASE_URi, DB_NAME, PRODUCT_COLLECTION_NAME} from "../config/mongo.config";
 import {MongoClient, ObjectId} from "mongodb";
 import {injectable} from "inversify";
@@ -27,69 +28,69 @@ export class ProductRepository {
         await client.close();
       }
     });
-  }
+ }
 
-  create(product: Product): Promise<Product> {
+ create(product: Product): Promise<Product> {
     return new Promise<Product>(async (resolve, reject) => {
-      if (product._id) {
-        return reject();
-      }
-      const client = this.createClient();
-      try {
-        const db = client.db(DB_NAME);
-        const collection = db.collection(PRODUCT_COLLECTION_NAME);
-        if (await collection.count({_id: product._id}) >= 1) { //|| await collection.count({name: product.name}) >= 1) {
-          reject();
+        if (product._id) {
+          return reject();
         }
-        const response = await collection.insertOne(product);
-        product._id = response.insertedId;
-        resolve(product);
-      } catch (exception) {
-        reject();
-      } finally {
-        await client.close();
-      }
-    });
+        const client = this.createClient();
+        try {
+          const db = client.db(DB_NAME);
+          const collection = db.collection(PRODUCT_COLLECTION_NAME);
+          if (await collection.count({_id: product._id}) >= 1) { //|| await collection.count({name: product.name}) >= 1) {
+            reject();
+          }
+          const response = await collection.insertOne(product);
+          product._id = response.insertedId;
+          resolve(product);
+        } catch (exception) {
+          reject();
+        } finally {
+          client.close();
+        }
+      });
   }
 
-  update(product: Product): Promise<void> {
+ update(product: Product): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
-      if (!product._id) {
-        return reject();
-      }
-      const client = this.createClient();
-      try {
-        const db = client.db(DB_NAME);
-        const collection = db.collection(PRODUCT_COLLECTION_NAME);
-        const response = await collection.updateOne(
-          {_id: product._id},
-          {
-            $set: {
-              name: product.name,
-              description: product.description,
-              tag: product.tag,
-              categoryName: product.categoryName,
-              attribute: product.attribute,
-              image: product.image
-            }
-          },
-          {upsert: false}
-        )
-        if (response.modifiedCount === 1) {
-          resolve();
-        } else {
-          reject();
+        if (!product._id) {
+          return reject();
         }
-      } catch (exception) {
-        reject();
-      } finally {
-        await client.close();
-      }
-    });
+        const client = this.createClient();
+        try {
+          const db = client.db(DB_NAME);
+          const collection = db.collection(PRODUCT_COLLECTION_NAME);
+          const response = await collection.updateOne(
+            {_id: product._id},
+            {
+              $set: {
+                name: product.name,
+                description: product.description,
+                tag: product.tag,
+                categoryName: product.categoryName,
+                attribute: product.attribute,
+                image: product.image
+              }
+            },
+            { upsert: false }
+          )
+          if (response.modifiedCount === 1) {
+            resolve();
+          } else {
+            reject();
+          }
+        } catch (exception) {
+          reject();
+        } finally {
+          client.close();
+        }
+      });
   }
 
 
-  read(_id: string): Promise<Product> {
+ read(_id: string): Promise<Product> {
     return new Promise<Product>(async (resolve, reject) => {
       const client = this.createClient();
       try {
@@ -106,73 +107,74 @@ export class ProductRepository {
       } catch (exception) {
         reject();
       } finally {
-        await client.close();
+        client.close();
       }
     });
-  }
+}
 
 
-  delete(_id: string): Promise<void> {
+delete(_id: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
-      const client = this.createClient();
-      try {
-        const db = client.db(DB_NAME);
-        const collection = db.collection(PRODUCT_COLLECTION_NAME);
-        const result = await collection.deleteOne({
-          _id: _id
-        });
-        if (result.deletedCount === 1) {
-          resolve();
-        } else {
+        const client = this.createClient();
+        try {
+          const db = client.db(DB_NAME);
+          const collection = db.collection(PRODUCT_COLLECTION_NAME);
+          const result = await collection.deleteOne({
+            _id: _id
+          });
+          if (result.deletedCount === 1) {
+            resolve();
+          } else {
+            reject();
+          }
+        } catch (exception) {
           reject();
+        } finally {
+          client.close();
         }
-      } catch (exception) {
-        reject();
-      } finally {
-        await client.close();
-      }
-    });
-  }
+      });
+}
 
-  readAll(): Promise<Product[]> {
-    return new Promise<Product[]>(async (resolve, reject) => {
-      const client = this.createClient();
-      try {
-        const db = client.db(DB_NAME);
-        const collection = db.collection(PRODUCT_COLLECTION_NAME);
-        let response = await collection.find<Product>({}).toArray();
-        if (response !== null) {
-          resolve(response);
-        } else {
-          reject();
-        }
-      } catch (exception) {
+readAll(): Promise<Product[]> {
+  return new Promise<Product[]>(async (resolve, reject) => {
+    const client = this.createClient();
+    try {
+      const db = client.db(DB_NAME);
+      const collection = db.collection(PRODUCT_COLLECTION_NAME);
+      let response = await collection.find<Product>({}).toArray();
+      if (response !== null) {
+        resolve(response);
+      } else {
         reject();
-      } finally {
-        await client.close();
       }
-    });
+    } catch (exception) {
+      reject();
+    } finally {
+      client.close();
+    }
+  });
   }
 
   deleteAll(): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
-      const client = this.createClient();
-      try {
-        const db = client.db(DB_NAME);
-        const collection = db.collection(PRODUCT_COLLECTION_NAME);
-        const result = await collection.deleteMany({});
-        const count = await collection.countDocuments({});
-        if (count === 0) {
-          resolve();
-        } else {
+        const client = this.createClient();
+        try {
+          const db = client.db(DB_NAME);
+          const collection = db.collection(PRODUCT_COLLECTION_NAME);
+          const result = await collection.deleteMany({});
+          const count = await collection.countDocuments({});
+          if (count === 0) {
+            resolve();
+          } else {
+            reject();
+          }
+        } catch (exception) {
           reject();
+        } finally {
+          client.close();
         }
-      } catch (exception) {
-        reject();
-      } finally {
-        await client.close();
-      }
-    });
-  }
+      });
+}
+
 }
 

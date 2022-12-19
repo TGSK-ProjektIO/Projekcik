@@ -2,14 +2,14 @@ import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from '@angular/c
 import {ReviewComponent} from "../review/review.component";
 import {OpinieComponent} from "../opinie.component";
 import {RatingComponent} from "../rating/rating.component";
-import {RatingsHostDirective, ReviewHostDirective} from "../opinion-host.directive";
+import {OpinionHostDirective} from "../opinion-host.directive";
 import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.component";
 
 @Component({
   selector: 'app-opinion-creator',
   templateUrl: './opinion-creator.component.html',
   styleUrls: ['./opinion-creator.component.css'],
-  //encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class OpinionCreatorComponent implements AfterViewInit {
 
@@ -17,8 +17,7 @@ export class OpinionCreatorComponent implements AfterViewInit {
   // @ts-ignore
   review : ReviewComponent = new ReviewComponent();
 
-  @ViewChild(RatingsHostDirective, {static: true}) ratingsHost!: RatingsHostDirective;
-  @ViewChild(ReviewHostDirective, {static: true}) opinionHost!: ReviewHostDirective;
+  @ViewChild(OpinionHostDirective, {static: true}) ratingsHost!: OpinionHostDirective;
   parent : OpinieComponent;
 
   constructor(parent : OpinieComponent) {
@@ -26,7 +25,7 @@ export class OpinionCreatorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.review = this.opinionHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
+    this.review = this.ratingsHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
     this.review.isReadonly = false;
   }
 
@@ -41,14 +40,10 @@ export class OpinionCreatorComponent implements AfterViewInit {
 
   CreateOpinion() : void {
     let newOpinion = new CompleteOpinionComponent();
-    newOpinion.userID = this.parent.userLogged.userId;
-    newOpinion.userName = this.parent.userLogged.nickname;
-    newOpinion.userPicture = this.parent.userLogged.profilePicture;
+    newOpinion.userID = this.parent.userLoggedID;
     newOpinion.review.text = this.review.text;
-    for (const rating of this.ratings) {
-      let ratingCopy = Object.assign({}, rating);
-      newOpinion.ratings.push(ratingCopy);
-    }
+    console.log(newOpinion.review.text)
+    newOpinion.ratings = this.ratings;
     this.parent.CreateOpinion(newOpinion);
 
     // clear fields

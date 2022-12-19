@@ -12,15 +12,10 @@ form {
   border-radius: 5px;
 }
 
-.ReviewHost {
+app-review {
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
-}
-
-.RatingsHost {
-  overflow-x: auto;
-  white-space: nowrap;
 }
 
 app-rating {

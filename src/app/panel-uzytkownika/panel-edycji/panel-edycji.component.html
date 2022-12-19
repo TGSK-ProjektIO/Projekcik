@@ -1,20 +1,25 @@
+<html>
+<body>
 <div class="bg-dark text-white bg-opacity-75" style="width: 90%; margin: auto; padding: 1em; border-radius: 1rem;">
   <div class="bg-white text-white bg-opacity-10" style="padding: 1em">
     <h2>Dane profilu</h2>
     Pseudonim <br/>
-    <input type="text" style="width: 20em;" [(ngModel)]="nickname" name="nickname" required> <br/>
+    <input type="text" style="width: 20em;" placeholder="Pseudonim"> <br/>
     <button>Zmień pseudonim</button> <br/> <br/>
     Opis <br/>
-    <input type="text" style="width: 20em;" [(ngModel)]="description" name="description" required> <br/>
+    <textarea style="width: 25em;"></textarea> <br/>
     <button>Zmień opis</button> <br/> <br/>
     Zdjęcie profilowe <br/>
-    <input type="file" style="width: 20em;" [(ngModel)]="profilePicture" name="profilePicture" required> <br/>
+    <input id="upload" type="file" style="  height: 40px; padding-top: 5px;"> <br/>
     <button>Zmień zdjęcie profilowe</button>
   </div>
-<!--  <div class="bg-white text-white bg-opacity-10" style="margin-top: 1em; padding: 1em">-->
-<!--    <h2>Dane logowania</h2>-->
-<!--    Hasło <br/>-->
-<!--    <button>Zmień hasło</button>-->
-<!--  </div>-->
+  <div class="bg-white text-white bg-opacity-10" style="margin-top: 1em; padding: 1em">
+    <h2>Dane logowania</h2>
+    Hasło <br/>
+    <button>Zmień hasło</button>
+  </div>
+  <br/>
   <button (click)="redirectToProfile()" style="margin: 0">Wróć</button>
 </div>
+</body>
+</html>

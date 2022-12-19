@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-export enum OpinionRatingState { None, Liked, Disliked }
+enum OpinionRatingState { None, Liked, Disliked }
 
 @Component({
   selector: 'app-opinion-rating',
@@ -21,11 +21,16 @@ export class OpinionRatingComponent implements OnInit {
       case OpinionRatingState.Disliked:
         this.RemoveDislike();
         this.AddLike();
+        this.ratingState = OpinionRatingState.Liked;
         break;
       case OpinionRatingState.None:
-        this.AddLike(); break;
+        this.AddLike();
+        this.ratingState = OpinionRatingState.Liked;
+        break;
       case OpinionRatingState.Liked:
-        this.RemoveLike(); break;
+        this.RemoveLike();
+        this.ratingState = OpinionRatingState.None;
+        break;
     }
   }
 
@@ -34,30 +39,23 @@ export class OpinionRatingComponent implements OnInit {
       case OpinionRatingState.Liked:
         this.RemoveLike();
         this.AddDislike();
+        this.ratingState = OpinionRatingState.Disliked;
         break;
       case OpinionRatingState.None:
-        this.AddDislike(); break;
+        this.AddDislike();
+        this.ratingState = OpinionRatingState.Disliked;
+        break;
       case OpinionRatingState.Disliked:
-        this.RemoveDislike(); break;
+        this.RemoveDislike();
+        this.ratingState = OpinionRatingState.None;
+        break;
     }
   }
 
-  private AddLike() : void {
-    this.likes += 1;
-    this.ratingState = OpinionRatingState.Liked;
-  }
-  private AddDislike() : void {
-    this.dislikes += 1;
-    this.ratingState = OpinionRatingState.Disliked;
-  }
-  private RemoveLike() : void {
-    this.likes -= 1;
-    this.ratingState = OpinionRatingState.None;
-  }
-  private RemoveDislike() : void {
-    this.dislikes -= 1;
-    this.ratingState = OpinionRatingState.None;
-  }
+  private AddLike() : void { this.likes += 1;  }
+  private AddDislike() : void { this.dislikes += 1; }
+  private RemoveLike() : void { this.likes -= 1; }
+  private RemoveDislike() : void { this.dislikes -= 1; }
   GetRating() : string {
     return `This opinion has ${this.likes} likes and ${this.dislikes} dislikes.`
   }

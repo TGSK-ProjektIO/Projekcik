@@ -14,7 +14,7 @@ export class ProductRouter {
     app.put('/api/v1/produkt/product/:id', this.productController.updateProduct());
     app.post('/api/v1/produkt/product', this.productController.addProduct());
     app.delete('/api/v1/produkt/product/:id', this.productController.deleteProduct());
-    app.get('/api/v1/produkt/getAllProducts', this.productController.getAllProducts());
+    app.get('/api/v1/produkt/product', this.productController.getAllProducts());
   }
 }
 

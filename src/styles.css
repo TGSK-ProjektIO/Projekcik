@@ -1,21 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
+/* Fuck white space at the bottom */
 html, body {
   min-height: 100vh;
-  max-height: 100vh;
 }
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  background-image: url("src/assets/gradient_background.jpg");
-}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 *::-webkit-scrollbar {
   width: 0.4em;
   height: 0.4em;
 }
-
 *::-webkit-scrollbar-track
 {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,1);
@@ -30,6 +25,15 @@ body {
 
 *::-webkit-scrollbar:hover {
   width: 0.7em;
+}
+
+.bg-dark, .bg-white {
+  border-radius: 1rem;
+  padding: 0.1em;
+}
+
+.bg-blue {
+  background-color: red;
 }
 
 button, input::file-selector-button{

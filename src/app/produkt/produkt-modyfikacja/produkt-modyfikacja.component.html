@@ -1,47 +1,58 @@
-<section title="Produkt - modyfikacja">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Opinion Controller - Modyfikacja Produktu</title>
+</head>
+<body>
+  <section class="container-fluid min-vh-100 vw-100">
     <div class="container py-1 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-8 col-xl-10">
           <div class="card bg-dark text-white" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-              <div class="mb-md-3 mt-md-4 pb-2">
+
+              <div class="mb-md-5 mt-md-4 pb-2">
+
                 <h2 class="fw-bold mb-2 text-uppercase">Modify product</h2>
                 <p class="text-white-50 mb-5">Please fill all spaces</p>
 
                 <div class="form-outline mb-4">
-                  <input id="name" type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="name"/>
-                  <label class="form-label" for="name">Name</label>
+                  <input type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="name"/>
+                  <label class="form-label" for="typeEmailLogin">Name</label>
 
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input id="description" type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="description"/>
-                    <label class="form-label" for="description">Description</label>
+                    <input type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="description"/>
+                    <label class="form-label" for="typeEmailLogin">Description</label>
 
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input id="tag" type="text"class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="tag"/>
-                    <label class="form-label" for="tag">Tags</label>
+                    <input type="text"class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="tag"/>
+                    <label class="form-label" for="typeEmailLogin">Tags</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input id="categoryName" type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="categoryName">
-                  <label class="form-label" for="categoryName">Category</label>
+                  <input type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="categoryName">
+                  <label class="form-label" for="typePasswordLogin">Category</label>
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input id="image" type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="image">
-                    <label class="form-label" for="image">Image</label>
+                    <input type="text" class="form-control form-control-lg bg-dark text-white"  [(ngModel)]="image">
+                    <label class="form-label" for="typePasswordLogin">Image</label>
                 </div>
 
                 <button class="btn btn-outline-light btn-lg px-5" type="submit" (click)="onModifyPressed()">Save</button>
                 <button class="btn btn-outline-light btn-lg px-5" (click)="redirectToProductList()">Cancel</button>
 
               </div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
-</section>
+  </section>
+</body>
+</html>

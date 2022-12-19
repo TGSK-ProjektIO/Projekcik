@@ -1,21 +1,22 @@
-
+<html>
+<body>
 <div class="bg-dark text-white bg-opacity-75" style="width: 90%; margin: auto; padding: 1em;">
   <div class="bg-white text-white bg-opacity-10" style="padding: 1em">
-    <img width="200" height="200" style="border-radius: 100%" src="{{profile.profilePicture}}" alt="Zdjęcie profilowe"/>
-    <h1 style="font-size: 40px"> {{profile.nickname}} </h1>
+    <img width="200" height="200" style="border-radius: 100%" src="{{mainComp.profile.profilePicture}}" alt="Zdjęcie profilowe"/>
+    <h1 style="font-size: 40px"> {{mainComp.profile.nickname}} </h1>
     <h1>
-      <div [hidden]="!profile.isBanned" style="color: red">
+      <div [hidden]="!mock_user.isBanned" style="color: red">
         [KONTO ZABLOKOWANE]
       </div>
     </h1>
     <br/>
     <div style="display: inline-block; margin-bottom: 1em;">
       <h3><i>O mnie</i></h3>
-      {{profile.description}}
+      {{mainComp.profile.description}}
     </div>
     <br/>
-    <button style="margin: 0 1em 0 0" [hidden]="!showEditButton" (click)="redirectToEdit()">Edytuj profil</button>
-    <button [hidden]="!showAdminButton" (click)="redirectToAdmin()">Panel administratora</button>
+    <button style="margin: 0 1em 0 0" [hidden]="!isCurrent" (click)="redirectToEdit()">Edytuj profil</button>
+    <button [hidden]="!mock_user.isAdmin || !isCurrent" (click)="redirectToAdmin()">Panel administratora</button>
   </div>
   <div class="bg-white text-white bg-opacity-10" style="margin-top: 1em">
     <h2 style="margin: 0.5em 0 0.5em 1em">Ocenione produkty</h2>
@@ -34,3 +35,5 @@
     <br/>
   </div>
 </div>
+</body>
+</html>

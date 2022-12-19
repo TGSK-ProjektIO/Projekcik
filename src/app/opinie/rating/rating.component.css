@@ -1,17 +1,14 @@
 .Rating {
   display: inline-block;
-  min-width: 150px;
-  padding: 2px;
-  width: auto;
+  width: 150px;
   border: #334465 1px outset;
   border-radius: 5px;
   justify-content: center;
-  text-align: center;
-  margin: auto;
-  white-space: nowrap;
+  margin-right: 1em;
 }
 
 .Content {
   display: inline-block;
   padding: 5px;
+  text-align: center;
 }

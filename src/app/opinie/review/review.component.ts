@@ -9,15 +9,12 @@ import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.com
 export class ReviewComponent implements OnInit {
   @Input() text : string = "";
   @Input() isReadonly = true;
-  parent: CompleteOpinionComponent | undefined;
 
-  constructor() { }
+  constructor(private parent: CompleteOpinionComponent) { }
   ngOnInit(): void { }
-
-  SetParent(newParent : CompleteOpinionComponent) { this.parent = newParent; }
 
   GetReview() : string { return this.text; }
 
   SetReview(newText : string) { this.text = newText; }
-  OnModify() { this.parent?.ModifyOpinion(); }
+  OnModify() { this.parent.ModifyOpinion(); }
 }

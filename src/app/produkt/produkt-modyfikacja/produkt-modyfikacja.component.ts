@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {Product} from "../../../../express-backend-api/model/product";
+import {Router} from "@angular/router";
+import { ProduktService } from '../services/produkt.service';
+import { Product } from 'express-backend-api/model/product';
 
 @Component({
   selector: 'app-produkt-modyfikacja',
@@ -9,61 +10,77 @@ import {Product} from "../../../../express-backend-api/model/product";
 })
 
 export class ProduktModyfikacjaComponent implements OnInit {
+
   _id = '';
   name = '';
   description = '';
-  tag: string[];
+  tag = '';
   categoryName = '';
   image = '';
-  product!: Product;
-  productId!: number;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  product: any;
+  path: string = window.location.href;
+  lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
+  modifyPath: string = '';
 
-  ngOnInit(): void {
-    this.route.params.forEach((params: Params) => {
-      this.productId = +params['id'];
-    });
+  constructor(private router: Router, private service: ProduktService) {
+    }
 
-    fetch(`http://localhost:3000/api/v1/produkt/product/${this.productId}`, {
-      method: 'GET',
-      headers: {
-        'Accept': '*/*',
-        'Content-Type': 'application/json'
-      },
-    }).then(async response => {
-      this.product = await response.json();
-    }).catch(err => {
-      console.error(err);
-    });
-  }
+    ngOnInit(): void {
+      this.service.getProduct(this.lastPath)
+      .subscribe(response => {
+        this.product = response;
+      });
+    }
 
-  redirectToMainPage() {
-    this.router.navigateByUrl('/');
-  }
+    redirectToMainPage() {
+      this.router.navigateByUrl('/');
+    }
 
-  redirectToProductList() {
-    this.router.navigateByUrl("/produkt/produkt-lista");
-  }
+    redirectToProductList() {
+      this.modifyPath = "/produkt/produkt-lista";
+      this.router.navigateByUrl(this.modifyPath);
+    }
+  
+    onModifyPressed() {
+      this.product.id = this.lastPath;
+      this.product.name = this.name;
+      this.product.description = this.description;
+      this.product.categoryName = this.categoryName;
+      this.product.tag = this.tag;
+      this.product.image = this.image;
+      this.service.modifyProduct(this.lastPath, this.product)
+      .subscribe(response => {
+        this.product = response;
+      });
 
-  onModifyPressed() {
-    this.product.name = this.name;
-    this.product.description = this.description;
-    this.product.categoryName = this.categoryName;
-    this.product.tag = this.tag;
-    this.product.image = this.image;
+    }
 
-    fetch(`http://localhost:3000/api/v1/produkt/product/${this.productId}`, {
-      method: 'PUT',
-      headers: {
-        'Accept': '*/*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.product)
-    }).then(async response => {
-      this.product = await response.json();
-    }).catch(err => {
-      console.error(err);
-    });
-  }
+
+    onSavePressed() {
+      this.modifyPath = "http://localhost:3000/api/v1/produkt/product/" + this.lastPath;
+      fetch(this.modifyPath, {
+        method: 'PUT',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "name": this.name,
+          "description": this.description,
+          "categoryName": this.categoryName,
+          "tag": this.tag,
+          "image": this.image
+        })
+      }).then(async response => {
+        if (response.status === 201) {
+          await this.router.navigateByUrl('/');
+        }
+        if (response.status === 404) {
+          console.log("hi");
+        }
+      }).catch(err => {
+        console.error(err);
+      });
+    }
 }

@@ -1,9 +1,4 @@
 <div class="Rating">
   <div class="Content">{{GetName()}}</div>
-  <div class="Content">
-    <rating [(ngModel)]="rating"
-            [max]="5"
-            [readonly]="isReadonly"
-            (click)="OnEdit()">
-    </rating></div>
+  <div class="Content"><rating [(ngModel)]="rating" [max]="5" [readonly]="isReadonly"></rating></div>
 </div>
