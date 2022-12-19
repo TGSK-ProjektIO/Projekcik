@@ -49,10 +49,6 @@ export class OpinieComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO: delet
-    this.id = "93887";
-    this.userLoggedID = "93887";
-
     switch (this.pageType) {
       case PageType.product:
         this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
@@ -60,7 +56,7 @@ export class OpinieComponent implements OnInit {
       default: break;
     }
   }
-  
+
   RetrieveAndSetupOpinions(getOpinionsFunction : (id:string) => Promise<Opinion[]>,
                            parameterID?: string,
                            addOpinionCreator?: boolean) {
@@ -71,7 +67,7 @@ export class OpinieComponent implements OnInit {
     // SESSION > USERS > OPINIONS > PROFILES
 
     //TODO: there is no defined behaviour for anon user
-    
+
     // Get session [needed to retrieve userType and userLoggedID info]
     // ---------------------------------------------------------------
     this.DB_GetSessionByID(sessionId)
