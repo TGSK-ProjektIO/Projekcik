@@ -27,6 +27,7 @@ import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator"
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatOptionModule} from "@angular/material/core";
 import {WyszukiwanieModule} from "./wyszukiwanie/wyszukiwanie.module";
+import {SugestieIZgloszeniaModule} from "./sugestie-i-zgloszenia/sugestie-i-zgloszenia.module";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {WyszukiwanieModule} from "./wyszukiwanie/wyszukiwanie.module";
     MatSelectModule,
     MatCheckboxModule,
     ReactiveFormsModule,
-    WyszukiwanieModule
+    WyszukiwanieModule,
+    SugestieIZgloszeniaModule
   ],
   providers: [AlertConfig],
   bootstrap: [AppComponent]
