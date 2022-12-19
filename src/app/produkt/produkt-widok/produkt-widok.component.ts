@@ -1,52 +1,51 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ProduktService } from '../services/produkt.service';
-
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {PageType} from "../../opinie/opinie.component";
+import {Product} from "../../../../express-backend-api/model/product";
 
 @Component({
   selector: 'app-produkt-widok',
   templateUrl: './produkt-widok.component.html',
   styleUrls: ['./produkt-widok.component.css']
 })
+
 export class ProduktWidokComponent implements OnInit {
 
-  id: string = '';
-  name = 'name';
-  description = 'description';
-  tag = 'tag1, tag2';
-  categoryName = 'drzewo';
-  image = 'https://images.obi.pl/product/PL/415x415/679553_1.jpg';
+  pageTypes: PageType = PageType.product;
+  product: Product = {} as Product;
+  productId: string;
 
-  path: string = window.location.href;
-  lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
-  product: any;
-  modifyPath: string = '';
-  constructor(private router: Router, private service: ProduktService) {
-    }
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-      this.service.getProduct(this.lastPath)
-        .subscribe(response => {
-          this.product = response;
-        });
+      this.route.params.forEach((params: Params) => {
+        this.productId = params['id'];
+        console.log(this.productId);
+      });
+
+      fetch(`http://localhost:3000/api/v1/produkt/product/${this.productId}`, {
+        method: 'GET',
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/json'
+        },
+      }).then(async response => {
+        this.product = await response.json();
+      }).catch(err => {
+        console.error(err);
+      });
     }
 
     redirectToModify() {
-      this.modifyPath = "/produkt/produkt-modyfikacja/" + this.lastPath;
-      this.router.navigateByUrl(this.modifyPath);
+      this.router.navigate(["/produkt/produkt-modyfikacja", this.productId]);
     }
-
-
 
     deleteProduct() {
-
+      fetch(`http://localhost:3000/api/v1/produkt/product/${this.productId}`, {
+        method: 'DELETE',
+      }).catch(err => {
+        console.error(err);
+      });
     }
-
-    getProductName(): string {return this.product.name}
-    getProductDescription(): string {return this.product.description}
-    getProductTags(): string {return this.product.tag}
-    getProductCategoryName(): string {return this.product.categoryName}
-    getProductImage(): string {return this.product.image}
 
 }

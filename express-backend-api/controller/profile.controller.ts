@@ -1,6 +1,7 @@
 import {inject, injectable} from "inversify";
 import {TYPES} from "../config/types.config";
 import {ProfileService} from "../services/profile.service";
+import {Profile} from "../model/profile";
 
 
 @injectable()

@@ -2,6 +2,7 @@ import {Profile} from "../model/profile";
 import {DATABASE_URi, DB_NAME, PROFILE_COLLECTION_NAME} from "../config/mongo.config";
 import {MongoClient, ObjectId} from "mongodb";
 import {injectable} from "inversify";
+import {Product} from "../model/product";
 
 @injectable()
 export class ProfileRepository {

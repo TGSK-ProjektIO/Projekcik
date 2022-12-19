@@ -2,9 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {OpinionRatingComponent} from "../opinion-rating/opinion-rating.component";
 import {RatingComponent} from "../rating/rating.component";
 import {ReviewComponent} from "../review/review.component";
-import {OpinieComponent, UserType} from "../opinie.component";
+import {OpinieComponent, PageType, UserType} from "../opinie.component";
 import {OpinionRatingHostDirective, RatingsHostDirective, ReviewHostDirective} from "../opinion-host.directive";
-import {OpinionRating} from "../../../../express-backend-api/model/opinion.rating";
 
 @Component({
   selector: 'app-complete-opinion',
@@ -23,7 +22,7 @@ export class CompleteOpinionComponent implements OnInit {
   // Needed to assign [[ user ]] to [[ opinion ]]
   userID : string = "";
 
-  opinionRating : OpinionRatingComponent = new OpinionRatingComponent;
+  opinionRating : OpinionRatingComponent;
   review : ReviewComponent;
   ratings : Array<RatingComponent> = [];
 
@@ -41,7 +40,8 @@ export class CompleteOpinionComponent implements OnInit {
   SetParent(newParent : OpinieComponent) { this.opinieParent = newParent}
 
   constructor() {
-    this.review = new ReviewComponent(this);
+    this.review = new ReviewComponent();
+    this.opinionRating = new OpinionRatingComponent();
   }
 
   ngOnInit(): void {
@@ -54,6 +54,7 @@ export class CompleteOpinionComponent implements OnInit {
   SpawnRatings() {
     for (let rating of this.ratings) {
       let ratingRef = this.ratingsHost.viewContainerRef.createComponent<RatingComponent>(RatingComponent).instance;
+      ratingRef.SetParent(this);
       ratingRef.rating = rating.rating;
       ratingRef.name = rating.name;
       ratingRef.isReadonly = !this.canEdit;
@@ -71,12 +72,19 @@ export class CompleteOpinionComponent implements OnInit {
   SpawnOpinionRating() {
     let opinionRatingRef = this.opinionRatingHost.viewContainerRef.createComponent<OpinionRatingComponent>(OpinionRatingComponent).instance;
     opinionRatingRef.ratingState = this.opinionRating.ratingState;
-    opinionRatingRef.isReadonly = this.canEdit;
+    opinionRatingRef.isReadonly = this.canEdit || !this.opinieParent.isUserType(UserType.logged);
     opinionRatingRef.likes = this.opinionRating.likes;
     opinionRatingRef.dislikes = this.opinionRating.dislikes;
     this.opinionRating = opinionRatingRef;
   }
   //endregion
+
+  ShowID(): string {
+    switch (this.opinieParent.pageType) {
+      case PageType.product: return "@"+this.userID;
+      case PageType.profile: return "ProductID: "+this.productID;
+    }
+  }
 
   GetMeanRating() : number {
     let result: number = 0;
@@ -87,7 +95,7 @@ export class CompleteOpinionComponent implements OnInit {
   }
 
   AddRating(name : string, value : number) : void {
-    let newRating: RatingComponent = new RatingComponent();
+    let newRating: RatingComponent = new RatingComponent(this);
     newRating.name = name;
     newRating.rating = value;
     newRating.isReadonly = !this.canEdit;
@@ -101,4 +109,11 @@ export class CompleteOpinionComponent implements OnInit {
   protected CanEdit() : boolean { return this.canEdit; }
 
   public ModifyOpinion() { this.opinieParent.ModifyOpinion(this); }
+  //TODO: why tf binding doesnt work and I have to resort to this monstrosity
+  public ModifyRating(name : string, value : number) {
+    for (let rating of this.ratings) {
+      if(rating.name == name) { rating.rating = value; break; }
+    }
+    this.opinieParent.ModifyOpinion(this);
+  }
 }
