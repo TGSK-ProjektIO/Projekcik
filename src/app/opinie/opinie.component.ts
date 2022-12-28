@@ -10,7 +10,6 @@ import {OpinionRatingState} from "./opinion-rating/opinion-rating.component";
 import {Session} from "../../../express-backend-api/model/session";
 import {User} from "../../../express-backend-api/model/user";
 
-// TODO: get user type from session
 export enum UserType { anon, logged, admin}
 export enum PageType { product, profile}
 
@@ -20,7 +19,6 @@ export enum PageType { product, profile}
   styleUrls: ['./opinie.component.css']
 })
 export class OpinieComponent implements OnInit {
-  // TODO: get user type and ID from session
   userType : UserType = UserType.logged;
   userLogged : Profile;
   isUserType(type : UserType) : boolean {
@@ -40,8 +38,8 @@ export class OpinieComponent implements OnInit {
 
   constructor() {
     this.userLogged = {
-      userId: "6669",
-      nickname: "Verified User",
+      userId: "0",
+      nickname: "Anonymous User",
       profilePicture: "https://i.imgur.com/tYkCX47.jpg",
       description: "",
       isBanned: false
@@ -49,10 +47,6 @@ export class OpinieComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO: delet
-    this.id = "93887";
-    this.userLoggedID = "93887";
-
     switch (this.pageType) {
       case PageType.product:
         this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
@@ -60,7 +54,7 @@ export class OpinieComponent implements OnInit {
       default: break;
     }
   }
-  
+
   RetrieveAndSetupOpinions(getOpinionsFunction : (id:string) => Promise<Opinion[]>,
                            parameterID?: string,
                            addOpinionCreator?: boolean) {
@@ -71,12 +65,14 @@ export class OpinieComponent implements OnInit {
     // SESSION > USERS > OPINIONS > PROFILES
 
     //TODO: there is no defined behaviour for anon user
-    
+
     // Get session [needed to retrieve userType and userLoggedID info]
     // ---------------------------------------------------------------
     this.DB_GetSessionByID(sessionId)
     .then(userSession => {
       this.userLogged.userId = userSession.userId.toString();
+      // TODO: if session not found, assign anon user profile
+      //  and change user type to anon (below)
     }).then(() => this.DB_GetUserByID(this.userLogged.userId)
 
     // Set user type
@@ -99,23 +95,30 @@ export class OpinieComponent implements OnInit {
         this.opinionCreator.parent = this;
         this.opinionCreator.AddRatings(this.productAttributes);
       }
-    // Get user opinions
+    // Get user/product opinions
     // -----------------
     }).then(() => getOpinionsFunction(parameterID || this.userLogged.userId)
     ).then(opinionList => {
-      for (const opinion of opinionList) {
-        this.allOpinions.push(this.OpinionDBToComponent(opinion));
+      if(Symbol.iterator in Object(opinionList)) {
+        for (const opinion of opinionList) {
+          this.allOpinions.push(this.OpinionDBToComponent(opinion));
+        }
       }
 
     // Get user nickname & picture from profile, attach them to opinion
     //  and show it
     // ----------------------------------------------------------------
     }).then(() => {
-      for (const opinion of this.allOpinions) {
+      for (let opinion of this.allOpinions) {
         this.DB_GetProfileByID(opinion.userID).then(userProfile => {
           opinion.userName = userProfile.nickname;
           opinion.userPicture = userProfile.profilePicture;
-          this.ShowOpinion(opinion)
+          // Spawn user opinion on top, instead of opinion creator
+          // -----------------------------------------------------
+          if(addOpinionCreator && opinion.userID == this.userLogged.userId) {
+            this.ShowUserOpinion(opinion);
+          }
+          else this.ShowOpinion(opinion);
         });
       }
     });
@@ -136,6 +139,23 @@ export class OpinieComponent implements OnInit {
 
   private ShowOpinion(opinion : CompleteOpinionComponent, index: number = this.allOpinionsRefs.length) {
     const componentRef = this.opinionHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent, {index: index}).instance;
+    componentRef.SetParent(this);
+    componentRef.canEdit = opinion.canEdit;
+    componentRef.ID = opinion.ID;
+    componentRef.userID = opinion.userID;
+    componentRef.productID = opinion.productID;
+    componentRef.review = opinion.review;
+    componentRef.ratings = opinion.ratings;
+    componentRef.opinionRating = opinion.opinionRating;
+    componentRef.userName = opinion.userName;
+    componentRef.userPicture = opinion.userPicture;
+    this.allOpinionsRefs.push(componentRef);
+  }
+
+  // fuck directives
+  private ShowUserOpinion(opinion : CompleteOpinionComponent) {
+    this.opinionCreatorHost.viewContainerRef.clear();
+    const componentRef = this.opinionCreatorHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent).instance;
     componentRef.SetParent(this);
     componentRef.canEdit = opinion.canEdit;
     componentRef.ID = opinion.ID;
@@ -202,7 +222,7 @@ export class OpinieComponent implements OnInit {
   // region Converters
   // ----------
   OpinionComponentToDB(opinion : CompleteOpinionComponent): Opinion {
-    //todo: populate list
+    //TODO: Populate list
     let opinionRatingsDB: Array<OpinionRating> = new Array<OpinionRating>();
     let ratingsDB: Array<Rating> = new Array<Rating>();
     for (const rating of opinion.ratings) {

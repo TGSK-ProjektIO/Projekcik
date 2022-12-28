@@ -14,7 +14,8 @@ overflow: hidden">
     <button *ngIf="opinieParent.isUserType(UserTypes.admin)"
             class="btn btn-default"
             (click)="DestroyOpinion()">
-              <img style="width: 2em; border: none;" src="https://i.imgur.com/peujZRW.png" />
+              <img style="width: 2em; border: none;"
+                   src="https://i.imgur.com/peujZRW.png" />
     </button>
   </div>
   <div class="RatingsHost bg-dark text-white">
@@ -28,5 +29,12 @@ overflow: hidden">
     font-size: 10px;">
     <span opinionRatingHost></span>
   </div>
+  <form *ngIf="canEdit">
+    <button
+      class="btn btn-outline-light btn-lg px-3 py-1"
+      type="submit" (click)="ApplyModifiedOpinion()">
+        Submit
+    </button>
+  </form>
 </div>
 
