@@ -75,14 +75,15 @@ export class CompleteOpinionComponent implements OnInit {
     opinionRatingRef.isReadonly = this.canEdit || !this.opinieParent.isUserType(UserType.logged);
     opinionRatingRef.likes = this.opinionRating.likes;
     opinionRatingRef.dislikes = this.opinionRating.dislikes;
+    opinionRatingRef.SetParent(this);
     this.opinionRating = opinionRatingRef;
   }
   //endregion
 
   ShowID(): string {
     switch (this.opinieParent.pageType) {
-      case PageType.product: return "@"+this.userID;
-      case PageType.profile: return "ProductID: "+this.productID;
+      case PageType.product: return "@" + this.userID;
+      case PageType.profile: return "@" + this.productID;
     }
   }
 
@@ -112,4 +113,6 @@ export class CompleteOpinionComponent implements OnInit {
     for (let rating of this.ratings)
       if(rating.name == name) { rating.rating = value; break; }
   }
+  public LikeOpinion() { this.opinieParent.LikeOpinion(this); }
+  public DislikeOpinion() { this.opinieParent.DislikeOpinion(this); }
 }

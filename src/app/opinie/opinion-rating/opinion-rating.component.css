@@ -6,5 +6,13 @@ button {
   font-size: 10px;
   text-align: center;
   color: #adadad;
-  font-family: "Helvetica";
+  font-family: "Helvetica", serif;
+}
+
+.liked {
+  color: lawngreen;
+}
+
+.disliked {
+  color: crimson;
 }

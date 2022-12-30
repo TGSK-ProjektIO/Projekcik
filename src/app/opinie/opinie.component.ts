@@ -9,6 +9,7 @@ import {Profile} from "../../../express-backend-api/model/profile";
 import {OpinionRatingState} from "./opinion-rating/opinion-rating.component";
 import {Session} from "../../../express-backend-api/model/session";
 import {User} from "../../../express-backend-api/model/user";
+import {Product} from "../../../express-backend-api/model/product";
 
 export enum UserType { anon, logged, admin}
 export enum PageType { product, profile}
@@ -25,9 +26,10 @@ export class OpinieComponent implements OnInit {
     return this.userType === type;
   }
   // Get productID from product/profile
-  @Input() id = "4";
+  @Input() id : string | undefined;
   // TODO: get product attributes from product
   productAttributes : string[] = ["fajno", "niefajno", "zajefajno", "wydajność"];
+  undefinedProduct : Product;
 
   @Input() pageType : PageType = PageType.profile;
   allOpinions : CompleteOpinionComponent[] = [];
@@ -44,22 +46,36 @@ export class OpinieComponent implements OnInit {
       description: "",
       isBanned: false
     }
-  }
-
-  ngOnInit(): void {
-    switch (this.pageType) {
-      case PageType.product:
-        this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
-      case PageType.profile: this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByUser); break;
-      default: break;
+    this.undefinedProduct = {
+      name: "undefined",
+      description: "",
+      tag: ["undefined"],
+      categoryName: "undefined",
+      attribute: [],
+      image: "https://avatars.akamai.steamstatic.com/f4d301ae50028220b9a8b41f08f879054f8d1a18_full.jpg",
+      isVisible: true
     }
   }
 
-  RetrieveAndSetupOpinions(getOpinionsFunction : (id:string) => Promise<Opinion[]>,
-                           parameterID?: string,
-                           addOpinionCreator?: boolean) {
+  ngOnInit(): void {
+    // switch (this.pageType) {
+    //   case PageType.product:
+    //     this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
+    //   case PageType.profile: this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByUser); break;
+    //   default: break;
+    // }
+    this.pageType = PageType.profile;
+    this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByUser);
+  }
+
+  RetrieveAndSetupOpinions(getOpinionsFunction : (id:string) => Promise<Opinion[]>,) {
     let sessionId = localStorage.getItem('sessionId');
-    if(sessionId === null) sessionId = "63989e1487aeaea885478453";
+    if(sessionId === null) {
+      //TODO: delet
+      sessionId = "63989e1487aeaea885478453";
+
+      //this.userType = UserType.anon;
+    }
 
     // Database calls order:
     // SESSION > USERS > OPINIONS > PROFILES
@@ -70,6 +86,8 @@ export class OpinieComponent implements OnInit {
     // ---------------------------------------------------------------
     this.DB_GetSessionByID(sessionId)
     .then(userSession => {
+      if(this.userType == UserType.anon) return;
+
       this.userLogged.userId = userSession.userId.toString();
       // TODO: if session not found, assign anon user profile
       //  and change user type to anon (below)
@@ -78,26 +96,31 @@ export class OpinieComponent implements OnInit {
     // Set user type
     // -------------
     ).then(userLogged => {
+      if(this.userType == UserType.anon) return;
+
       if(userLogged.isAdministrator) this.userType = UserType.admin;
       else this.userType = UserType.logged;
 
     // Get logged user profile
     // -----------------------
     }).then(() => {
+      if(this.userType == UserType.anon) return this.userLogged;
+
       return this.DB_GetProfileByID(this.userLogged.userId);
     }).then(profile => { this.userLogged = profile;
 
     // Init opinion creator
     // --------------------
     }).then(() => {
-      if(addOpinionCreator && this.userType == UserType.logged) {
+      if(this.pageType == PageType.product && this.userType == UserType.logged) {
         this.opinionCreator = this.opinionCreatorHost.viewContainerRef.createComponent<OpinionCreatorComponent>(OpinionCreatorComponent).instance;
         this.opinionCreator.parent = this;
         this.opinionCreator.AddRatings(this.productAttributes);
       }
+
     // Get user/product opinions
     // -----------------
-    }).then(() => getOpinionsFunction(parameterID || this.userLogged.userId)
+    }).then(() => getOpinionsFunction(this.id || this.userLogged.userId)
     ).then(opinionList => {
       if(Symbol.iterator in Object(opinionList)) {
         for (const opinion of opinionList) {
@@ -105,40 +128,62 @@ export class OpinieComponent implements OnInit {
         }
       }
 
-    // Get user nickname & picture from profile, attach them to opinion
-    //  and show it
-    // ----------------------------------------------------------------
+    // Get product/user nickname & picture from profile,
+    //  attach them to opinion and show it
+    // -------------------------------------------------
     }).then(() => {
       for (let opinion of this.allOpinions) {
-        this.DB_GetProfileByID(opinion.userID).then(userProfile => {
-          opinion.userName = userProfile.nickname;
-          opinion.userPicture = userProfile.profilePicture;
-          // Spawn user opinion on top, instead of opinion creator
-          // -----------------------------------------------------
-          if(addOpinionCreator && opinion.userID == this.userLogged.userId) {
-            this.ShowUserOpinion(opinion);
-          }
-          else this.ShowOpinion(opinion);
-        });
+        // Show either user profile or product name on top of opinion
+        //   depending on page type
+        // ----------------------------------------------------------
+        if(this.pageType == PageType.product) {
+          this.DB_GetProfileByID(opinion.userID).then(userProfile => {
+            opinion.userName = userProfile.nickname;
+            opinion.userPicture = userProfile.profilePicture;
+            // Spawn user opinion on top, instead of opinion creator
+            // -----------------------------------------------------
+            if (opinion.userID == this.userLogged.userId) {
+              this.ShowUserOpinion(opinion);
+            } else this.ShowOpinion(opinion);
+          });
+        }
+        else {
+          this.DB_GetProductByID(opinion.productID).then(product => {
+            // Product wasn't found in database
+            // --------------------------------
+            if("message" in product) product = this.undefinedProduct;
+            opinion.userName = product.name;
+            if (product.image != undefined)
+              opinion.userPicture = product.image;
+            this.ShowOpinion(opinion);
+          });
+        }
       }
     });
   }
 
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {
     newOpinion.userID = this.userLogged.userId;
-    newOpinion.productID = this.id;
+    newOpinion.productID = this.id || "66667";
     newOpinion.canEdit = true;
 
     this.DB_CreateOpinion(this.OpinionComponentToDB(newOpinion)).then(success => {
       if(success) {
         this.allOpinions.unshift(newOpinion);
+        this.opinionCreatorHost.viewContainerRef.clear();
         this.ShowOpinion(newOpinion, 0);
       }
     });
   }
 
-  private ShowOpinion(opinion : CompleteOpinionComponent, index: number = this.allOpinionsRefs.length) {
-    const componentRef = this.opinionHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent, {index: index}).instance;
+  private ShowOpinion(opinion : CompleteOpinionComponent, index: number = -1) {
+    let componentRef;
+    if(index == -1) {
+      componentRef = this.opinionHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent).instance;
+    }
+    else {
+      componentRef = this.opinionHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent, {index: index}).instance;
+    }
     componentRef.SetParent(this);
     componentRef.canEdit = opinion.canEdit;
     componentRef.ID = opinion.ID;
@@ -152,7 +197,6 @@ export class OpinieComponent implements OnInit {
     this.allOpinionsRefs.push(componentRef);
   }
 
-  // fuck directives
   private ShowUserOpinion(opinion : CompleteOpinionComponent) {
     this.opinionCreatorHost.viewContainerRef.clear();
     const componentRef = this.opinionCreatorHost.viewContainerRef.createComponent<CompleteOpinionComponent>(CompleteOpinionComponent).instance;
@@ -170,7 +214,7 @@ export class OpinieComponent implements OnInit {
   }
 
   ModifyOpinion(opinion : CompleteOpinionComponent): void {
-    //TODO: likes dont work
+    console.log(opinion);
     this.DB_GetOpinionByID(opinion.ID).then(res => {
       res.review = { userID: opinion.userID, text: opinion.review.text };
       let ratings: Array<Rating> = new Array<Rating>();
@@ -178,25 +222,16 @@ export class OpinieComponent implements OnInit {
         ratings.push({userID: res.userId, name: rating.name, rating: rating.rating});
       }
       res.ratings = ratings;
-
-      let foundUser = false;
-      for (const opinionRating of res.opinionRatings) {
-        if(opinionRating.userID == this.userLogged.userId) {
-          switch(opinion.opinionRating.ratingState) {
-            case OpinionRatingState.Liked: opinionRating.like++; break;
-            case OpinionRatingState.Disliked: opinionRating.dislike++; break;
-          }
-          foundUser = true;
-          break;
-        }
-      }
-      if(!foundUser)
-        res.opinionRatings.push(
-          {userID: this.userLogged.userId,
-            like: opinion.opinionRating.likes,
-            dislike: opinion.opinionRating.dislikes});
       this.DB_ModifyOpinion(res);
     });
+  }
+
+  LikeOpinion(opinion : CompleteOpinionComponent) {
+    this.DB_LikeOpinion(opinion.ID, this.userLogged.userId);
+  }
+
+  DislikeOpinion(opinion : CompleteOpinionComponent) {
+    this.DB_DislikeOpinion(opinion.ID, this.userLogged.userId);
   }
 
   DeleteOpinion(ID: string): boolean {
@@ -223,7 +258,9 @@ export class OpinieComponent implements OnInit {
   // ----------
   OpinionComponentToDB(opinion : CompleteOpinionComponent): Opinion {
     //TODO: Populate list
-    let opinionRatingsDB: Array<OpinionRating> = new Array<OpinionRating>();
+    let opinionRatingsDB: Array<OpinionRating> = [{
+      userID: opinion.userID,
+      ratingState: opinion.opinionRating.ratingState}];
     let ratingsDB: Array<Rating> = new Array<Rating>();
     for (const rating of opinion.ratings) {
       ratingsDB.push({
@@ -245,8 +282,7 @@ export class OpinieComponent implements OnInit {
   OpinionDBToComponent(opinion : Opinion) : CompleteOpinionComponent {
     let opinionComponent = new CompleteOpinionComponent();
     opinionComponent.SetParent(this);
-    // @ts-ignore
-    opinionComponent.ID = opinion._id.toString();
+    opinionComponent.ID = opinion._id?.toString() || "";
     opinionComponent.userID = opinion.userId;
     opinionComponent.productID = opinion.productId;
     opinionComponent.review.SetParent(opinionComponent);
@@ -254,20 +290,17 @@ export class OpinieComponent implements OnInit {
     for (const rating of opinion.ratings) {
       opinionComponent.AddRating(rating.name, rating.rating);
     }
-    let likes = 0, dislikes = 0, ratingState = OpinionRatingState.None;
+    let likes = 0, dislikes = 0;
     for (const opinionRating of opinion.opinionRatings) {
-      dislikes += opinionRating.dislike;
-      likes += opinionRating.like;
-      if(opinionRating.userID == opinion.userId) {
-        if(opinionRating.like >=1)
-          opinionComponent.opinionRating.ratingState = OpinionRatingState.Liked
-        else if((opinionRating.dislike >=1))
-          opinionComponent.opinionRating.ratingState = OpinionRatingState.Disliked
+      switch (opinionRating.ratingState) {
+        case OpinionRatingState.Disliked: dislikes++; break;
+        case OpinionRatingState.Liked: likes++; break;
       }
+      if(opinionRating.userID == this.userLogged.userId)
+        opinionComponent.opinionRating.ratingState = opinionRating.ratingState;
     }
     opinionComponent.opinionRating.likes = likes;
     opinionComponent.opinionRating.dislikes = dislikes;
-    opinionComponent.opinionRating.ratingState = ratingState;
 
     opinionComponent.canEdit = (this.isUserType(UserType.logged) &&
                                 this.userLogged.userId === opinion.userId);
@@ -305,6 +338,37 @@ export class OpinieComponent implements OnInit {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(opinion)
+    }).then(async response => {
+      if (response.status === 200) {}
+      if (response.status === 400) {}
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+
+  private DB_LikeOpinion(opinionID : string, userID : string) {
+    fetch(`http://localhost:3000/api/v1/opinie/like/${userID}/${opinionID}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then(async response => {
+      if (response.status === 200) {}
+      if (response.status === 400) {}
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+
+  private DB_DislikeOpinion(opinionID : string, userID : string) {
+    fetch(`http://localhost:3000/api/v1/opinie/dislike/${userID}/${opinionID}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+      //body: JSON.stringify(opinion)
     }).then(async response => {
       if (response.status === 200) {}
       if (response.status === 400) {}
@@ -409,6 +473,24 @@ export class OpinieComponent implements OnInit {
   }
   private async DB_GetUserByID(userID: string): Promise<User> {
     return await fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/${userID}`, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+  //endregion
+
+  // region Product API
+  // ------------------
+  private async DB_GetProductByID(productID: string): Promise<Product> {
+    return await fetch(`http://localhost:3000/api/v1/produkt/product/${productID}`, {
       method: 'GET',
       headers: {
         'Accept': '*/*',

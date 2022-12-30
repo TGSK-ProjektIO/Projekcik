@@ -2,6 +2,7 @@ import {inject, injectable} from "inversify";
 import {OpinionRepository} from "../repository/opinion.repository";
 import {TYPES} from "../config/types.config";
 import {Opinion} from "../model/opinion";
+import {OpinionRatingState} from "../model/opinion.rating";
 
 @injectable()
 export class OpinionService {
@@ -32,22 +33,24 @@ export class OpinionService {
           for (let opinionRating of opinion.opinionRatings) {
             if (opinionRating.userID === userID) {
               foundUser = true;
-              opinionRating.like++;
-              opinionRating.dislike = 0;
-              if (opinionRating.like === 2) {
-                opinionRating.like = 0;
+              switch (opinionRating.ratingState) {
+                case OpinionRatingState.None:
+                case OpinionRatingState.Disliked:
+                  opinionRating.ratingState = OpinionRatingState.Liked; break;
+                case OpinionRatingState.Liked:
+                  opinionRating.ratingState = OpinionRatingState.None; break;
               }
               break;
             }
           }
-          if(!foundUser) {
-            opinion.opinionRatings.push({userID : userID, like: 0, dislike: 1})
-          }
-          await this.opinionRepository.update(opinion);
-          resolve(true);
-        } else {
-          resolve(false);
         }
+        if(!foundUser)
+          opinion.opinionRatings.push({
+            userID : userID,
+            ratingState: OpinionRatingState.Liked
+          });
+        await this.opinionRepository.update(opinion);
+        resolve(true);
       } catch (error) {
         reject();
       }
@@ -65,22 +68,26 @@ export class OpinionService {
           for (let opinionRating of opinion.opinionRatings) {
             if (opinionRating.userID === userID) {
               foundUser = true;
-              opinionRating.dislike++;
-              opinionRating.like = 0;
-              if (opinionRating.dislike === 2) {
-                opinionRating.dislike = 0;
+              switch (opinionRating.ratingState) {
+                case OpinionRatingState.None:
+                case OpinionRatingState.Liked:
+                  opinionRating.ratingState = OpinionRatingState.Disliked;
+                  break;
+                case OpinionRatingState.Disliked:
+                  opinionRating.ratingState = OpinionRatingState.None;
+                  break;
               }
               break;
             }
           }
-          if(!foundUser) {
-            opinion.opinionRatings.push({userID : userID, like: 0, dislike: 1})
-          }
-          await this.opinionRepository.update(opinion);
-          resolve(true);
-        } else {
-          resolve(false);
         }
+        if(!foundUser || opinion.opinionRatings.length == 0)
+          opinion.opinionRatings.push({
+            userID : userID,
+            ratingState: OpinionRatingState.Disliked
+          });
+        await this.opinionRepository.update(opinion);
+        resolve(true);
       } catch (error) {
         reject();
       }
@@ -130,7 +137,7 @@ export class OpinionService {
         let likes = 0;
         if(opinion !== null) {
           for (let rating of opinion.opinionRatings){
-            if (rating.like == 1) {
+            if (rating.ratingState == OpinionRatingState.Liked) {
               likes++;
             }
           }
@@ -154,7 +161,7 @@ export class OpinionService {
         let dislikes = 0;
         if(opinion !== null) {
           for (let rating of opinion.opinionRatings){
-            if (rating.dislike == 1) {
+            if (rating.ratingState == OpinionRatingState.Disliked) {
               dislikes++;
             }
           }

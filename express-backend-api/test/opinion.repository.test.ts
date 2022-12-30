@@ -4,6 +4,7 @@ import {container} from "../config/container.config";
 import {Opinion} from "../model/opinion";
 import {ObjectId} from "mongodb";
 import {faker} from "@faker-js/faker";
+import {OpinionRatingState} from "../model/opinion.rating";
 
 const opinionRepository = container.get<OpinionRepository>(TYPES.OpinionRepository);
 
@@ -18,20 +19,32 @@ beforeEach(async () => {
   validOpinion = {
     userId: faker.datatype.number().toString(),
     productId: faker.datatype.number().toString(),
-    opinionRatings: [{userID: "122", like: 1, dislike: 0}, {userID: "121", like: 1, dislike: 0},
-      {userID: "120", like: 1, dislike: 0}, {userID: "121", like: 0, dislike: 1}, {userID: "121", like: 0, dislike: 1}],
+    opinionRatings: [
+      {userID: "122", ratingState: OpinionRatingState.Liked},
+      {userID: "121", ratingState: OpinionRatingState.Liked},
+      {userID: "120", ratingState: OpinionRatingState.Liked},
+      {userID: "121", ratingState: OpinionRatingState.Disliked},
+      {userID: "121", ratingState: OpinionRatingState.Disliked}],
     review: {userID: "122", text: "skrrt skiri papa tutu"},
-    ratings: [{userID: "152", name: "skrrt", rating: 5}, {userID: "1253", name: "skrrt", rating: 5}]
+    ratings: [
+      {userID: "152", name: "skrrt", rating: 5},
+      {userID: "1253", name: "skrrt", rating: 5}]
   };
 
   invalidOpinion = {
     _id: new ObjectId(),
     userId: "123",
     productId: "1",
-    opinionRatings: [{userID: "122", like: 1, dislike: 0}, {userID: "121", like: 1, dislike: 0},
-      {userID: "120", like: 1, dislike: 0}, {userID: "121", like: 0, dislike: 1}, {userID: "121", like: 0, dislike: 1}],
+    opinionRatings: [
+      {userID: "122", ratingState: OpinionRatingState.Liked},
+      {userID: "121", ratingState: OpinionRatingState.Liked},
+      {userID: "120", ratingState: OpinionRatingState.Liked},
+      {userID: "121", ratingState: OpinionRatingState.Disliked},
+      {userID: "121", ratingState: OpinionRatingState.Disliked}],
     review: {userID: "123", text: "skrrt skiri papa tutu"},
-    ratings: [{userID: "123", name: "skrrt", rating: 5}, {userID: "123", name: "skrrt", rating: 5}]
+    ratings: [
+      {userID: "123", name: "skrrt", rating: 5},
+      {userID: "123", name: "skrrt", rating: 5}]
   };
 });
 
@@ -61,7 +74,7 @@ test('Delete Opinion positive test', async () => {
 
 test('Update Opinion positive test', async () => {
   let opinionRep = await opinionRepository.create(validOpinion);
-  opinionRep.opinionRatings.push({userID: "128", like: 1, dislike: 0});
+  opinionRep.opinionRatings.push({userID: "128", ratingState: OpinionRatingState.Liked});
   // @ts-ignore
   await expect(opinionRepository.update(opinionRep)).resolves.toBeUndefined();
   // @ts-ignore

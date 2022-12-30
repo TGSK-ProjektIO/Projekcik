@@ -1,7 +1,13 @@
 <div>{{ GetRating() }}</div>
-<button *ngIf="!isReadonly" class="btn btn-default" (click)="ClickedLike()">
-  <img src="https://i.imgur.com/jhnnH71.png" width="10" /> like
+<button *ngIf="!isReadonly"
+        [ngClass]="{'liked' : isLiked()}"
+        class="btn btn-default"
+        (click)="ClickedLike()">
+  <img src="https://i.imgur.com/jhnnH71.png" width="10" alt="/\"/> like
 </button>
-<button *ngIf="!isReadonly" class="btn btn-default" (click)="ClickedDislike()">
-  <img src="https://i.imgur.com/3PRkszC.png" width="10" /> dislike
+<button *ngIf="!isReadonly"
+        [ngClass]="{'disliked' : isDisliked()}"
+        class="btn btn-default"
+        (click)="ClickedDislike()">
+  <img src="https://i.imgur.com/3PRkszC.png" width="10" alt="\/" /> dislike
 </button>

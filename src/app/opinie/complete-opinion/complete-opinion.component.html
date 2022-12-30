@@ -10,7 +10,7 @@ overflow: hidden">
   font-size: 18px;">
     <img src="{{userPicture}}"/>
     <span class="badge badge-dark">{{userName}}</span>
-    <span class="badge badge-dark" style="margin-left: -10px;">{{ShowID()}}</span>
+    <span class="badge badge-dark text-muted" style="margin-left: -10px;">{{ShowID()}}</span>
     <button *ngIf="opinieParent.isUserType(UserTypes.admin)"
             class="btn btn-default"
             (click)="DestroyOpinion()">

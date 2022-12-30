@@ -1,4 +1,5 @@
 import {Opinion} from "../model/opinion";
+import {OpinionRating} from "../model/opinion.rating";
 import {DATABASE_URi, DB_NAME, OPINION_COLLECTION_NAME} from "../config/mongo.config";
 import {MongoClient, ObjectId} from "mongodb";
 import {injectable} from "inversify";
@@ -114,7 +115,6 @@ export class OpinionRepository {
         if (response !== null) {
           resolve(response);
         } else {
-          console.log("NOT FOUND")
           reject();
         }
       } catch (exception) {
