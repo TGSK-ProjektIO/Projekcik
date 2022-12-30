@@ -7,6 +7,7 @@ import {ResetowanieComponent} from "./resetowanie/resetowanie.component";
 import {LogowanieIRejestracjaComponent} from "./logowanie-i-rejestracja.component";
 import {ResetowaniePotwierdzenieComponent} from "./resetowanie-potwierdzenie/resetowanie-potwierdzenie.component";
 import {WeryfikacjaPotwierdzenieComponent} from "./weryfikacja-potwierdzenie/weryfikacja-potwierdzenie.component";
+import {GithubResponseComponent} from "./github-response/github-response.component";
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'confirm/:id/:emailToken',
         component: WeryfikacjaPotwierdzenieComponent
+      },
+      {
+        path: 'github_response',
+        component: GithubResponseComponent
       }
     ]
   }
