@@ -58,14 +58,12 @@ export class OpinieComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // switch (this.pageType) {
-    //   case PageType.product:
-    //     this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct, "2", true); break;
-    //   case PageType.profile: this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByUser); break;
-    //   default: break;
-    // }
-    this.pageType = PageType.profile;
-    this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByUser);
+    switch (this.pageType) {
+      case PageType.product:
+        this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByProduct); break;
+      case PageType.profile: this.RetrieveAndSetupOpinions(this.DB_GetOpinionsByUser); break;
+      default: break;
+    }
   }
 
   RetrieveAndSetupOpinions(getOpinionsFunction : (id:string) => Promise<Opinion[]>,) {
