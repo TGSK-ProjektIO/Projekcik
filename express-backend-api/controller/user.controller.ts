@@ -22,7 +22,8 @@ export class UserController {
         const createdUser = await this.userService.registerUser({
           username: userLogin,
           password: null,
-          email: userEmail
+          email: userEmail,
+          githubToken: accessToken
         });
         response.status(200).send(createdUser);
       } catch (error) {

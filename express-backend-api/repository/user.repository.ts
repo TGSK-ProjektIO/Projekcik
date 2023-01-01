@@ -47,6 +47,7 @@ export class UserRepository {
           username: userParams.username,
           email: userParams.email,
           emailToken: randomBytes(64).toString('hex'),
+          githubToken: userParams.githubToken,
           isAdministrator: false,
           isEmailVerified: false
         };
@@ -54,6 +55,7 @@ export class UserRepository {
           createdUser.password = createHash('sha256').update(userParams.password).digest('hex');
         } else {
           createdUser.password = null;
+          createdUser.isEmailVerified = true;
         }
         const response = await collection.insertOne(createdUser);
         createdUser._id = response.insertedId;
