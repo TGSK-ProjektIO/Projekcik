@@ -21,6 +21,7 @@ const TYPES = {
   OpinionRouter: Symbol.for('OpinionRouter'),
   ReportRouter: Symbol.for('ReportRouter'),
 
+  GithubService: Symbol.for('GithubService'),
   UserService: Symbol.for('UserService'),
   SessionService: Symbol.for('SessionService'),
   ProfileService: Symbol.for('ProfileService'),

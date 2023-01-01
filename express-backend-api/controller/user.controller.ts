@@ -3,11 +3,34 @@ import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
 import {EmailService} from "../services/email.service";
 import {createHash} from "crypto";
+import {GithubService} from "../services/githubService";
 
 @injectable()
 export class UserController {
  constructor(@inject(TYPES.UserService) private userService: UserService,
-             @inject(TYPES.EmailService) private emailService : EmailService) {
+             @inject(TYPES.EmailService) private emailService : EmailService,
+             @inject(TYPES.GithubService) private githubService: GithubService) {
+ }
+
+ public registerGithubUser() {
+    return async (request: any, response: any) => {
+      const githubCode = request.params.code;
+      try {
+        const accessToken = await this.githubService.retrieveAccessToken(githubCode);
+        const userLogin = await this.githubService.retrieveUserLogin(accessToken);
+        const userEmail = await this.githubService.retrieveUserEmail(accessToken);
+        const createdUser = await this.userService.registerUser({
+          username: userLogin,
+          password: null,
+          email: userEmail
+        });
+        response.status(200).send(createdUser);
+      } catch (error) {
+        response.status(400).send({
+          message: error
+        });
+      }
+    }
  }
 
  public registerUser() {

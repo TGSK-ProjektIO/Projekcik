@@ -33,29 +33,33 @@ export class UserRepository {
 
   public async create(userParams: UserPartial): Promise<User> {
     return new Promise<User>(async (resolve, reject) => {
-      if (!userParams.username || !userParams.email || !userParams.password) {
-        return reject();
+      if (!userParams.username || !userParams.email) {
+        return reject('User must have username and email');
       }
       const client = this.createClient();
       try {
         const db = client.db(DB_NAME);
         const collection = db.collection(USER_COLLECTION_NAME);
         if (await collection.count({email: userParams.email}) >= 1) {
-          return reject();
+          return reject('User with this email already exists');
         }
         const createdUser: any = {
           username: userParams.username,
-          password: createHash('sha256').update(userParams.password).digest('hex'),
           email: userParams.email,
           emailToken: randomBytes(64).toString('hex'),
           isAdministrator: false,
           isEmailVerified: false
         };
+        if (userParams.password) {
+          createdUser.password = createHash('sha256').update(userParams.password).digest('hex');
+        } else {
+          createdUser.password = null;
+        }
         const response = await collection.insertOne(createdUser);
         createdUser._id = response.insertedId;
         resolve(createdUser);
       } catch (exception) {
-        reject();
+        reject(exception);
       } finally {
         client.close();
       }
