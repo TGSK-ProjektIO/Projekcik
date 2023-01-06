@@ -21,7 +21,8 @@ export class SessionController {
         return response.status(400).send({
           message: "Request is missing required 'username' parameter"
         });
-      } if (!password) {
+      }
+      if (!password) {
         return response.status(400).send({
           message: "Request is missing required 'password' parameter"
         });
@@ -29,6 +30,11 @@ export class SessionController {
 
       try {
         const user = await this.userService.getUserByEmail(email);
+        if (this.userService.isGithubUser(user)) {
+          return response.status(400).send({
+            error: "User is a Github user"
+          });
+        }
         if (!user.isEmailVerified) {
           return response.status(401).send({
             error: "User email is not verified"
