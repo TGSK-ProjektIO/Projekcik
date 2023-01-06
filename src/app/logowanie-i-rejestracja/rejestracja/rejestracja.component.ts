@@ -88,6 +88,6 @@ export class RejestracjaComponent implements OnInit {
   }
 
   getGithubRedirectUrl(): string {
-    return this.githubService.getGithubRedirectUrl();
+    return this.githubService.getGithubRegisterUri();
   }
 }

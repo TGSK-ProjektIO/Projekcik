@@ -14,7 +14,7 @@ export class GithubResponseComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private githubService: GithubService
+    private githubService: GithubService,
   ) { }
 
   ngOnInit(): void {
@@ -25,16 +25,30 @@ export class GithubResponseComponent implements OnInit {
           console.error('No github code was provided');
           this.router.navigate(['/']);
         } else {
-          this.githubService.registerGithubUser(this.githubCode)
-            .then(user => {
-              console.log('Success')
-              console.log(user)
-            })
-            .catch(error => {
-              console.log('error')
-              console.log(error)
-              this.router.navigate(['/']);
-            });
+          const isLogin = this.router.url.includes('/login');
+          if (isLogin) {
+            this.githubService.loginGithubUser(this.githubCode)
+              .then(session => {
+                if (session && session._id) {
+                  localStorage.setItem('sessionId', session._id.toString());
+                }
+                this.router.navigate(['/']);
+              }).catch(error => {
+                console.error(error);
+                this.router.navigate(['/']);
+              });
+          } else {
+            this.githubService.registerGithubUser(this.githubCode)
+              .then(user => {
+                console.log('Success')
+                console.log(user)
+              })
+              .catch(error => {
+                console.log('error')
+                console.log(error)
+                this.router.navigate(['/']);
+              });
+          }
         }
       });
   }

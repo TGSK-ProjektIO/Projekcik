@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {ValidationService} from "../services/validation.service";
+import {GithubService} from "../services/github.service";
 
 @Component({
   selector: 'app-logowanie',
@@ -18,7 +19,8 @@ export class LogowanieComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private validationService: ValidationService
+    private validationService: ValidationService,
+    private githubService: GithubService
   ) { }
 
   ngOnInit(): void {
@@ -93,5 +95,9 @@ export class LogowanieComponent implements OnInit {
 
   onAlertUserNotFoundClose() {
     this.isAlertUserNotFoundOpened = false;
+  }
+
+  getGithubLoginUri(): string {
+    return this.githubService.getGithubLoginUri();
   }
 }
