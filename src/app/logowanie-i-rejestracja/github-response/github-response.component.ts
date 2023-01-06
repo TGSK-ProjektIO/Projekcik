@@ -25,7 +25,6 @@ export class GithubResponseComponent implements OnInit {
         this.githubCode = params['code'];
         if (!this.githubCode) {
           console.error('No github code was provided');
-          this.router.navigate(['/']);
         } else {
           const isLogin = this.router.url.includes('/login');
           if (isLogin) {
@@ -34,10 +33,10 @@ export class GithubResponseComponent implements OnInit {
                 if (session && session._id) {
                   localStorage.setItem('sessionId', session._id.toString());
                 }
-                this.router.navigate(['/']);
+                this.message = "User logged in successfully";
               }).catch(error => {
                 this.message = "Error occurred";
-                this.secondMessage = "Please, try again";
+                this.secondMessage = error.message;
               });
           } else {
             this.githubService.registerGithubUser(this.githubCode)
@@ -60,5 +59,9 @@ export class GithubResponseComponent implements OnInit {
 
   redirectToLoginPage() {
     this.router.navigateByUrl('/login');
+  }
+
+  redirectToLoginPageHidden() {
+    return this.message == "User logged in successfully";
   }
 }
