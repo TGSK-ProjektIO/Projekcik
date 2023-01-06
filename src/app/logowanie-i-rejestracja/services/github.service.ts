@@ -23,9 +23,9 @@ export class GithubService {
 
   registerGithubUser(githubCode: string): Promise<User> {
     return fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/user/github/register/' + githubCode)
-      .then(response => {
+      .then(async response => {
         if (!response.ok) {
-          throw new Error("Github user registration failed")
+          throw new Error((await response.json()).error)
         }
         return response;
       })

@@ -28,7 +28,7 @@ export class UserController {
         response.status(200).send(createdUser);
       } catch (error) {
         response.status(400).send({
-          message: error
+          error: "GIven access token is invalid, or already used"
         });
       }
     }
