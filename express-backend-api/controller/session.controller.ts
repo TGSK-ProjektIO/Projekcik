@@ -57,6 +57,11 @@ export class SessionController {
         const accessToken = await this.githubService.retrieveAccessToken(githubToken);
         const userEmail = await this.githubService.retrieveUserEmail(accessToken);
         const user = await this.userService.getUserByEmail(userEmail);
+        if (!this.userService.isGithubUser(user)) {
+          return response.status(400).send({
+            error: "User is not a Github user"
+          });
+        }
         const session = await this.sessionService.createSession(user);
         return response.status(201).send(session);
       } catch (error) {

@@ -88,4 +88,8 @@ export class UserService {
       }
     });
   }
+
+  isGithubUser(user: User): boolean {
+    return user.password === null;
+  }
 }
