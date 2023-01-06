@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {ValidationService} from "../services/validation.service";
+import {GithubService} from "../services/github.service";
 
 @Component({
   selector: 'app-rejestracja',
@@ -17,7 +18,8 @@ export class RejestracjaComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private validationService: ValidationService
+    private validationService: ValidationService,
+    private githubService: GithubService
   ) { }
 
   ngOnInit(): void {
@@ -83,5 +85,9 @@ export class RejestracjaComponent implements OnInit {
 
   onCloseFailureAlert() {
     this.isFailureAlertOpen = false;
+  }
+
+  getGithubRedirectUrl(): string {
+    return this.githubService.getGithubRedirectUrl();
   }
 }

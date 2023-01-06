@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {GithubService} from "../services/github.service";
 
 @Component({
   selector: 'app-github-response',
@@ -12,7 +13,8 @@ export class GithubResponseComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private githubService: GithubService
   ) { }
 
   ngOnInit(): void {
@@ -22,6 +24,17 @@ export class GithubResponseComponent implements OnInit {
         if (!this.githubCode) {
           console.error('No github code was provided');
           this.router.navigate(['/']);
+        } else {
+          this.githubService.registerGithubUser(this.githubCode)
+            .then(user => {
+              console.log('Success')
+              console.log(user)
+            })
+            .catch(error => {
+              console.log('error')
+              console.log(error)
+              this.router.navigate(['/']);
+            });
         }
       });
   }
