@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class WeryfikacjaPotwierdzenieComponent implements OnInit {
   message = 'Waiting for server response...';
+  success = false;
 
   constructor(
     private router: Router,
@@ -34,6 +35,7 @@ export class WeryfikacjaPotwierdzenieComponent implements OnInit {
         this.message = 'Given email token is invalid';
       } else {
         this.message = 'Email verified successfully';
+        this.success = true;
       }
     }).catch(e => {
       this.message = 'Internal server error';
