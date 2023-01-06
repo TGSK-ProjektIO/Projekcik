@@ -36,8 +36,8 @@ export class GithubResponseComponent implements OnInit {
                 }
                 this.router.navigate(['/']);
               }).catch(error => {
-                console.error(error);
-                this.router.navigate(['/']);
+                this.message = "Error occurred";
+                this.secondMessage = "Please, try again";
               });
           } else {
             this.githubService.registerGithubUser(this.githubCode)

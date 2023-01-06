@@ -25,7 +25,7 @@ export class GithubService {
     return fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/user/github/register/' + githubCode)
       .then(async response => {
         if (!response.ok) {
-          throw new Error((await response.json()).error)
+          throw new Error((await response.json()).error);
         }
         return response;
       })
@@ -34,11 +34,9 @@ export class GithubService {
 
   loginGithubUser(githubCode: string): Promise<User> {
     return fetch('http://localhost:3000/api/v1/logowanie-i-rejestracja/session/github/login/' + githubCode)
-      .then(response => {
-        if (response.ok) {
-          console.log('Github user logged in successfully');
-        } else {
-          console.log('Github user login failed');
+      .then(async response => {
+        if (!response.ok) {
+          throw new Error((await response.json()).error);
         }
         return response;
       })
