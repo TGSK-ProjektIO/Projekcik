@@ -10,6 +10,8 @@ import {GithubService} from "../services/github.service";
 export class GithubResponseComponent implements OnInit {
 
   githubCode = '';
+  message = 'Waiting for server response...'
+  secondMessage = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -27,16 +29,22 @@ export class GithubResponseComponent implements OnInit {
         } else {
           this.githubService.registerGithubUser(this.githubCode)
             .then(user => {
-              console.log('Success')
-              console.log(user)
+              this.message = "User registered successfully";
+              this.secondMessage = "Now you can sign in";
             })
             .catch(error => {
-              console.log('error')
-              console.log(error)
-              this.router.navigate(['/']);
+              this.message = "Error occurred";
+              this.secondMessage = error.message;
             });
         }
       });
   }
 
+  redirectToMainPage() {
+    this.router.navigateByUrl('/');
+  }
+
+  redirectToLoginPage() {
+    this.router.navigateByUrl('/login');
+  }
 }
