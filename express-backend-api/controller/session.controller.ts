@@ -4,6 +4,7 @@ import {UserService} from "../services/user.service";
 import {SessionService} from "../services/session.service";
 import {createHash} from "crypto";
 import {GithubService} from "../services/githubService";
+import moment from "moment";
 
 @injectable()
 export class SessionController {
@@ -130,7 +131,7 @@ export class SessionController {
       const sessionId = request.params.id;
       try {
         const session = await this.sessionService.getSession(sessionId);
-        if (session.expireDate < new Date()) {
+        if (session.expireDate.getTime() < moment(new Date()).add(1, 'h').toDate().getTime()) {
           return response.status(200).send({
             expired: true
           });
