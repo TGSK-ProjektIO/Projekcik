@@ -27,15 +27,29 @@ export class GithubResponseComponent implements OnInit {
           console.error('No github code was provided');
           this.router.navigate(['/']);
         } else {
-          this.githubService.registerGithubUser(this.githubCode)
-            .then(user => {
-              this.message = "User registered successfully";
-              this.secondMessage = "Now you can sign in";
-            })
-            .catch(error => {
-              this.message = "Error occurred";
-              this.secondMessage = error.message;
-            });
+          const isLogin = this.router.url.includes('/login');
+          if (isLogin) {
+            this.githubService.loginGithubUser(this.githubCode)
+              .then(session => {
+                if (session && session._id) {
+                  localStorage.setItem('sessionId', session._id.toString());
+                }
+                this.router.navigate(['/']);
+              }).catch(error => {
+                console.error(error);
+                this.router.navigate(['/']);
+              });
+          } else {
+            this.githubService.registerGithubUser(this.githubCode)
+              .then(user => {
+                this.message = "User registered successfully";
+                this.secondMessage = "Now you can sign in";
+              })
+              .catch(error => {
+                this.message = "Error occurred";
+                this.secondMessage = error.message;
+              });
+          }
         }
       });
   }

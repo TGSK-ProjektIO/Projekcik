@@ -41,6 +41,10 @@ const routes: Routes = [
       {
         path: 'github_response',
         component: GithubResponseComponent
+      },
+      {
+        path: 'github_response/login',
+        component: GithubResponseComponent
       }
     ]
   }

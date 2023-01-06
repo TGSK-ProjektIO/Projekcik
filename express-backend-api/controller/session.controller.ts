@@ -3,11 +3,13 @@ import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
 import {SessionService} from "../services/session.service";
 import {createHash} from "crypto";
+import {GithubService} from "../services/githubService";
 
 @injectable()
 export class SessionController {
   constructor(@inject(TYPES.UserService) private userService: UserService,
-              @inject(TYPES.SessionService) private sessionService: SessionService) {
+              @inject(TYPES.SessionService) private sessionService: SessionService,
+              @inject(TYPES.GithubService) private githubService: GithubService) {
   }
 
   public login() {
@@ -40,6 +42,23 @@ export class SessionController {
             error: "Wrong password"
           });
         }
+      } catch (error) {
+        return response.status(404).send({
+          error: "User not found"
+        });
+      }
+    }
+  }
+
+  public githubLogin() {
+    return async (request: any, response: any) => {
+      const githubToken = request.params.github_token;
+      try {
+        const accessToken = await this.githubService.retrieveAccessToken(githubToken);
+        const userEmail = await this.githubService.retrieveUserEmail(accessToken);
+        const user = await this.userService.getUserByEmail(userEmail);
+        const session = await this.sessionService.createSession(user);
+        return response.status(201).send(session);
       } catch (error) {
         return response.status(404).send({
           error: "User not found"
