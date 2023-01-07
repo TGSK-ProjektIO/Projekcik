@@ -47,11 +47,7 @@
                 <div class="form-outline mb-4">
                   <img style="display: inline-block;" width="300" height="500" src="{{getProductImage()}}" alt="Zdjęcie produktu"/>      
                 </div>
-
-                <app-opinie [pageType]=pageTypes id="{{lastPath}}"></app-opinie>
-                <button class="btn btn-outline-light btn-lg px-5" type="submit" [routerLink]="['/produkt/produkt-modyfikacja']" (click)="redirectToModify()">Modify</button>
-                <button class="btn btn-outline-light btn-lg px-5" type="submit" [routerLink]="['/produkt/produkt-lista']" (click)="deleteProduct()">Delete</button>
-                
+                <app-opinie [pageType]=pageTypes id={{lastPath}}></app-opinie>
 
               </div>
             </div>

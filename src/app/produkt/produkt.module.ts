@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import {ProduktDodanieComponent} from './produkt-dodanie/produkt-dodanie.component';
 import {ProduktModyfikacjaComponent} from './produkt-modyfikacja/produkt-modyfikacja.component';
 import {ProduktWidokComponent} from './produkt-widok/produkt-widok.component';
+import {ProduktWidokUserComponent} from './produkt-widok-user/produkt-widok-user.component';
+import { ProduktListaComponent } from './produkt-lista/produkt-lista.component';
+
 import {ProduktRoutingModule} from './produkt-routing.module';
 
 import {KategoriaDodanieComponent} from './kategoria-dodanie/kategoria-dodanie.component';
@@ -13,7 +17,6 @@ import {KategoriaListaComponent} from './kategoria-lista/kategoria-lista.compone
 
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
-import { ProduktListaComponent } from './produkt-lista/produkt-lista.component';
 import { OpinieModule } from "../opinie/opinie.module";
 
 @NgModule({
@@ -21,6 +24,7 @@ import { OpinieModule } from "../opinie/opinie.module";
         ProduktDodanieComponent,
         ProduktModyfikacjaComponent,
         ProduktWidokComponent,
+        ProduktWidokUserComponent,
         ProduktListaComponent,
 
         KategoriaDodanieComponent,

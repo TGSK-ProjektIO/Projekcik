@@ -5,6 +5,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {ProduktDodanieComponent} from "./produkt-dodanie/produkt-dodanie.component";
 import {ProduktModyfikacjaComponent} from "./produkt-modyfikacja/produkt-modyfikacja.component";
 import {ProduktWidokComponent} from "./produkt-widok/produkt-widok.component";
+import {ProduktWidokUserComponent} from "./produkt-widok-user/produkt-widok-user.component";
 import {ProduktComponent} from "./produkt.component";
 import { ProduktListaComponent } from './produkt-lista/produkt-lista.component';
 
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'produkt-widok/:id',
         component: ProduktWidokComponent
+      },
+      {
+        path: 'produkt-widok-user/:id',
+        component: ProduktWidokUserComponent
       },
       {
         path: 'produkt-lista',
