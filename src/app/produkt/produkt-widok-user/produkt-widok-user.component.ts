@@ -5,14 +5,13 @@ import { ProduktService } from '../services/produkt.service';
 import {PageType} from "../../opinie/opinie.component";
 
 @Component({
-  selector: 'app-produkt-widok',
-  templateUrl: './produkt-widok.component.html',
-  styleUrls: ['./produkt-widok.component.css']
+  selector: 'app-produkt-widok-user',
+  templateUrl: './produkt-widok-user.component.html',
+  styleUrls: ['./produkt-widok-user.component.css']
 })
-export class ProduktWidokComponent implements OnInit {
+export class ProduktWidokUserComponent implements OnInit {
 
   pageTypes: PageType = PageType.product;
-  
   id: string = '';
   name = 'name';
   description = 'description';
@@ -34,20 +33,7 @@ export class ProduktWidokComponent implements OnInit {
         });
     }
 
-    redirectToModify() {
-      this.modifyPath = "/produkt/produkt-modyfikacja/" + this.lastPath;
-      this.router.navigateByUrl(this.modifyPath);
-    }
-
-
-
-    deleteProduct() {
-      this.service.deleteProduct(this.lastPath)
-      .subscribe(response => {
-        //this.product = response;
-      });
-    }
-
+  
     getProductName(): string {return this.product.name}
     getProductDescription(): string {return this.product.description}
     getProductTags(): string {return this.product.tag}
