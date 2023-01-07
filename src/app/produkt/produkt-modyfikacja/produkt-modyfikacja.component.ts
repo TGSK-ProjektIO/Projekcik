@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { ProduktService } from '../services/produkt.service';
 import { Product } from 'express-backend-api/model/product';
+import { Category } from 'express-backend-api/model/category';
 
 @Component({
   selector: 'app-produkt-modyfikacja',
@@ -17,16 +18,21 @@ export class ProduktModyfikacjaComponent implements OnInit {
   tag = '';
   categoryName = '';
   image = '';
+  
 
   product: any;
   path: string = window.location.href;
   lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
   modifyPath: string = '';
+  categories : any;
 
   constructor(private router: Router, private service: ProduktService) {
     }
 
     ngOnInit(): void {
+      this.service.getCategories()
+      .subscribe(categories => this.categories = categories);
+
       this.service.getProduct(this.lastPath)
       .subscribe(response => {
         this.product = response;

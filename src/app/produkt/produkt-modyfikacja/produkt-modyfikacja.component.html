@@ -32,10 +32,17 @@
                     <input type="text"class="form-control form-control-lg bg-dark text-white"  value="{{tag}}" [(ngModel)]="tag"/>
                     <label class="form-label" for="typeEmailLogin">Tags</label>
                 </div>
-
-                <div class="form-outline mb-4">
+                
+                <!--<div class="form-outline mb-4">
                   <input type="text" class="form-control form-control-lg bg-dark text-white"  value="{{categoryName}}" [(ngModel)]="categoryName">
                   <label class="form-label" for="typePasswordLogin">Category</label>
+                </div>-->
+
+                <div class="form-outline mb-4">
+                  <select class="form-select" [(ngModel)]="categoryName">
+                    <option *ngFor="let category of categories" value={{category.name}}>{{category.name}}</option>
+                  </select>
+                  <label class="form-label" for="typePasswordLogin">Category </label>
                 </div>
 
                 <div class="form-outline mb-4">
