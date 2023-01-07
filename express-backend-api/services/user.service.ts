@@ -3,6 +3,7 @@ import {UserRepository} from "../repository/user.repository";
 import {TYPES} from "../config/types.config";
 import {User} from "../model/user";
 import {UserPartial} from "../model/user.partial";
+import {randomBytes} from "crypto";
 
 @injectable()
 export class UserService {
@@ -21,7 +22,8 @@ export class UserService {
         if (user.emailToken === emailToken) {
           await this.userRepository.update({
             _id: user._id,
-            isEmailVerified: true
+            isEmailVerified: true,
+            emailToken: randomBytes(64).toString('hex')
           });
           resolve(true);
         } else {
@@ -46,19 +48,6 @@ export class UserService {
     });
   }
 
-  public updateUserEmailToken(userId: string, newToken: string): Promise<boolean> {
-    return new Promise<boolean>(async (resolve, reject) => {
-      try {
-        const user = await this.userRepository.read(userId);
-        user.emailToken = newToken;
-        await this.userRepository.update(user);
-        resolve(true);
-      } catch (error) {
-        resolve(false);
-      }
-    });
-  }
-
   public getUser(userId: string): Promise<User> {
     return this.userRepository.read(userId);
   }
@@ -67,25 +56,7 @@ export class UserService {
     return this.userRepository.readByEmail(email);
   }
 
-  private isGithubAccount(id: string): Promise<boolean> {
-    return new Promise<boolean>(async (resolve, reject) => {
-      try {
-        const account = await this.userRepository.read(id);
-        resolve(account.password === null);
-      } catch (error) {
-        reject();
-      }
-    });
-  }
-
-  private isEmailCorrect(email: string): Promise<boolean> {
-    return new Promise<boolean>(async (resolve) => {
-      try {
-        await this.userRepository.readByEmail(email);
-        resolve(true);
-      } catch (error) {
-        resolve(false);
-      }
-    });
+  isGithubUser(user: User): boolean {
+    return user.password === null;
   }
 }

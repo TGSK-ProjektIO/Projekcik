@@ -12,6 +12,7 @@ import { WeryfikacjaPotwierdzenieComponent } from './weryfikacja-potwierdzenie/w
 import {AlertConfig, AlertModule} from "ngx-bootstrap/alert";
 import {AppComponent} from "../app.component";
 import {LogowanieIRejestracjaComponent} from "./logowanie-i-rejestracja.component";
+import { GithubResponseComponent } from './github-response/github-response.component';
 
 
 
@@ -22,7 +23,8 @@ import {LogowanieIRejestracjaComponent} from "./logowanie-i-rejestracja.componen
         PotwierdzenieComponent,
         ResetowanieComponent,
         ResetowaniePotwierdzenieComponent,
-        WeryfikacjaPotwierdzenieComponent
+        WeryfikacjaPotwierdzenieComponent,
+        GithubResponseComponent
     ],
   exports: [
     RejestracjaComponent,

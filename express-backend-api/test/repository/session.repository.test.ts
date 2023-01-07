@@ -23,7 +23,8 @@ beforeEach(async () => {
   validUserPartial = {
     username: faker.internet.userName(),
     password: faker.internet.password(),
-    email: faker.internet.email()
+    email: faker.internet.email(),
+    githubToken: null
   };
   const createdUser = await userRepository.create(validUserPartial);
   validSessionParams = {

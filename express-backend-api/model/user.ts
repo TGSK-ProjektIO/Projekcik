@@ -6,6 +6,7 @@ export interface User {
   password: string | null;
   email: string;
   emailToken: string;
+  githubToken: string | null;
   isAdministrator: boolean;
   isEmailVerified: boolean;
 }

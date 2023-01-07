@@ -3,11 +3,35 @@ import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
 import {EmailService} from "../services/email.service";
 import {createHash} from "crypto";
+import {GithubService} from "../services/githubService";
 
 @injectable()
 export class UserController {
  constructor(@inject(TYPES.UserService) private userService: UserService,
-             @inject(TYPES.EmailService) private emailService : EmailService) {
+             @inject(TYPES.EmailService) private emailService : EmailService,
+             @inject(TYPES.GithubService) private githubService: GithubService) {
+ }
+
+ public registerGithubUser() {
+    return async (request: any, response: any) => {
+      const githubCode = request.params.code;
+      try {
+        const accessToken = await this.githubService.retrieveAccessToken(githubCode);
+        const userLogin = await this.githubService.retrieveUserLogin(accessToken);
+        const userEmail = await this.githubService.retrieveUserEmail(accessToken);
+        const createdUser = await this.userService.registerUser({
+          username: userLogin,
+          password: null,
+          email: userEmail,
+          githubToken: accessToken
+        });
+        response.status(200).send(createdUser);
+      } catch (error) {
+        response.status(400).send({
+          error: "GIven access token is invalid, or already used"
+        });
+      }
+    }
  }
 
  public registerUser() {
@@ -33,15 +57,21 @@ export class UserController {
      const email = request.params.email;
      try {
        const user = await this.userService.getUserByEmail(email);
-       if (user.isEmailVerified) {
-         await this.emailService.sendPasswordResetMail(user);
-         return response.status(200).send({
-           message: "Sent password reset email"
-         });
+       if (user.password != null) {
+         if (user.isEmailVerified) {
+           await this.emailService.sendPasswordResetMail(user);
+           return response.status(200).send({
+             message: "Sent password reset email"
+           });
+         } else {
+           return response.status(403).send({
+             message: "Cannot send reset password mail to unconfirmed user"
+           });
+         }
        } else {
-         return response.status(403).send({
-           message: "Cannot send reset password mail to unconfirmed user"
-         });
+         return response.status(400).send({
+           message: "Cannot reset password for account registered by github"
+         })
        }
      } catch (e) {
        return response.status(404).send({
@@ -128,10 +158,16 @@ export class UserController {
            error: "Given emailToken is invalid"
          });
        }
-       await this.userService.updatePassword(userId, newPassword);
-       return response.status(200).send({
-         message: "Password changed successfully"
-       });
+       if (user.password != null) {
+         await this.userService.updatePassword(userId, newPassword);
+         return response.status(200).send({
+           message: "Password changed successfully"
+         });
+       } else {
+         return response.status(400).send({
+           message: "Cannot change password for account registered by github"
+         })
+       }
      } catch (error) {
        return response.status(404).send({
          error: "User not found"

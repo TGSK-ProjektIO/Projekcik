@@ -34,6 +34,7 @@ import {CategoryController} from "../controller/category.controller";
 import {CategoryRouter} from "../router/category.router";
 import {CategoryService} from "../services/category.service";
 import {CategoryRepository} from "../repository/category.repository";
+import {GithubService} from "../services/githubService";
 
 export const container = new Container();
 
@@ -103,6 +104,9 @@ container.bind<ProfileRouter>(TYPES.ProfileRouter)
   .to(ProfileRouter)
   .inSingletonScope();
 
+container.bind<GithubService>(TYPES.GithubService)
+  .to(GithubService)
+  .inSingletonScope();
 container.bind<UserService>(TYPES.UserService)
   .to(UserService)
   .inSingletonScope();

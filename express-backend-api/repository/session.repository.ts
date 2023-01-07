@@ -47,7 +47,7 @@ export class SessionRepository {
         const collection = db.collection(SESSION_COLLECTION_NAME);
         const createdSession: any = {
           startDate: sessionParams.startDate,
-          expireDate: moment(sessionParams.startDate).add(SESSION_DURATION, 'm').toDate(),
+          expireDate: moment(sessionParams.startDate).add(SESSION_DURATION + 60, 'm').toDate(),
           invalidated: false,
           userId: sessionParams.userId
         };
