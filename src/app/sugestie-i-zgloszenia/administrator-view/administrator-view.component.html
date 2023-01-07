@@ -1,0 +1,91 @@
+<!--
+<router-outlet></router-outlet>
+-->
+<html>
+<body>
+<section class="container-fluid min-vh-100 vw-100">
+  <div class="container py-1 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-10 col-lg-10 col-xl-8">
+
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body pt-5 text-center">
+            <div class="mb-md-5 mt-md-4 pb-2">
+
+              <!--
+              <h2 class="fw-bold mb-2 text-uppercase">ADMINISTRATOR VIEW</h2>
+              <button class="btn btn-outline-light btn-lg px-5" (click)="onPressedShowSingle()">Wyświetl sugestie</button>
+              <p>{{id}}</p>
+              <p>{{type}}</p>
+              <p>{{description}}</p>
+              <p>{{status}}</p>
+              <p>{{userId}}</p>
+              <p>{{productId}}</p>
+              -->
+
+              <button class="btn btn-outline-light btn-lg px-5" (click)="onPressedShowAll()">Wyświetl wszystkie sugestie</button>
+
+              <p>{{indicies}}</p>
+
+              <div class="container report-list">
+              <div class="row justify-content-center align-items-center" *ngFor="let report of reports">
+
+                <div class="col-12 col-md-12 col-lg-11 col-xl-11 mb-3 report-element awaiting ">
+
+                  <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                      <div class="col m-3 report-element-product">
+                        Produkt: {{report.idProduct}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                      <div class="col mx-3 report-element-description">
+                        {{report.description}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row justify-content-center align-items-center">
+                    <div class="col align-self-start ">
+                      <div class="container">
+                        <div class="row justify-content-center align-items-center">
+                         <div class="col col-11 report-element-user">
+                            Użytkownik {{report.idUser}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col align-self-end">
+                      <div class="container">
+                      <div class="row justify-content-center align-items-center">
+                        <button class="col col-5 btn btn-outline-success btn-accept">Potwierdź</button>
+                        <div class="col-1"></div>
+                        <button class="col col-5 btn btn-outline-danger btn-decline">Odrzuć</button>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
+
+<!--
+<button type="submit" (click)="onSignInPressed()">Wyświetl Zgłoszenia</button>
+<div *ngFor="let report of reports">
+  <app-all-reports-admin [report]="report"></app-all-reports-admin>
+</div>
+-->

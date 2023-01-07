@@ -1,7 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-/* Fuck white space at the bottom */
+body {
+  background-image: url("src/assets/gradient_background.jpg");
+}
+
 html, body {
   min-height: 100vh;
 }
@@ -25,15 +28,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 *::-webkit-scrollbar:hover {
   width: 0.7em;
-}
-
-.bg-dark, .bg-white {
-  border-radius: 1rem;
-  padding: 0.1em;
-}
-
-.bg-blue {
-  background-color: red;
 }
 
 button, input::file-selector-button{

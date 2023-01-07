@@ -4,7 +4,12 @@ border: #334465 2px outset;
 width: 95%;
 padding: 10px;">
   <h1>Add your opinion:</h1>
-  <div opinionHost></div>
+  <div class="RatingsHost">
+    <span ratingsHost></span>
+  </div>
+  <div class="ReviewHost">
+    <span reviewHost></span>
+  </div>
   <form>
     <button class="btn btn-outline-light btn-lg px-3 py-1" type="submit" (click)="CreateOpinion()">Submit</button>
   </form>
