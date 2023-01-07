@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import { ProduktService } from '../services/produkt.service';
 import { Product } from 'express-backend-api/model/product';
 import { Category } from 'express-backend-api/model/category';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
   selector: 'app-produkt-modyfikacja',
@@ -16,30 +17,36 @@ export class ProduktModyfikacjaComponent implements OnInit {
   name = '';
   description = '';
   tag = '';
-  categoryName = '';
+  category: Category;
   image = '';
-  
 
   product: any;
   path: string = window.location.href;
   lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
   modifyPath: string = '';
-  categories : any;
+  categories : Array<Category>;
+  attributes : any;
 
   constructor(private router: Router, private service: ProduktService) {
     }
 
     ngOnInit(): void {
       this.service.getCategories()
-      .subscribe(categories => this.categories = categories);
-
+        .subscribe(categories=> {
+          this.categories = categories as Category[];
+        });
+/*
+      this.service.getCategory()
+      .subscribe(attributes => this.attributes = )*/
       this.service.getProduct(this.lastPath)
       .subscribe(response => {
         this.product = response;
         this.name = this.product.name;
         this.description = this.product.description;
         this.tag = this.product.tag;
-        this.categoryName = this.product.categoryName;
+        this.category = this.categories.find((obj: any) => {
+          return obj.name === this.product.categoryName;
+        })!
         this.image = this.product.image;
       });
     }
@@ -54,10 +61,13 @@ export class ProduktModyfikacjaComponent implements OnInit {
     }
   
     onModifyPressed() {
+      console.log(this.category._id);
+      console.log(this.category.name);
+
       this.product.id = this.lastPath;
       this.product.name = this.name;
       this.product.description = this.description;
-      this.product.categoryName = this.categoryName;
+      this.product.categoryName = this.category.name;
       this.product.tag = this.tag;
       this.product.image = this.image;
       this.service.modifyProduct(this.lastPath, this.product)
@@ -65,33 +75,5 @@ export class ProduktModyfikacjaComponent implements OnInit {
         this.product = response;
       });
 
-    }
-
-
-    onSavePressed() {
-      this.modifyPath = "http://localhost:3000/api/v1/produkt/product/" + this.lastPath;
-      fetch(this.modifyPath, {
-        method: 'PUT',
-        headers: {
-          'Accept': '*/*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "name": this.name,
-          "description": this.description,
-          "categoryName": this.categoryName,
-          "tag": this.tag,
-          "image": this.image
-        })
-      }).then(async response => {
-        if (response.status === 201) {
-          await this.router.navigateByUrl('/');
-        }
-        if (response.status === 404) {
-          console.log("hi");
-        }
-      }).catch(err => {
-        console.error(err);
-      });
     }
 }

@@ -39,8 +39,8 @@
                 </div>-->
 
                 <div class="form-outline mb-4">
-                  <select class="form-select" [(ngModel)]="categoryName">
-                    <option *ngFor="let category of categories" value={{category.name}}>{{category.name}}</option>
+                  <select class="form-select" [(ngModel)]="category">
+                    <option *ngFor="let category of categories" value={{category._id}}>{{category.name}}</option>
                   </select>
                   <label class="form-label" for="typePasswordLogin">Category </label>
                 </div>

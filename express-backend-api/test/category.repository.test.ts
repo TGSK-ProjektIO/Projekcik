@@ -19,18 +19,18 @@ beforeAll(async () => {
 beforeEach(async () => {
   category1 = {
     name: "mebel",
-    attribute: [{wymiary: "example",material: "example"}],
+    attribute: ["wymiary", "material"]
   };
 
   category2 = {
     _id: new ObjectId(),
     name: "category2",
-    attribute: [{at1: "at1", at2: "at2"}],
+    attribute: ["at1", "at2"],
   };
 
   category3 = {
     name: "category3",
-    attribute: [{at1: "example",at2: "example"}],
+    attribute: ["example", "example"]
   };
 
 });
@@ -65,7 +65,7 @@ test('Delete Category positive test', async () => {
 //dziala?
 test('Update Category positive test', async () => {
   let createdCategory = await categoryRepository.create(category3);
-  createdCategory.attribute.push({at3: "example"});
+  createdCategory.attribute.push("example");
   // @ts-ignore
   await expect(categoryRepository.update(createdCategory)).resolves.toBeUndefined();
   // @ts-ignore
