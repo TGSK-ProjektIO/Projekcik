@@ -20,7 +20,8 @@ beforeEach(async () => {
   validUserPartial = {
     username: faker.internet.userName(),
     password: faker.internet.password(),
-    email: faker.internet.email()
+    email: faker.internet.email(),
+    githubToken: null
   };
 });
 
@@ -34,25 +35,18 @@ describe('Create user', () => {
     await expect(userRepository.create({
       password: faker.internet.password(),
       email: faker.internet.email()
-    })).rejects.toBeUndefined();
-  });
-  it('Tries to create user with missing password parameter', async () => {
-    // @ts-ignore
-    await expect(userRepository.create({
-      username: faker.internet.userName(),
-      email: faker.internet.email()
-    })).rejects.toBeUndefined();
+    })).rejects.toEqual("User must have username and email");
   });
   it('Tries to create user with missing email parameter', async () => {
     // @ts-ignore
     await expect(userRepository.create({
       username: faker.internet.userName(),
       password: faker.internet.password()
-    })).rejects.toBeUndefined();
+    })).rejects.toEqual("User must have username and email");
   });
   it('Tries to create user with already existing email', async () => {
     await userRepository.create(validUserPartial);
-    await expect(userRepository.create(validUserPartial)).rejects.toBeUndefined();
+    await expect(userRepository.create(validUserPartial)).rejects.toEqual("User with this email already exists");
   });
 });
 

@@ -18,7 +18,8 @@ beforeEach(async () => {
   validUserPartial = {
     username: faker.internet.userName(),
     password: faker.internet.password(),
-    email: faker.internet.email()
+    email: faker.internet.email(),
+    githubToken: null
   };
 });
 
@@ -82,15 +83,6 @@ describe('Register User', () => {
       .post(`${API_URI_LIR}/user`)
       .send({
         password: faker.internet.password(),
-        email: faker.internet.email()
-      });
-    expect(response.status).toEqual(400);
-  });
-  it('Should comply about missing password param', async () => {
-    const response = await request(app)
-      .post(`${API_URI_LIR}/user`)
-      .send({
-        username: faker.internet.userName(),
         email: faker.internet.email()
       });
     expect(response.status).toEqual(400);
@@ -172,12 +164,14 @@ describe('Send reset password email', () => {
     validUserPartial = {
       username: faker.internet.userName(),
       password: faker.internet.password(),
-      email: faker.internet.email()
+      email: faker.internet.email(),
+      githubToken: null
     };
     validUser2Partial = {
       username: faker.internet.userName(),
       password: faker.internet.password(),
-      email: faker.internet.email()
+      email: faker.internet.email(),
+      githubToken: null
     };
     unconfirmedUser = await userRepository.create(validUserPartial);
     confirmedUser = await userRepository.create(validUser2Partial);

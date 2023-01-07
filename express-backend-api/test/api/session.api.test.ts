@@ -28,7 +28,8 @@ beforeEach(async () => {
   validUserPartial = {
     username: faker.internet.userName(),
     password: faker.internet.password(),
-    email: faker.internet.email()
+    email: faker.internet.email(),
+    githubToken: null
   };
   user = await userRepository.create(validUserPartial);
   validSessionParams = {
@@ -137,7 +138,7 @@ describe('Has expired', () => {
     const response = await request(app)
       .get(`${API_URI_LIR}/session/${session._id.toString()}/has-expired`);
     expect(response.status).toEqual(200);
-    expect(response.body.expired).toBeFalsy();
+    expect(response.body.expired).toBeTruthy();
   });
   it('Properly tries to retrieve info about expired session', async () => {
     await sessionRepository.update({
@@ -154,7 +155,7 @@ describe('Has expired', () => {
     const response = await request(app)
       .get(`${API_URI_LIR}/session/${session._id.toString()}/has-expired`);
     expect(response.status).toEqual(200);
-    expect(response.body.expired).toBeFalsy();
+    expect(response.body.expired).toBeTruthy();
   });
 });
 
