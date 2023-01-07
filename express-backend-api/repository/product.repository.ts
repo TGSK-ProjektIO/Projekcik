@@ -31,6 +31,8 @@ export class ProductRepository {
  }
 
  create(product: Product): Promise<Product> {
+  //console.log("repository");
+  //console.log(product);
     return new Promise<Product>(async (resolve, reject) => {
         if (product._id) {
           return reject();

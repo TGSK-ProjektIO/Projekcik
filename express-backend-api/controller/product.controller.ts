@@ -34,6 +34,9 @@ public getProduct() {
 public updateProduct() {
   return async (request: any, response: any) => {
     const productId = request.params.id;
+    let productBody = request.body;
+    //console.log("controller");
+    //console.log(productName);
     //idk co dalej
     if (!productId) {
       return response.status(400).send({
@@ -41,7 +44,7 @@ public updateProduct() {
       });
     }
     try {
-      const product = await this.productService.updateProduct(productId);
+      const product = await this.productService.updateProduct(productBody);
       //idk
       return response.status(200).send({
         message: "Product updated successfully"

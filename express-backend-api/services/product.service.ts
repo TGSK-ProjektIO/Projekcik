@@ -15,6 +15,8 @@ export class ProductService {
     }
 
   public updateProduct(product: Product): Promise<void>  {
+    //console.log("service");
+    //console.log(product);
       return this.productRepository.update(product);
     }
   public getProduct(id: string): Promise<Product> {
