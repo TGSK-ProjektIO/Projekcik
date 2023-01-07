@@ -7,6 +7,8 @@ import {Opinion} from "../../../express-backend-api/model/opinion";
 import {OpinionRating} from "../../../express-backend-api/model/opinion.rating";
 import {Rating} from "../../../express-backend-api/model/rating";
 import {Profile} from "../../../express-backend-api/model/profile";
+import {OpinionRatingComponent, OpinionRatingState} from "./opinion-rating/opinion-rating.component";
+import {Session} from "../../../express-backend-api/model/session";
 
 
 // TODO: get user type from session
@@ -39,6 +41,10 @@ export class OpinieComponent implements OnInit {
   constructor() {  }
 
   ngOnInit(): void {
+    // TODO: delet
+    this.id = "93887";
+    this.userLoggedID = "93887";
+
     switch (this.pageType) {
       case PageType.product: this.ShowProductOpinions(this.id); break;
       case PageType.profile: this.ShowUserOpinions(this.id); break;
@@ -55,7 +61,7 @@ export class OpinieComponent implements OnInit {
     }).then(() =>
     {
       for (const opinion of this.allOpinions) {
-        this.DB_GetUserByID(opinion.userID).then(userProfile => {
+        this.DB_GetProfileByID(opinion.userID).then(userProfile => {
           opinion.userName = userProfile.nickname;
           opinion.userPicture = userProfile.profilePicture;
           this.ShowOpinion(opinion)
@@ -73,7 +79,13 @@ export class OpinieComponent implements OnInit {
   }
 
   ShowUserOpinions(userID : string) {
-    this.DB_GetOpinionsByUser(userID).then(opinionList =>
+    this.DB_GetSessionByID(localStorage.getItem('sessionId') || "639decd190099e173e34da28").then(userSession => {
+      this.userLoggedID = userSession.userId.toString();
+      console.log(this.userLoggedID);
+    }).then(() => {
+
+    }).then(() => this.DB_GetOpinionsByUser(userID)
+    ).then(opinionList =>
     {
       for (const opinion of opinionList) {
         this.allOpinions.push(this.OpinionDBToComponent(opinion));
@@ -81,20 +93,13 @@ export class OpinieComponent implements OnInit {
     }).then(() =>
     {
       for (const opinion of this.allOpinions) {
-        this.DB_GetUserByID(opinion.userID).then(userProfile => {
+        this.DB_GetProfileByID(opinion.userID).then(userProfile => {
           opinion.userName = userProfile.nickname;
           opinion.userPicture = userProfile.profilePicture;
           this.ShowOpinion(opinion)
         });
       }
     });
-  }
-
-  public ShowAllOpinions(): void {
-    //viewContainerRef.clear();
-    for (const opinion of this.allOpinions) {
-      this.ShowOpinion(opinion);
-    }
   }
 
   CreateOpinion(newOpinion : CompleteOpinionComponent): void {
@@ -128,14 +133,27 @@ export class OpinieComponent implements OnInit {
       res.review = { userID: opinion.userID, text: opinion.review.text };
       let ratings: Array<Rating> = new Array<Rating>();
       for (const rating of opinion.ratings) {
-        console.log(rating);
         ratings.push({userID: res.userId, name: rating.name, rating: rating.rating});
       }
       res.ratings = ratings;
 
-      res.opinionRatings.push({userID: this.userLoggedID, like: opinion.opinionRating.likes, dislike: opinion.opinionRating.dislikes});
-
-      this.DB_ModifyOpinion(res)
+      let foundUser = false;
+      for (const opinionRating of res.opinionRatings) {
+        if(opinionRating.userID == this.userLoggedID) {
+          switch(opinion.opinionRating.ratingState) {
+            case OpinionRatingState.Liked: opinionRating.like++; break;
+            case OpinionRatingState.Disliked: opinionRating.dislike++; break;
+          }
+          foundUser = true;
+          break;
+        }
+      }
+      if(!foundUser)
+        res.opinionRatings.push(
+          {userID: this.userLoggedID,
+            like: opinion.opinionRating.likes,
+            dislike: opinion.opinionRating.dislikes});
+      this.DB_ModifyOpinion(res);
     });
   }
 
@@ -208,6 +226,9 @@ export class OpinieComponent implements OnInit {
   //endregion
 
   // region Database functions
+  // ------------------
+
+  // region Opinion API
   // ------------------
   private DB_CreateOpinion(opinion: Opinion) {
     fetch(`http://localhost:3000/api/v1/opinie/add`, {
@@ -299,10 +320,11 @@ export class OpinieComponent implements OnInit {
       console.error(err);
     });
   }
+  //endregion
 
-  // UserProfile API
-  // ---------------
-  private async DB_GetUserByID(userID: string): Promise<Profile> {
+  // region UserProfile API
+  // ----------------------
+  private async DB_GetProfileByID(userID: string): Promise<Profile> {
     return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfileByUserId/${userID}`, {
       method: 'GET',
       headers: {
@@ -316,6 +338,39 @@ export class OpinieComponent implements OnInit {
       console.error(err);
     });
   }
+  //endregion
+
+  // region Session/User API
+  // ------------------
+  private async DB_GetSessionByID(sessionID: string | undefined): Promise<Session> {
+    return await fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/session/${sessionID}`, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+  private async DB_GetUserByID(userID: string): Promise<Session> {
+    return await fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/${userID}`, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json()
+    ).then((result) => {
+      return result;
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+  //endregion
 
   //endregion
 }
