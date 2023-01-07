@@ -16,7 +16,7 @@ import {KategoriaListaComponent} from './kategoria-lista/kategoria-lista.compone
 
 
 import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { OpinieModule } from "../opinie/opinie.module";
 
 @NgModule({
@@ -48,7 +48,8 @@ import { OpinieModule } from "../opinie/opinie.module";
         ProduktRoutingModule,
         BrowserModule,
         FormsModule,
-        OpinieModule
+        OpinieModule,
+        ReactiveFormsModule
     ]
 })
 export class ProduktModule { }
