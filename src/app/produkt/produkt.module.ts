@@ -5,6 +5,12 @@ import {ProduktModyfikacjaComponent} from './produkt-modyfikacja/produkt-modyfik
 import {ProduktWidokComponent} from './produkt-widok/produkt-widok.component';
 import {ProduktRoutingModule} from './produkt-routing.module';
 
+import {KategoriaDodanieComponent} from './kategoria-dodanie/kategoria-dodanie.component';
+import {KategoriaModyfikacjaComponent} from './kategoria-modyfikacja/kategoria-modyfikacja.component';
+import {KategoriaWidokComponent} from './kategoria-widok/kategoria-widok.component';
+import {KategoriaListaComponent} from './kategoria-lista/kategoria-lista.component';
+
+
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import { ProduktListaComponent } from './produkt-lista/produkt-lista.component';
@@ -15,13 +21,23 @@ import { OpinieModule } from "../opinie/opinie.module";
         ProduktDodanieComponent,
         ProduktModyfikacjaComponent,
         ProduktWidokComponent,
-        ProduktListaComponent
+        ProduktListaComponent,
+
+        KategoriaDodanieComponent,
+        KategoriaModyfikacjaComponent,
+        KategoriaWidokComponent,
+        KategoriaListaComponent
     ],
     exports: [
         ProduktDodanieComponent,
         ProduktModyfikacjaComponent,
         ProduktWidokComponent,
-        ProduktListaComponent
+        ProduktListaComponent,
+
+        KategoriaDodanieComponent,
+        KategoriaModyfikacjaComponent,
+        KategoriaWidokComponent,
+        KategoriaListaComponent
     ],
     imports: [
         CommonModule,
