@@ -30,6 +30,11 @@ export class ProduktModyfikacjaComponent implements OnInit {
       this.service.getProduct(this.lastPath)
       .subscribe(response => {
         this.product = response;
+        this.name = this.product.name;
+        this.description = this.product.description;
+        this.tag = this.product.tag;
+        this.categoryName = this.product.categoryName;
+        this.image = this.product.image;
       });
     }
 
