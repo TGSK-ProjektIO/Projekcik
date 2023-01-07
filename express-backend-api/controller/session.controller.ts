@@ -79,12 +79,6 @@ export class SessionController {
     }
   }
 
-  // public loginWithGithub() {
-  //   return async (request: any, response: any) => {
-  //
-  //   }
-  // }
-
   public logout() {
     return async (request: any, response: any) => {
       const sessionId = request.params.id;
