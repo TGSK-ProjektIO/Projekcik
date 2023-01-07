@@ -134,11 +134,16 @@ describe('Logout', () => {
 });
 
 describe('Has expired', () => {
+  let session: Session;
+  beforeEach(async () => {
+    session = await sessionRepository.create(validSessionParams);
+  });
+
   it('Properly tries to retrieve information about not expired session', async () => {
     const response = await request(app)
       .get(`${API_URI_LIR}/session/${session._id.toString()}/has-expired`);
     expect(response.status).toEqual(200);
-    expect(response.body.expired).toBeTruthy();
+    expect(response.body.expired).toBeFalsy();
   });
   it('Properly tries to retrieve info about expired session', async () => {
     await sessionRepository.update({

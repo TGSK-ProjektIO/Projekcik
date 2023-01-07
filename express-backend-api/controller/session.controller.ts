@@ -125,7 +125,7 @@ export class SessionController {
       const sessionId = request.params.id;
       try {
         const session = await this.sessionService.getSession(sessionId);
-        if (session.expireDate.getTime() < moment(new Date()).add(1, 'h').toDate().getTime()) {
+        if (session.invalidated || session.expireDate.getTime() < moment(new Date()).add(1, 'h').toDate().getTime()) {
           return response.status(200).send({
             expired: true
           });
