@@ -41,7 +41,7 @@ export class KategoriaModyfikacjaComponent implements OnInit {
     onModifyPressed() {
       this.category.id = this.lastPath;
       this.category.name = this.name;
-      this.service.modifyProduct(this.lastPath, this.category)
+      this.service.modifyCategory(this.lastPath, this.category)
       .subscribe(response => {
         this.category = response;
       });
