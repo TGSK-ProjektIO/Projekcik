@@ -11,10 +11,8 @@ import {ProduktComponent} from '../produkt.component';
 export class KategoriaDodanieComponent implements OnInit {
 
   name = '';
-  description = '';
-  tag = '';
-  categoryName = '';
-  image = '';
+  attribute: Array<Object>;
+
 
   modifyPath: string = '';
 
@@ -24,14 +22,14 @@ export class KategoriaDodanieComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    redirectToProductList() {
-      this.modifyPath = "/produkt/produkt-lista";
+    redirectToCategoryList() {
+      this.modifyPath = "/produkt/kategoria-lista";
       this.router.navigateByUrl(this.modifyPath);
     }
 
   
     onSavePressed() {
-      fetch('http://localhost:3000/api/v1/produkt/product', {
+      fetch('http://localhost:3000/api/v1/produkt/category', {
         method: 'POST',
         headers: {
           'Accept': '*/*',
@@ -39,10 +37,6 @@ export class KategoriaDodanieComponent implements OnInit {
         },
         body: JSON.stringify({
           "name": this.name,
-          "description": this.description,
-          "categoryName": this.categoryName,
-          "tag": this.tag,
-          "image": this.image
         })
       }).then(async response => {
         if (response.status === 201) {

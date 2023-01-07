@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Opinion Controller - Dodawanie Produktu</title>
+  <title>Opinion Controller - Lista Kategorii</title>
 </head>
 <body>
   <section class="container-fluid min-vh-100 vw-100">
@@ -13,16 +13,16 @@
 
               <div class="mb-md-5 mt-md-4 pb-2">
                 <div>
-                <h2 class="fw-bold mb-2 text-uppercase">All Products</h2>
+                <h2 class="fw-bold mb-2 text-uppercase">All Categories</h2>
                 </div>
                 <div class="list-group" >
-                  <button type="button" class="list-group-item list-group-item-action" *ngFor="let product of products" type="submit" [routerLink]="['/produkt/kategoria-widok']" (click)="redirectToWidok(product._id)">
+                  <button type="button" class="list-group-item list-group-item-action" *ngFor="let category of categories" type="submit" [routerLink]="['/produkt/kategoria-widok']" (click)="redirectToWidok(category._id)">
                       <div>
-                      {{product.name}}
+                      {{category.name}}
                       </div>
                   </button>
                 </div>
-                <button class="btn btn-outline-light btn-lg px-5" type="submit" [routerLink]="['/produkt/kategoria-dodanie']" (click)="redirectToDodanie()">Add product</button>
+                <button class="btn btn-outline-light btn-lg px-5" type="submit" [routerLink]="['/produkt/kategoria-dodanie']" (click)="redirectToDodanie()">Add category</button>
               </div>
             </div>
           </div>

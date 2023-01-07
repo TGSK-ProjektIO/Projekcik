@@ -12,24 +12,19 @@ import { ProduktService } from '../services/produkt.service';
 export class KategoriaListaComponent implements OnInit {
 
   id: string = '';
-  name = 'name';
-  description = 'description';
-  tag = 'tag1, tag2';
-  categoryName = 'drzewo';
-  image = 'https://images.obi.pl/product/PL/415x415/679553_1.jpg';
 
   path: string = window.location.href;
   lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
-  products: any;
+  categories: any;
   modifyPath: string = '';
 
   constructor(private router: Router, private service: ProduktService) {
     }
 
     ngOnInit(): void {
-      this.service.getProducts()
+      this.service.getCategories()
         .subscribe(response => {
-          this.products = response;
+          this.categories = response;
         });
     }
 
@@ -52,10 +47,5 @@ export class KategoriaListaComponent implements OnInit {
 
     }
 
-    getProductName(): string {return this.name}
-    getProductDescription(): string {return this.description}
-    getProductTags(): string {return this.tag}
-    getProductCategoryName(): string {return this.categoryName}
-    getProductImage(): string {return this.image}
 
 }
