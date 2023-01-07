@@ -13,6 +13,7 @@ export class ResetowanieComponent implements OnInit {
   isWarningAlertOpen = false;
   isFailureAlertOpen = false;
   isConfirmedAlertOpen = false;
+  isGithubAccountAlertOpen = false;
 
   constructor(
     private router: Router,
@@ -39,9 +40,11 @@ export class ResetowanieComponent implements OnInit {
           this.isSuccessAlertOpen = true;
         } else if(response.status === 403) {
           this.isConfirmedAlertOpen = true;
+        } else if(response.status === 400) {
+          this.isGithubAccountAlertOpen = true;
         } else {
-          this.isWarningAlertOpen = true;
-        }
+            this.isWarningAlertOpen = true;
+          }
       }).catch(() => {
         this.isFailureAlertOpen = true;
       });
@@ -61,5 +64,9 @@ export class ResetowanieComponent implements OnInit {
   }
   onCloseConfirmedAlert() {
     this.isConfirmedAlertOpen = false;
+  }
+
+  onCloseGithubAccountAlert() {
+    this.isGithubAccountAlertOpen = false;
   }
 }

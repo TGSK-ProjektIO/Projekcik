@@ -57,15 +57,21 @@ export class UserController {
      const email = request.params.email;
      try {
        const user = await this.userService.getUserByEmail(email);
-       if (user.isEmailVerified) {
-         await this.emailService.sendPasswordResetMail(user);
-         return response.status(200).send({
-           message: "Sent password reset email"
-         });
+       if (user.password != null) {
+         if (user.isEmailVerified) {
+           await this.emailService.sendPasswordResetMail(user);
+           return response.status(200).send({
+             message: "Sent password reset email"
+           });
+         } else {
+           return response.status(403).send({
+             message: "Cannot send reset password mail to unconfirmed user"
+           });
+         }
        } else {
-         return response.status(403).send({
-           message: "Cannot send reset password mail to unconfirmed user"
-         });
+         return response.status(400).send({
+           message: "Cannot reset password for account registered by github"
+         })
        }
      } catch (e) {
        return response.status(404).send({
@@ -152,10 +158,16 @@ export class UserController {
            error: "Given emailToken is invalid"
          });
        }
-       await this.userService.updatePassword(userId, newPassword);
-       return response.status(200).send({
-         message: "Password changed successfully"
-       });
+       if (user.password != null) {
+         await this.userService.updatePassword(userId, newPassword);
+         return response.status(200).send({
+           message: "Password changed successfully"
+         });
+       } else {
+         return response.status(400).send({
+           message: "Cannot change password for account registered by github"
+         })
+       }
      } catch (error) {
        return response.status(404).send({
          error: "User not found"
