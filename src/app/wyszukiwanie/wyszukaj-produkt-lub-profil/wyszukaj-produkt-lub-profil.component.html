@@ -39,7 +39,7 @@
       <div class="card bg-dark text-white" style="border-radius: 1rem; border-width: 5px">
         <div class="mat-elevation-z8 mt-2 bg-dark" [hidden]="productsDataSource.data.length == 0">
     <span *ngFor="let tag of productTags" class="bg-dark text-white-18">
-      <mat-checkbox color="primary">{{tag}}</mat-checkbox>
+      <mat-checkbox #checkbox (change)="applyTagFilter(checkbox.value, checkbox.checked)" value={{tag}} color="primary">{{tag}}</mat-checkbox>
     </span>
           <table mat-table #productMatSort="matSort" [dataSource]="productsDataSource" matSort class="bg-dark">
             <ng-container matColumnDef="name">

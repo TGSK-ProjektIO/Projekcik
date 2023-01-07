@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Injectable, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Injectable, OnInit, Output, ViewChild} from '@angular/core';
 import {Product} from "../../../../express-backend-api/model/product";
 import {ProductSearch} from "./ProductSearch";
 import {MatTableDataSource} from "@angular/material/table";
@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {WyszukiwanieService} from "../services/wyszukiwanie.service";
 import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 
 @Injectable()
@@ -40,6 +41,8 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   productSearch: ProductSearch;
   searchedProducts: Product[] = [];
   filteredData: Product[] = [];
+  tagFilteredData: Product[] = []
+  selectedTags: string[] = [];
   selected = 'all';
 
   productTags: string[] = [];   //zawiera tagi dla kategorii i wyszukiwania
@@ -69,6 +72,9 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   @ViewChild('productMatSort') productSort: MatSort;
   @ViewChild('profileMatSort') profileSort: MatSort;
 
+  @Output()
+  change: EventEmitter<MatCheckboxChange>
+
   ngAfterViewInit()  {
     this.service.getAllProfiles()
       .subscribe(response => {
@@ -87,6 +93,7 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   }
 
   searchProducts() {
+    this.categories = [];
     this.searchedProducts = this.productSearch.getSearchResults(this.productModel.name.toLowerCase());
     this.productsDataSource.data = this.searchedProducts;
     this.profilesDataSource.data.splice(0);
@@ -112,11 +119,70 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     this.productTagsAll = this.productTagsAll.filter((elem, index, self) => {
       return index === self.indexOf(elem);
     })
+
+    this.filteredData = this.searchedProducts;
+  }
+
+  applyTagFilter(checked: string, isChecked: boolean) {
+    this.tagFilteredData = [];
+    //var isFlag = false;
+    if (isChecked)
+    {
+      this.selectedTags.push(checked);
+    }
+    else
+    {
+      this.selectedTags.forEach((item, index) => {
+        if (item == checked) this.selectedTags.splice(index,1);
+      })
+    }
+
+    if (this.selectedTags.length === 0)
+    {
+      this.productsDataSource.data = this.filteredData;
+    }
+    else
+    {
+
+      for (let i = 0; i < this.filteredData.length; i++)
+      {
+        var findElement = true;
+        for (let j = 0; j < this.selectedTags.length; j++)
+        {
+
+          for (let p = 0; p < this.filteredData[i].tag.length; p++)
+          {
+            if (this.selectedTags[j] === this.filteredData[i].tag[p])
+            {
+              findElement = true;
+              break
+            }
+            else
+            {
+              findElement = false;
+            }
+          }
+          if (!findElement)
+            break;
+
+        }
+        if (findElement)
+          this.tagFilteredData.push(this.filteredData[i]);
+      }
+
+      this.tagFilteredData = this.tagFilteredData.filter((elem, index, self) => {
+        return index === self.indexOf(elem);
+      })
+      this.productsDataSource.data = this.tagFilteredData;
+
+
+    }
   }
 
   applyCategory($event: any) {
     this.filteredData = [];
     this.productTags = [];
+    this.selectedTags = [];
 
     for (let i = 0; i < this.searchedProducts.length; i++) {
 
@@ -138,30 +204,6 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
     }
     this.productsDataSource.data = this.filteredData;
   }
-
-  applyTagFilter(event: Event) {
-    const filterValue= (event.target as HTMLInputElement).value.toLowerCase().trim();
-    this.filteredData = [];
-
-    for (let i = 0; i < this.searchedProducts.length; i++) {
-      for (let j = 0; j < 2; j++) {
-        if (this.searchedProducts[i].tag[j] == filterValue)
-        {
-          this.filteredData.push(this.searchedProducts[i]);
-        }
-      }
-    }
-    if (filterValue == "")
-    {
-      this.productsDataSource.data = this.searchedProducts;
-    }
-    else
-    {
-      this.productsDataSource.data = this.filteredData;
-    }
-
-  }
-
   searchProfiles() {
     this.searchedProfiles = this.profileSearch.getSearchResults(this.profileModel.nickname.toLowerCase());
     this.profilesDataSource.data = this.searchedProfiles;
@@ -175,5 +217,4 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   goToProfile(profile: Profile) {
     console.log(profile._id);
   }
-
 }
