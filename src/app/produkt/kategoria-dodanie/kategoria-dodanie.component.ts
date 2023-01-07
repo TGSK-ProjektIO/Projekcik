@@ -17,13 +17,12 @@ export class KategoriaDodanieComponent implements OnInit {
   modifyPath: string = '';
 
 
-  productForm: FormGroup;
-  
+  attributesForm: FormGroup;
+
   constructor(private router: Router, private fb:FormBuilder) {
          
-    this.productForm = this.fb.group({  
-      name: '',  
-      quantities: this.fb.array([]) ,  
+    this.attributesForm = this.fb.group({  
+      attributes: this.fb.array([]) ,  
     });  
   }
     
@@ -38,6 +37,7 @@ export class KategoriaDodanieComponent implements OnInit {
 
   
     onSavePressed() {
+      console.log(this.attributesForm.value); 
       fetch('http://localhost:3000/api/v1/produkt/category', {
         method: 'POST',
         headers: {
@@ -55,30 +55,26 @@ export class KategoriaDodanieComponent implements OnInit {
         }
       }).catch(err => {
         console.error(err);
-      });
+      }); 
     }
 
-    quantities() : FormArray {  
-      return this.productForm.get("quantities") as FormArray  
+    attributes() : FormArray {  
+      return this.attributesForm.get("attributes") as FormArray  
     }  
        
-    newQuantity(): FormGroup {  
+    newAttribute(): FormGroup {  
       return this.fb.group({  
-        qty: '',  
-        price: '',  
+        attribute: '',  
       })  
     }  
        
-    addQuantity() {  
-      this.quantities().push(this.newQuantity());  
+    addAttribute() {  
+      this.attributes().push(this.newAttribute());  
+      console.log(this.attributes().length);
     }  
        
-    removeQuantity(i:number) {  
-      this.quantities().removeAt(i);  
-    }  
-       
-    onSubmit() {  
-      console.log(this.productForm.value);  
+    removeAttribute(i:number) {  
+      this.attributes().removeAt(i);  
     }  
   
 

@@ -24,23 +24,21 @@
                 
   <div class="container">  
       
-    <div class="form-outline mb-4" [formGroup]="productForm" (ngSubmit)="onSubmit()">   
-      <div><button type="button" (click)="addQuantity()" class="btn btn-outline-light btn-mg px-3">Add Attribute</button></div>   
-      <table class="table" formArrayName="quantities">  
-        <tr *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i">  
+    <div class="form-outline mb-4" [formGroup]="attributesForm">   
+      <div><button type="button" (click)="addAttribute()" class="btn btn-outline-light btn-mg px-3">Add Attribute</button></div>   
+      <table class="table" formArrayName="attributes">  
+        <tr *ngFor="let quantity of attributes().controls; let i=index" [formGroupName]="i">  
           <td>   
-              <input type="text" formControlName="price" class="form-control">  
+              <input type="text" formControlName="attribute" class="form-control form-control-lg bg-dark text-white">  
           </td>  
           <td>  
-              <button (click)="removeQuantity(i)" class="btn btn-outline-light btn-mg px-3">Remove</button>  
+              <button (click)="removeAttribute(i)" class="btn btn-outline-light btn-mg px-3">Remove</button>  
           </td>  
         </tr>  
       </table> 
     </div>  
-        
     <br/>  
   </div>  
-
 
                 <button class="btn btn-outline-light btn-lg px-5" type="submit" (click)="onSavePressed()">Save</button>
                 <button class="btn btn-outline-light btn-lg px-5" (click)="redirectToCategoryList()">Cancel</button>
