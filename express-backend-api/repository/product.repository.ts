@@ -63,7 +63,7 @@ export class ProductRepository {
           const db = client.db(DB_NAME);
           const collection = db.collection(PRODUCT_COLLECTION_NAME);
           const response = await collection.updateOne(
-            {_id: product._id},
+            {_id: new ObjectId(product._id)},
             {
               $set: {
                 name: product.name,
@@ -120,7 +120,7 @@ delete(_id: string): Promise<void> {
           const db = client.db(DB_NAME);
           const collection = db.collection(PRODUCT_COLLECTION_NAME);
           const result = await collection.deleteOne({
-            _id: _id
+            _id: new ObjectId(_id)
           });
           if (result.deletedCount === 1) {
             resolve();

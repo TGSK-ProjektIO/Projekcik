@@ -43,7 +43,7 @@ export class ProduktWidokComponent implements OnInit {
     deleteProduct() {
       this.service.deleteProduct(this.lastPath)
       .subscribe(response => {
-        this.product = response;
+        //this.product = response;
       });
     }
 
