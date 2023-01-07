@@ -13,16 +13,16 @@ import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms'
 export class KategoriaDodanieComponent implements OnInit {
 
   name = '';
-  attribute: Array<Object>;
+  attrib: Array<string> = [];
   modifyPath: string = '';
-
+  att: string;
 
   attributesForm: FormGroup;
 
   constructor(private router: Router, private fb:FormBuilder) {
          
     this.attributesForm = this.fb.group({  
-      attributes: this.fb.array([]) ,  
+      attributes: this.fb.array<String>([]) ,  
     });  
   }
     
@@ -37,7 +37,7 @@ export class KategoriaDodanieComponent implements OnInit {
 
   
     onSavePressed() {
-      console.log(this.attributesForm.value); 
+      this.getAttributes();
       fetch('http://localhost:3000/api/v1/produkt/category', {
         method: 'POST',
         headers: {
@@ -46,6 +46,7 @@ export class KategoriaDodanieComponent implements OnInit {
         },
         body: JSON.stringify({
           "name": this.name,
+          "attributes": this.attrib
         })
       }).then(async response => {
         if (response.status === 201) {
@@ -65,17 +66,26 @@ export class KategoriaDodanieComponent implements OnInit {
     newAttribute(): FormGroup {  
       return this.fb.group({  
         attribute: '',  
-      })  
+      })
     }  
        
     addAttribute() {  
       this.attributes().push(this.newAttribute());  
-      console.log(this.attributes().length);
+      console.log(this.attributes().value);
     }  
        
     removeAttribute(i:number) {  
       this.attributes().removeAt(i);  
     }  
+
+    getAttributes() {
+      console.log("getAttributes");
+      for (let i = 0; i < this.attributes().length; i++) {
+        this.att = this.attributes().at(i).value.attribute;
+        this.attrib.push(this.att);
+      }
+
+    }
   
 
 }
