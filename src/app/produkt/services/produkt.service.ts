@@ -40,7 +40,9 @@ export class ProduktService {
   }
 
   modifyCategory(last: string, category: Category) {
-    return this.httpClient.put<Product>(this.urlCategory + last, category);
+    console.log("service");
+    console.log(category);
+    return this.httpClient.put<Category>(this.urlCategory + last, category);
   }
 
   deleteCategory(last: string){

@@ -64,7 +64,7 @@ update(category: Category): Promise<void> {
           const db = client.db(DB_NAME);
           const collection = db.collection(CATEGORY_COLLECTION_NAME);
           const response = await collection.updateOne(
-            {_id: category._id},
+            {_id: new ObjectId(category._id)},
             {
               $set: {
                 name: category.name,
@@ -115,7 +115,7 @@ delete(_id: string): Promise<void> {
           const db = client.db(DB_NAME);
           const collection = db.collection(CATEGORY_COLLECTION_NAME);
           const result = await collection.deleteOne({
-            _id: _id
+            _id: new ObjectId(_id)
           });
           if (result.deletedCount === 1) {
             resolve();

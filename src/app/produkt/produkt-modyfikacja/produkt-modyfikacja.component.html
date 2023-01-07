@@ -43,7 +43,7 @@
                     <label class="form-label" for="typePasswordLogin">Image</label>
                 </div>
 
-                <button class="btn btn-outline-light btn-lg px-5" type="submit" (click)="onModifyPressed()">Save</button>
+                <button class="btn btn-outline-light btn-lg px-5" type="submit" [routerLink]="['/produkt/produkt-lista']" (click)="onModifyPressed()">Save</button>
                 <button class="btn btn-outline-light btn-lg px-5" (click)="redirectToProductList()">Cancel</button>
 
               </div>
