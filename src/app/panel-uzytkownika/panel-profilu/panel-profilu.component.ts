@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PageType} from "../../opinie/opinie.component";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PanelUzytkownikaComponent} from "../panel-uzytkownika.component";
+import {Profile} from "../../../../express-backend-api/model/profile";
 
 @Component({
   selector: 'app-panel-profilu',
@@ -15,15 +16,16 @@ export class PanelProfiluComponent implements OnInit {
   showEditButton: boolean = false
   showAdminButton: boolean = false
   showBanned: boolean = false
+  profile: Profile
 
-  constructor(private router: Router, public mainComp: PanelUzytkownikaComponent) { }
+  constructor(private router: Router, public mainComp: PanelUzytkownikaComponent, private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-
+    //this.mainComp.ngOnInit();
   }
 
   redirectToEdit() {
-    this.router.navigateByUrl('/panel-edycji');
+    this.router.navigateByUrl('/edytuj-profil');
   }
 
   redirectToAdmin() {

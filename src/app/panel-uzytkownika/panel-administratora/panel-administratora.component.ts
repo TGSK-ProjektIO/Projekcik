@@ -11,7 +11,7 @@ export class PanelAdministratoraComponent implements OnInit {
   constructor(private router: Router) { }
 
   redirectToProfile() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('/profil/');
   }
 
   // Placeholder

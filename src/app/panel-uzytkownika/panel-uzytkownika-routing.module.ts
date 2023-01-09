@@ -12,22 +12,22 @@ import {PanelUzytkownikaComponent} from "./panel-uzytkownika.component";
 
 const appRoute: Routes = [
   {
-    path: ``,
+    path: 'profil/:profileId',
     component: PanelUzytkownikaComponent,
     children: [
       {
-        path: '',
-        component: PanelProfiluComponent
-      },
-      {
-        path: 'panel-edycji',
-        component: PanelEdycjiComponent
-      },
-      {
-        path: 'panel-administratora',
-        component: PanelAdministratoraComponent
+        path: ``,
+        component: PanelProfiluComponent,
       }
     ]
+  },
+  {
+    path: 'edytuj-profil',
+    component: PanelEdycjiComponent
+  },
+  {
+    path: 'panel-administratora',
+    component: PanelAdministratoraComponent
   }
 ]
 

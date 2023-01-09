@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Profile} from "../../../express-backend-api/model/profile";
 import {User} from "../../../express-backend-api/model/user";
 import {ObjectId} from "mongodb";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-panel-uzytkownika',
@@ -13,24 +14,31 @@ export class PanelUzytkownikaComponent implements OnInit {
   public profile!: Profile;
   public user!: User;
 
-  constructor() { }
+  constructor(private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.fetchProfile("639b832e65e32788ffb34dd3").then(res => {
+    let profileId!: string;
+    this.activeRoute.paramMap.subscribe((params) => {
+      console.log(params.getAll(''));
+      profileId = params.get('profileId')!.toString();
+    })
+
+    //profileId = "639b832e65e32788ffb34dd3";
+
+    //console.log(profileId);
+
+    this.fetchProfile(profileId).then(res => {
       this.profile = res;
-    }).then( res =>
-      {
-        this.fetchUser(this.profile.userId).then(res => {
-          this.user = res;
-        });
-      }
-    )
-    console.log(this.user._id)
+      this.fetchUser(this.profile.userId).then(res => {
+        this.user = res;
+      });
+    });
+    //console.log(this.user._id)
   }
 
   // ---------- FETCH METHODS ----------
 
-  private async fetchUser(id: string): Promise<User> {
+  public async fetchUser(id: string): Promise<User> {
     return await fetch(`http://localhost:3000/api/v1/logowanie-i-rejestracja/user/${id}`, {
       method: 'GET',
       headers: {
@@ -45,7 +53,7 @@ export class PanelUzytkownikaComponent implements OnInit {
     });
   }
 
-  private async fetchProfile(id: string): Promise<Profile> {
+  public async fetchProfile(id: string): Promise<Profile> {
     return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfile/${id}`, {
       method: 'GET',
       headers: {
@@ -60,7 +68,7 @@ export class PanelUzytkownikaComponent implements OnInit {
     });
   }
 
-  private async fetchProfileByUserId(userId: ObjectId | undefined): Promise<Profile> {
+  public async fetchProfileByUserId(userId: ObjectId | undefined): Promise<Profile> {
     return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfile/${userId}`, {
       method: 'GET',
       headers: {
@@ -75,7 +83,7 @@ export class PanelUzytkownikaComponent implements OnInit {
     });
   }
 
-  private async fetchProfileByNickname(nickname: string): Promise<Profile> {
+  public async fetchProfileByNickname(nickname: string): Promise<Profile> {
     return await fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/getProfile/${nickname}`, {
       method: 'GET',
       headers: {
@@ -105,7 +113,7 @@ export class PanelUzytkownikaComponent implements OnInit {
     });
   }
 
-  private fetchChangeProfilePicture(id: string, profilePicture: string) {
+  public fetchChangeProfilePicture(id: string, profilePicture: string) {
     fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeProfilePicture/${id}/${profilePicture}`, {
       method: 'POST',
       headers: {
@@ -120,7 +128,7 @@ export class PanelUzytkownikaComponent implements OnInit {
     });
   }
 
-  private fetchChangeDescription(id: string, description: string) {
+  public fetchChangeDescription(id: string, description: string) {
     fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeDescription/${id}/${description}`, {
       method: 'POST',
       headers: {
@@ -134,5 +142,4 @@ export class PanelUzytkownikaComponent implements OnInit {
       console.error(err);
     });
   }
-
 }
