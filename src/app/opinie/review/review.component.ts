@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.component";
 
 @Component({
   selector: 'app-review',
@@ -8,15 +9,15 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ReviewComponent implements OnInit {
   @Input() text : string = "";
   @Input() isReadonly = true;
+  parent: CompleteOpinionComponent | undefined;
 
-  constructor() {
-  }
+  constructor() { }
+  ngOnInit(): void { }
 
-  ngOnInit(): void {
-  }
+  SetParent(newParent : CompleteOpinionComponent) { this.parent = newParent; }
 
   GetReview() : string { return this.text; }
 
   SetReview(newText : string) { this.text = newText; }
-
+  OnModify() { this.parent?.ModifyOpinion(); }
 }

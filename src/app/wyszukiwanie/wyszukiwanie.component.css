@@ -1,0 +1,31 @@
+.container-fluid {
+  background-image: url("src/assets/gradient_background.jpg");
+}
+table {
+  width:100%;
+}
+
+span {
+  padding:10px;
+}
+
+::ng-deep .mat-select-value {
+  color: white;
+}
+
+::ng-deep .dropdown-menu-dark {
+  color: red;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
