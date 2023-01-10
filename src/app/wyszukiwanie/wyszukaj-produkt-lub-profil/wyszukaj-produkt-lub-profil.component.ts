@@ -9,6 +9,10 @@ import {WyszukiwanieService} from "../services/wyszukiwanie.service";
 import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatCheckboxChange} from "@angular/material/checkbox";
+import {ExtendedProduct} from "../model/ExtendedProduct";
+import {Opinion} from "../../../../express-backend-api/model/opinion";
+import {response} from "express";
+import {ExtendedProfile} from "../model/ExtendedProfile";
 
 
 @Injectable()
@@ -29,19 +33,20 @@ export class PolishPaginatorIntl extends MatPaginatorIntl{
 })
 export class WyszukajProduktLubProfilComponent implements AfterViewInit {
 
-  productModel : Product = {
+  productModel : ExtendedProduct = {
     attribute: [],
     categoryName: "",
     description: "",
     isVisible: false,
     name: "",
-    tag: []
+    tag: [],
+    numberOfOpinions: 0,
   }
-  fetchedProducts: Product[];
+  fetchedProducts: ExtendedProduct[];
   productSearch: ProductSearch;
-  searchedProducts: Product[] = [];
-  filteredData: Product[] = [];
-  tagFilteredData: Product[] = []
+  searchedProducts: ExtendedProduct[] = [];
+  filteredData: ExtendedProduct[] = [];
+  tagFilteredData: ExtendedProduct[] = []
   selectedTags: string[] = [];
   selected = 'all';
 
@@ -49,21 +54,22 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   productTagsAll: string[] = [];  //zawiera tagi z wyszukiwania
   categories: string[] = [];
   productSearchColumnsToDisplay: string[] = ['name', 'productTag', 'productDescription', 'categoryName', 'numberOfOpinions' ];
-  productsDataSource : MatTableDataSource<Product> = new MatTableDataSource<Product>(this.searchedProducts);
+  productsDataSource : MatTableDataSource<ExtendedProduct> = new MatTableDataSource<ExtendedProduct>(this.searchedProducts);
 
 
-  profileModel : Profile = {
+  profileModel : ExtendedProfile = {
     nickname: '',
     description: '',
     isBanned: false,
     profilePicture: "",
     userId: "",
+    numberOfOpinions: 0,
   };
-  fetchedProfiles: Profile[];
+  fetchedProfiles: ExtendedProfile[];
   profileSearch : ProfileSearch;
-  searchedProfiles: Profile[] = [];
+  searchedProfiles: ExtendedProfile[] = [];
   profileSearchColumnsToDisplay: string[] = ['avatar', 'nickname', 'numberOfOpinions', 'score']
-  profilesDataSource: MatTableDataSource<Profile> = new MatTableDataSource<Profile>(this.searchedProfiles);
+  profilesDataSource: MatTableDataSource<ExtendedProfile> = new MatTableDataSource<ExtendedProfile>(this.searchedProfiles);
 
   constructor(private router: Router, private service: WyszukiwanieService) { }
 
@@ -78,12 +84,26 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   ngAfterViewInit()  {
     this.service.getAllProfiles()
       .subscribe(response => {
-        this.fetchedProfiles = response as Profile[];
+        this.fetchedProfiles = response as ExtendedProfile[];
+        this.fetchedProfiles.forEach((profile) => {
+          this.service.getAllProfileOpinions(profile)
+            .subscribe(response => {
+              let opinions : Array<Opinion> = response as Array<Opinion>;
+              profile.numberOfOpinions = opinions.length;
+            })
+        })
         this.profileSearch = new ProfileSearch(this.fetchedProfiles);
       });
     this.service.getAllProducts()
       .subscribe(response => {
-        this.fetchedProducts = response as Product[];
+        this.fetchedProducts = response as ExtendedProduct[];
+        this.fetchedProducts.forEach((product) => {
+          this.service.getAllProductOpinions(product)
+            .subscribe(response => {
+              let opinions : Array<Opinion> = response as Array<Opinion>;
+              product.numberOfOpinions = opinions.length;
+            })
+        })
         this.productSearch = new ProductSearch(this.fetchedProducts);
       })
     this.productsDataSource.paginator = this.productPaginator;
@@ -215,6 +235,6 @@ export class WyszukajProduktLubProfilComponent implements AfterViewInit {
   }
 
   goToProfile(profile: Profile) {
-    console.log(profile._id);
+    this.router.navigate(['/profile/getProfile/' + profile._id]);
   }
 }
