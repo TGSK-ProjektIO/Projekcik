@@ -18,6 +18,8 @@ export class KategoriaWidokComponent implements OnInit {
   products: any;
   product: any;
 
+  attrib: Array<Object> = [];
+
   path: string = window.location.href;
   lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
   category: any;
@@ -56,6 +58,7 @@ export class KategoriaWidokComponent implements OnInit {
           for(let i = 0; i < this.products.length; i++){
             if(this.products.at(i).categoryName == this.lastPath) {
               this.products.at(i).categoryName = "NULL";
+              this.products.at(i).attribute = this.attrib;
               this.product = this.products.at(i) ;
               this.service.modifyProduct(this.products.at(i)._id,this.products.at(i)).subscribe(response => {
                 this.product = response;
