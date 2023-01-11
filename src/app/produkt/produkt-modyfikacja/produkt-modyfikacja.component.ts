@@ -44,9 +44,14 @@ export class ProduktModyfikacjaComponent implements OnInit {
         this.name = this.product.name;
         this.description = this.product.description;
         this.tag = this.product.tag;
+        this.service.getCategory(this.product.categoryName)
+        .subscribe((category : any)=> {
+          this.category = category;
+        });
+        /*
         this.category = this.categories.find((obj: any) => {
           return obj.name === this.product.categoryName;
-        })!
+        })!*/
         this.image = this.product.image;
       });
     }
@@ -61,8 +66,6 @@ export class ProduktModyfikacjaComponent implements OnInit {
     }
   
     onModifyPressed() {
-      console.log(this.category._id);
-      console.log(this.category.name);
 
       this.product.id = this.lastPath;
       this.product.name = this.name;

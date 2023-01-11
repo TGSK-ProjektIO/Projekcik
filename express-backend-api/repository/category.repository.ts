@@ -33,18 +33,18 @@ export class CategoryRepository {
 
  create(category: Category): Promise<Category> {
     return new Promise<Category>(async (resolve, reject) => {
-        if (category._id) {
+        if (category.name) {
           return reject();
         }
         const client = this.createClient();
         try {
           const db = client.db(DB_NAME);
           const collection = db.collection(CATEGORY_COLLECTION_NAME);
-          if (await collection.count({_id: category._id}) >= 1) {
+          if (await collection.count({name: category.name}) >= 1) {
             reject();
           }
           const response = await collection.insertOne(category);
-          category._id = response.insertedId;
+          //category.name = response.insertedId;
           resolve(category);
         } catch (exception) {
           reject();
@@ -56,7 +56,7 @@ export class CategoryRepository {
 
 update(category: Category): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
-        if (!category._id) {
+        if (!category.name) {
           return reject();
         }
         const client = this.createClient();
@@ -64,10 +64,9 @@ update(category: Category): Promise<void> {
           const db = client.db(DB_NAME);
           const collection = db.collection(CATEGORY_COLLECTION_NAME);
           const response = await collection.updateOne(
-            {_id: new ObjectId(category._id)},
+            {name: new ObjectId(category.name)},
             {
               $set: {
-                name: category.name,
                 attribute: category.attribute
               }
             },
@@ -86,14 +85,14 @@ update(category: Category): Promise<void> {
       });
 }
 
-read(_id: string): Promise<Category> {
+read(name: string): Promise<Category> {
     return new Promise<Category>(async (resolve, reject) => {
       const client = this.createClient();
       try {
         const db = client.db(DB_NAME);
         const collection = db.collection(CATEGORY_COLLECTION_NAME);
         let response = await collection.findOne<Category>({
-          _id: new ObjectId(_id)
+          name: name
         });
         if (response !== null) {
           resolve(response);
@@ -108,14 +107,14 @@ read(_id: string): Promise<Category> {
     });
 }
 
-delete(_id: string): Promise<void> {
+delete(name: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
         const client = this.createClient();
         try {
           const db = client.db(DB_NAME);
           const collection = db.collection(CATEGORY_COLLECTION_NAME);
           const result = await collection.deleteOne({
-            _id: new ObjectId(_id)
+            name: name
           });
           if (result.deletedCount === 1) {
             resolve();

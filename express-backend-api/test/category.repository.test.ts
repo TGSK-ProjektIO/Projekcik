@@ -23,7 +23,6 @@ beforeEach(async () => {
   };
 
   category2 = {
-    _id: new ObjectId(),
     name: "category2",
     attribute: ["at1", "at2"],
   };
@@ -37,7 +36,7 @@ beforeEach(async () => {
 
 test('Create Category positive test', async () => {
   const createdCategory = await categoryRepository.create(category1);
-  expect(createdCategory._id).not.toBeNaN();
+  expect(createdCategory.name).not.toBeNaN();
 });
 
 test('Create Category negative test', async () => {
@@ -48,7 +47,7 @@ test('Create Category negative test', async () => {
 test('Get Category positive test', async () => {
   const createdCategory = await categoryRepository.create(category1);
   // @ts-ignore
-  let getCategory = await categoryRepository.read(createdCategory._id);
+  let getCategory = await categoryRepository.read(createdCategory.name);
   expect(getCategory).toEqual(createdCategory);
 });
 
@@ -57,9 +56,9 @@ jest.setTimeout(10000);
 test('Delete Category positive test', async () => {
     const createdCategory = await categoryRepository.create(category3);
   // @ts-ignore
-  await expect(categoryRepository.delete(createdCategory._id)).resolves.toBeUndefined();
+  await expect(categoryRepository.delete(createdCategory.name)).resolves.toBeUndefined();
   // @ts-ignore
-  await expect(categoryRepository.read(createdCategory._id)).rejects.toBeUndefined();
+  await expect(categoryRepository.read(createdCategory.name)).rejects.toBeUndefined();
 });
 
 //dziala?
@@ -69,7 +68,7 @@ test('Update Category positive test', async () => {
   // @ts-ignore
   await expect(categoryRepository.update(createdCategory)).resolves.toBeUndefined();
   // @ts-ignore
-  await expect(categoryRepository.read(createdCategory._id)).resolves.toEqual(createdCategory);
+  await expect(categoryRepository.read(createdCategory.name)).resolves.toEqual(createdCategory);
 });
 
 test('Get Categories positive test', async () => {
