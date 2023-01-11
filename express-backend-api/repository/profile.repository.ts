@@ -151,7 +151,7 @@ export class ProfileRepository {
         const db = client.db(DB_NAME);
         const collection = db.collection(PROFILE_COLLECTION_NAME);
         const response = await collection.updateOne(
-          {_id: profile._id},
+          {_id: new ObjectId(profile._id)},
           {
             $set: {
               nickname: profile.nickname,
@@ -162,6 +162,7 @@ export class ProfileRepository {
           },
           { upsert: false }
         )
+        console.log(response);
         if (response.modifiedCount === 1) {
           resolve();
         } else {

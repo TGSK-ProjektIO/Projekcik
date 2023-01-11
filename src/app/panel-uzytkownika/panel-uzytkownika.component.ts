@@ -30,7 +30,6 @@ export class PanelUzytkownikaComponent implements OnInit {
     this.fetchProfile(profileId).then(res => {
       this.profile = res;
       this.fetchUser(this.profile.userId).then(res => {
-        this.user = res;
       });
     });
     //console.log(this.user._id)
@@ -98,13 +97,14 @@ export class PanelUzytkownikaComponent implements OnInit {
     });
   }
 
-  private fetchChangeNickname(id: string, nickname: string) {
-    fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeNickname/${id}/${nickname}`, {
+  public async fetchUpdateProfile(profile: Profile) {
+    fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/updateProfile`, {
       method: 'POST',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify(profile)
     }).then(async response => {
       if (response.status === 200) {}
       if (response.status === 400) {}
@@ -113,7 +113,23 @@ export class PanelUzytkownikaComponent implements OnInit {
     });
   }
 
-  public fetchChangeProfilePicture(id: string, profilePicture: string) {
+  public async fetchChangeNickname(id: string, nickname: string) {
+    fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeNickname/${id}/${nickname}`, {
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({id, nickname})
+    }).then(async response => {
+      if (response.status === 200) {}
+      if (response.status === 400) {}
+    }).catch(err => {
+      console.error(err);
+    });
+  }
+
+  public async fetchChangeProfilePicture(id: string, profilePicture: string) {
     fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeProfilePicture/${id}/${profilePicture}`, {
       method: 'POST',
       headers: {
@@ -128,13 +144,14 @@ export class PanelUzytkownikaComponent implements OnInit {
     });
   }
 
-  public fetchChangeDescription(id: string, description: string) {
+  public async fetchChangeDescription(id: string, description: string) {
     fetch(`http://localhost:3000/api/v1/panel-uzytkownika/profile/changeDescription/${id}/${description}`, {
       method: 'POST',
       headers: {
         'Accept': '*/*',
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify([id, description])
     }).then(async response => {
       if (response.status === 200) {}
       if (response.status === 400) {}

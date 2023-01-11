@@ -20,6 +20,17 @@ export class ProfileService {
     return this.profileRepository.create(profile);
   }
 
+  public updateProfile(profile: Profile): Promise<boolean> {
+    return new Promise<boolean>(async (resolve, reject) => {
+      try {
+        await this.profileRepository.update(profile);
+        resolve(true);
+      } catch (error) {
+        resolve(false);
+      }
+    });
+  }
+
   public updateNickname(userId: string, newNickname: string): Promise<boolean> {
     return new Promise<boolean>(async (resolve, reject) => {
       try {

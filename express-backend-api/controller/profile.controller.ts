@@ -28,6 +28,27 @@ export class ProfileController {
 
   // ---------- POST REQUESTS ----------
 
+  public updateProfile() {
+    return async (request: any, response: any) => {
+      let profile = request.body;
+      if (!profile) {
+        return response.status(400).send({
+          error: "Missing required 'profile' parameter"
+        });
+      }
+      try {
+          await this.profileService.updateProfile(profile);
+          response.status(201).send({
+            message: "Profile picture changed",
+          });
+      } catch (error) {
+        response.status(400).send({
+          message: "Error occurred while changing profile picture"
+        });
+      }
+    }
+  }
+
   public changeNickname() {
     return async (request: any, response: any) => {
       let userId = request.body?.userId;

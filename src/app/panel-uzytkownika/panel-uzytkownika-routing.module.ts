@@ -18,12 +18,12 @@ const appRoute: Routes = [
       {
         path: ``,
         component: PanelProfiluComponent,
+      },
+      {
+        path: 'edytuj-profil',
+        component: PanelEdycjiComponent
       }
     ]
-  },
-  {
-    path: 'edytuj-profil',
-    component: PanelEdycjiComponent
   },
   {
     path: 'panel-administratora',

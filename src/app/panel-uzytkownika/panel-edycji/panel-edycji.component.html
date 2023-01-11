@@ -4,11 +4,11 @@
   <div class="bg-white text-white bg-opacity-10" style="padding: 1em">
     <h2>Dane profilu</h2>
     Pseudonim <br/>
-    <input type="text" style="width: 20em;" placeholder="Pseudonim"> <br/>
-    <button>Zmień pseudonim</button> <br/> <br/>
+    <input id="nicknameField" type="text" style="width: 20em;" placeholder="Pseudonim"> <br/>
+    <button (click)="onNicknameChange()">Zmień pseudonim</button> <br/> <br/>
     Opis <br/>
-    <textarea style="width: 25em;"></textarea> <br/>
-    <button>Zmień opis</button> <br/> <br/>
+    <textarea id="descriptionField" style="width: 25em;"></textarea> <br/>
+    <button (click)="onDescriptionChange()">Zmień opis</button> <br/> <br/>
     Zdjęcie profilowe <br/>
     <input id="upload" type="file" style="  height: 40px; padding-top: 5px;"> <br/>
     <button>Zmień zdjęcie profilowe</button>

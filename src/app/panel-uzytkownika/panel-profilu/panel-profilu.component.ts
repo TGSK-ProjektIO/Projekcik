@@ -3,6 +3,7 @@ import {PageType} from "../../opinie/opinie.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PanelUzytkownikaComponent} from "../panel-uzytkownika.component";
 import {Profile} from "../../../../express-backend-api/model/profile";
+import * as url from "url";
 
 @Component({
   selector: 'app-panel-profilu',
@@ -25,7 +26,7 @@ export class PanelProfiluComponent implements OnInit {
   }
 
   redirectToEdit() {
-    this.router.navigateByUrl('/edytuj-profil');
+    this.router.navigateByUrl(this.router.url + '/edytuj-profil');
   }
 
   redirectToAdmin() {
