@@ -15,10 +15,14 @@ export class KategoriaWidokComponent implements OnInit {
   id: string = '';
   name = 'name';
 
+  products: any;
+
   path: string = window.location.href;
   lastPath: string = this.path.substring(this.path.lastIndexOf('/') + 1);
   category: any;
+  categoryName: string;
   modifyPath: string = '';
+
   constructor(private router: Router, private service: ProduktService) {
     }
 
@@ -41,6 +45,23 @@ export class KategoriaWidokComponent implements OnInit {
       .subscribe(response => {
         this.category = response;
       });
+      /*
+      this.category.name = this.category.name;
+      console.log(this.category.name);
+      this.service.getProducts()
+        .subscribe(response => {
+          this.products = response;
+          console.log(this.products.length);
+          for(let i = 0; i < this.products.length; i ++){
+            if(this.products.at(i).categoryName == this.getCategoryName()) {
+              console.log(this.getCategoryName())
+              console.log(this.products.at(i));
+              this.products.at(i).categoryName = "L";
+              this.service.modifyProduct(this.products.at(i)._id,this.products.at(i));
+            }
+          }
+        });
+        */
     }
 
     getCategoryName(): string {return this.category.name}
