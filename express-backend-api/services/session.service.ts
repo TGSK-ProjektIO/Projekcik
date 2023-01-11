@@ -3,11 +3,15 @@ import {SessionRepository} from "../repository/session.repository";
 import {TYPES} from "../config/types.config";
 import {Session} from "../model/session";
 import {User} from "../model/user";
+import {Profile} from "../model/profile";
 import moment from "moment";
+import {ObjectId} from "mongodb";
+import {ProfileService} from "./profile.service";
 
 @injectable()
 export class SessionService {
-  constructor(@inject(TYPES.SessionRepository) private sessionRepository: SessionRepository) {
+  constructor(@inject(TYPES.SessionRepository) private sessionRepository: SessionRepository,
+              @inject(TYPES.ProfileService) private profileService: ProfileService){
 
   }
 
@@ -25,6 +29,14 @@ export class SessionService {
       // @ts-ignore
       userId: user._id
     }
+
+    // Create new profile if it's missing
+    if(this.profileService.getProfileByUserId(user._id.toString()) == null)
+    {
+      let newProfile = Profile();
+      this.profileService.createProfile();
+    }
+
     // @ts-ignore
     return this.sessionRepository.create(newSession);
   }

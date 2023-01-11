@@ -10,7 +10,7 @@ export class ProfileRouter {
   }
 
   addRoutes(app: Express): void {
-    app.put('/api/v1/panel-uzytkownika/profile/createProfile', this.profileController.createProfile());
+    //app.put('/api/v1/panel-uzytkownika/profile/createProfile', this.profileController.createProfile());
     app.post('/api/v1/panel-uzytkownika/profile/changeNickname/:id/:nickname', this.profileController.changeNickname());
     app.post('/api/v1/panel-uzytkownika/profile/changeProfilePicture/:id/:profilePicture', this.profileController.changeProfilePicture());
     app.post('/api/v1/panel-uzytkownika/profile/changeDescription/:id/:description', this.profileController.changeDescription());

@@ -4,12 +4,14 @@ import {UserService} from "../services/user.service";
 import {EmailService} from "../services/email.service";
 import {createHash} from "crypto";
 import {GithubService} from "../services/githubService";
+import { ProfileService } from "../services/profile.service";
 
 @injectable()
 export class UserController {
  constructor(@inject(TYPES.UserService) private userService: UserService,
              @inject(TYPES.EmailService) private emailService : EmailService,
-             @inject(TYPES.GithubService) private githubService: GithubService) {
+             @inject(TYPES.GithubService) private githubService: GithubService,
+             @inject(TYPES.ProfileService) private profileService: ProfileService) {
  }
 
  public registerGithubUser() {
@@ -40,6 +42,7 @@ export class UserController {
      try {
        const registeredUser = await this.userService.registerUser(user);
        await this.emailService.sendEmailConfirmationMail(registeredUser);
+       await this.profileService.createProfile(registeredUser);
        response.status(201).send({
          message: "created",
          _id: registeredUser._id

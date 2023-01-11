@@ -2,14 +2,21 @@ import {inject, injectable} from "inversify";
 import {ProfileRepository} from "../repository/profile.repository";
 import {TYPES} from "../config/types.config";
 import {Profile} from "../model/profile";
+import {User} from "../model/user";
 
 @injectable()
 export class ProfileService {
   constructor(@inject(TYPES.ProfileRepository) private profileRepository: ProfileRepository) {
-
   }
 
-  public createProfile(profile: Profile): Promise<Profile> {
+  public createProfile(user: User): Promise<Profile> {
+    let profile: Profile = {
+      userId: user._id.toString(),
+      nickname: user.username,
+      profilePicture: "",
+      description: null,
+      isBanned: false
+    }
     return this.profileRepository.create(profile);
   }
 

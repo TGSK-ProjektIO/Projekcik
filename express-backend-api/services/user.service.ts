@@ -4,10 +4,12 @@ import {TYPES} from "../config/types.config";
 import {User} from "../model/user";
 import {UserPartial} from "../model/user.partial";
 import {randomBytes} from "crypto";
+import { ProfileRepository } from "../repository/profile.repository";
 
 @injectable()
 export class UserService {
-  constructor(@inject(TYPES.UserRepository) private userRepository: UserRepository) {
+  constructor(@inject(TYPES.UserRepository) private userRepository: UserRepository,
+              @inject(TYPES.ProfileRepository) private profileRepository: ProfileRepository) {
 
   }
 

@@ -10,22 +10,21 @@ export class ProfileController {
 
   // ---------- PUT REQUESTS ----------
 
-  public createProfile() {
-    return async (request: any, response: any) => {
-      let profile = request.body;
-      try {
-        const createdProfile = await this.profileService.createProfile(profile);
-        response.status(201).send({
-          message: "created",
-          id: createdProfile._id
-        });
-      } catch (error) {
-        response.status(400).send({
-          message: "Invalid params"
-        });
-      }
-    }
-  }
+  // public createProfile() {
+  //   return async (request: any, response: any) => {
+  //     try {
+  //       const createdProfile = await this.profileService.createProfile(profile);
+  //       response.status(201).send({
+  //         message: "created",
+  //         id: createdProfile._id
+  //       });
+  //     } catch (error) {
+  //       response.status(400).send({
+  //         message: "Invalid params"
+  //       });
+  //     }
+  //   }
+  // }
 
   // ---------- POST REQUESTS ----------
 
