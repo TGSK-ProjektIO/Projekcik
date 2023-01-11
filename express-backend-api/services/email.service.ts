@@ -39,10 +39,10 @@ export class EmailService {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await this.transporter.sendMail({
-          from: '"OpinionCollector" <opinioncontroller@gmail.com>',
+          from: 'opinioncontroller@gmail.com',
           to: user.email,
           subject: "Reset password",
-          html: '<p>Click <a href="http://localhost:4200/reset/' + user._id.toString() + "/" + user.emailToken + '"> here</a> to verify your account.</p>'
+          html: '<p>Click <a href="http://localhost:4200/reset/' + user._id.toString() + "/" + user.emailToken + '"> here</a> to reset your password.</p>'
         });
         resolve();
       } catch (e) {

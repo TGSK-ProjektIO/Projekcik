@@ -26,6 +26,12 @@
                (onClosed)="onCloseConfirmedAlert()">
           <p class="text-center">This email is not confirmed</p>
         </alert>
+        <alert type="warning"
+               [dismissible]="true"
+               [isOpen]="isGithubAccountAlertOpen"
+               (onClosed)="onCloseGithubAccountAlert()">
+          <p class="text-center">Cannot reset password for account registered by github</p>
+        </alert>
         <alert type="danger"
                [dismissible]="true"
                [isOpen]="isFailureAlertOpen"

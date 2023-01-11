@@ -3,11 +3,14 @@ import {TYPES} from "../config/types.config";
 import {UserService} from "../services/user.service";
 import {SessionService} from "../services/session.service";
 import {createHash} from "crypto";
+import {GithubService} from "../services/githubService";
+import moment from "moment";
 
 @injectable()
 export class SessionController {
   constructor(@inject(TYPES.UserService) private userService: UserService,
-              @inject(TYPES.SessionService) private sessionService: SessionService) {
+              @inject(TYPES.SessionService) private sessionService: SessionService,
+              @inject(TYPES.GithubService) private githubService: GithubService) {
   }
 
   public login() {
@@ -19,7 +22,8 @@ export class SessionController {
         return response.status(400).send({
           message: "Request is missing required 'username' parameter"
         });
-      } if (!password) {
+      }
+      if (!password) {
         return response.status(400).send({
           message: "Request is missing required 'password' parameter"
         });
@@ -27,6 +31,11 @@ export class SessionController {
 
       try {
         const user = await this.userService.getUserByEmail(email);
+        if (this.userService.isGithubUser(user)) {
+          return response.status(400).send({
+            error: "User is a Github user"
+          });
+        }
         if (!user.isEmailVerified) {
           return response.status(401).send({
             error: "User email is not verified"
@@ -48,11 +57,27 @@ export class SessionController {
     }
   }
 
-  // public loginWithGithub() {
-  //   return async (request: any, response: any) => {
-  //
-  //   }
-  // }
+  public githubLogin() {
+    return async (request: any, response: any) => {
+      const githubToken = request.params.github_token;
+      try {
+        const accessToken = await this.githubService.retrieveAccessToken(githubToken);
+        const userEmail = await this.githubService.retrieveUserEmail(accessToken);
+        const user = await this.userService.getUserByEmail(userEmail);
+        if (!this.userService.isGithubUser(user)) {
+          return response.status(400).send({
+            error: "User is not a Github user"
+          });
+        }
+        const session = await this.sessionService.createSession(user);
+        return response.status(201).send(session);
+      } catch (error) {
+        return response.status(404).send({
+          error: "User not found"
+        });
+      }
+    }
+  }
 
   public logout() {
     return async (request: any, response: any) => {
@@ -100,7 +125,7 @@ export class SessionController {
       const sessionId = request.params.id;
       try {
         const session = await this.sessionService.getSession(sessionId);
-        if (session.expireDate < new Date()) {
+        if (session.invalidated || session.expireDate.getTime() < moment(new Date()).add(1, 'h').toDate().getTime()) {
           return response.status(200).send({
             expired: true
           });

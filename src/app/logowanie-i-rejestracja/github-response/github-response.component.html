@@ -14,12 +14,12 @@
             <div class="mb-md-5 mt-md-4 pb-2">
 
               <div class="fw-bold mb-2 text-uppercase">{{message}}</div>
-              <p class="text-white-50 mb-5" [hidden]="!success">Now you can sign in</p>
+              <p class="text-white-50 mb-5">{{secondMessage}}</p>
 
             </div>
 
             <div>
-              <p class="mb-2"><a href="/login" class="text-white fw-bold" (click)="redirectToLoginPage()">Go back to the login page</a></p>
+              <p class="mb-2"><a href="/login" [hidden]="redirectToLoginPageHidden()" class="text-white fw-bold" (click)="redirectToLoginPage()">Go back to the login page</a></p>
             </div>
             <div>
               <p class="mb-0"><a href="" class="text-white fw-bold" (click)="redirectToMainPage()">Go back to the main page</a></p>

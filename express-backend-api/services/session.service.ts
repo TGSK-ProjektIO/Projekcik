@@ -4,7 +4,6 @@ import {TYPES} from "../config/types.config";
 import {Session} from "../model/session";
 import {User} from "../model/user";
 import moment from "moment";
-import {ObjectId} from "mongodb";
 
 @injectable()
 export class SessionService {
@@ -17,7 +16,8 @@ export class SessionService {
   }
 
   public createSession(user: User) : Promise<Session> {
-    const currentDate = new Date();
+    let currentDate = new Date();
+    currentDate = moment(currentDate).add(1, 'h').toDate();
     let newSession = {
       startDate: currentDate,
       expireDate: moment(currentDate).add(30, 'm').toDate(),
