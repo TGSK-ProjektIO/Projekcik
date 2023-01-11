@@ -33,8 +33,8 @@ export class KategoriaListaComponent implements OnInit {
       this.router.navigateByUrl(this.modifyPath);
     }
 
-    redirectToWidok(id: string) {
-      this.modifyPath = "/produkt/kategoria-widok/" + id;
+    redirectToWidok(name: string) {
+      this.modifyPath = "/produkt/kategoria-widok/" + name;
       this.router.navigateByUrl(this.modifyPath);
     }
 

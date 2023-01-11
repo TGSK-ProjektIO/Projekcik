@@ -45,23 +45,23 @@ export class KategoriaWidokComponent implements OnInit {
       .subscribe(response => {
         this.category = response;
       });
-      /*
+      
       this.category.name = this.category.name;
       console.log(this.category.name);
       this.service.getProducts()
         .subscribe(response => {
           this.products = response;
           console.log(this.products.length);
-          for(let i = 0; i < this.products.length; i ++){
-            if(this.products.at(i).categoryName == this.getCategoryName()) {
-              console.log(this.getCategoryName())
-              console.log(this.products.at(i));
+          for(let i = 0; i < this.products.length; i++){
+            if(this.products.at(i).categoryName == this.lastPath) {
+              console.log("lastpath ",this.lastPath)
               this.products.at(i).categoryName = "L";
+              console.log(this.products.at(i));
               this.service.modifyProduct(this.products.at(i)._id,this.products.at(i));
             }
           }
         });
-        */
+        
     }
 
     getCategoryName(): string {return this.category.name}

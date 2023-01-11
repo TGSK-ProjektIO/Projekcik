@@ -16,7 +16,7 @@
                 <h2 class="fw-bold mb-2 text-uppercase">All Categories</h2>
                 </div>
                 <div class="list-group" >
-                  <button type="button" class="list-group-item list-group-item-action" *ngFor="let category of categories" type="submit" [routerLink]="['/produkt/kategoria-widok']" (click)="redirectToWidok(category._id)">
+                  <button type="button" class="list-group-item list-group-item-action" *ngFor="let category of categories" type="submit" [routerLink]="['/produkt/kategoria-widok']" (click)="redirectToWidok(category.name)">
                       <div>
                       {{category.name}}
                       </div>

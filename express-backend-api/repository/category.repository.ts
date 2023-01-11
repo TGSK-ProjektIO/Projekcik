@@ -33,7 +33,7 @@ export class CategoryRepository {
 
  create(category: Category): Promise<Category> {
     return new Promise<Category>(async (resolve, reject) => {
-        if (category.name) {
+        if (!category.name) {
           return reject();
         }
         const client = this.createClient();
