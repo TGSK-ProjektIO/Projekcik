@@ -81,17 +81,17 @@ export class OpinionController {
    */
   public addLike() {
     return async (request: any, response: any) => {
-      let opinion = request.body;
-      let userID : string = request.params.id;
+      let userID : string = request.params.userId;
+      let opinionID : string = request.params.opinionId;
       try {
-        await this.opinionService.addLike(opinion.id, userID);
+        await this.opinionService.addLike(opinionID, userID);
         response.status(201).send({
           message: "Added like",
-          id: opinion.id
+          id: opinionID
         });
       } catch (error) {
         response.status(400).send({
-          message: "User not found"
+          message: `User not found`
         });
       }
     }
@@ -104,13 +104,13 @@ export class OpinionController {
    */
   public addDislike() {
     return async (request: any, response: any) => {
-      let opinion = request.body;
-      let userID : string = request.params.id;
+      let userID : string = request.params.userId;
+      let opinionID : string = request.params.opinionId;
       try {
-        await this.opinionService.addDislike(opinion.id, userID);
+        await this.opinionService.addDislike(opinionID, userID);
         response.status(201).send({
           message: "Added dislike",
-          id: opinion.id
+          id: opinionID
         });
       } catch (error) {
         response.status(400).send({

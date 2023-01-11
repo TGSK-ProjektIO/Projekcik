@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import {ReviewComponent} from "../review/review.component";
 import {OpinieComponent} from "../opinie.component";
 import {RatingComponent} from "../rating/rating.component";
@@ -9,7 +9,6 @@ import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.com
   selector: 'app-opinion-creator',
   templateUrl: './opinion-creator.component.html',
   styleUrls: ['./opinion-creator.component.css'],
-  //encapsulation: ViewEncapsulation.None
 })
 export class OpinionCreatorComponent implements AfterViewInit {
 
@@ -18,7 +17,7 @@ export class OpinionCreatorComponent implements AfterViewInit {
   review : ReviewComponent = new ReviewComponent();
 
   @ViewChild(RatingsHostDirective, {static: true}) ratingsHost!: RatingsHostDirective;
-  @ViewChild(ReviewHostDirective, {static: true}) opinionHost!: ReviewHostDirective;
+  @ViewChild(ReviewHostDirective, {static: true}) reviewHost!: ReviewHostDirective;
   parent : OpinieComponent;
 
   constructor(parent : OpinieComponent) {
@@ -26,7 +25,7 @@ export class OpinionCreatorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.review = this.opinionHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
+    this.review = this.reviewHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
     this.review.isReadonly = false;
   }
 
@@ -45,6 +44,7 @@ export class OpinionCreatorComponent implements AfterViewInit {
     newOpinion.userName = this.parent.userLogged.nickname;
     newOpinion.userPicture = this.parent.userLogged.profilePicture;
     newOpinion.review.text = this.review.text;
+    newOpinion.review.SetParent(newOpinion);
     for (const rating of this.ratings) {
       let ratingCopy = Object.assign({}, rating);
       newOpinion.ratings.push(ratingCopy);

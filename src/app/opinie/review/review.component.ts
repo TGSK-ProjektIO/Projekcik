@@ -19,5 +19,4 @@ export class ReviewComponent implements OnInit {
   GetReview() : string { return this.text; }
 
   SetReview(newText : string) { this.text = newText; }
-  OnModify() { this.parent?.ModifyOpinion(); }
 }

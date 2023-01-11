@@ -11,7 +11,6 @@ import {OpinionRatingHostDirective, RatingsHostDirective, ReviewHostDirective} f
   styleUrls: ['./complete-opinion.component.css']
 })
 export class CompleteOpinionComponent implements OnInit {
-  // TODO: get user type from session
   UserTypes = UserType;
   canEdit : boolean = false;
 
@@ -66,6 +65,7 @@ export class CompleteOpinionComponent implements OnInit {
     let reviewRef = this.reviewHost.viewContainerRef.createComponent<ReviewComponent>(ReviewComponent).instance;
     reviewRef.text = this.review.text;
     reviewRef.isReadonly = !this.canEdit;
+    reviewRef.SetParent(this);
     this.review = reviewRef;
   }
 
@@ -75,14 +75,15 @@ export class CompleteOpinionComponent implements OnInit {
     opinionRatingRef.isReadonly = this.canEdit || !this.opinieParent.isUserType(UserType.logged);
     opinionRatingRef.likes = this.opinionRating.likes;
     opinionRatingRef.dislikes = this.opinionRating.dislikes;
+    opinionRatingRef.SetParent(this);
     this.opinionRating = opinionRatingRef;
   }
   //endregion
 
   ShowID(): string {
     switch (this.opinieParent.pageType) {
-      case PageType.product: return "@"+this.userID;
-      case PageType.profile: return "ProductID: "+this.productID;
+      case PageType.product: return "@" + this.userID;
+      case PageType.profile: return "@" + this.productID;
     }
   }
 
@@ -106,14 +107,12 @@ export class CompleteOpinionComponent implements OnInit {
     this.opinieParent.DeleteOpinion(this.ID);
   }
 
-  protected CanEdit() : boolean { return this.canEdit; }
-
-  public ModifyOpinion() { this.opinieParent.ModifyOpinion(this); }
+  public ApplyModifiedOpinion() { this.opinieParent.ModifyOpinion(this); }
   //TODO: why tf binding doesnt work and I have to resort to this monstrosity
   public ModifyRating(name : string, value : number) {
-    for (let rating of this.ratings) {
+    for (let rating of this.ratings)
       if(rating.name == name) { rating.rating = value; break; }
-    }
-    this.opinieParent.ModifyOpinion(this);
   }
+  public LikeOpinion() { this.opinieParent.LikeOpinion(this); }
+  public DislikeOpinion() { this.opinieParent.DislikeOpinion(this); }
 }

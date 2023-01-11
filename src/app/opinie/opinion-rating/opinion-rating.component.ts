@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.component";
 
 export enum OpinionRatingState { None, Liked, Disliked }
 
@@ -12,9 +13,12 @@ export class OpinionRatingComponent implements OnInit {
   @Input() dislikes : number = 0;
   @Input() ratingState : OpinionRatingState = OpinionRatingState.None;
   @Input() isReadonly = true;
+  parent : CompleteOpinionComponent;
 
   constructor() {}
   ngOnInit(): void {}
+
+  SetParent(newParent : CompleteOpinionComponent) { this.parent = newParent}
 
   ClickedLike() : void {
     switch (this.ratingState) {
@@ -27,6 +31,7 @@ export class OpinionRatingComponent implements OnInit {
       case OpinionRatingState.Liked:
         this.RemoveLike(); break;
     }
+    this.parent.LikeOpinion();
   }
 
   ClickedDislike() : void {
@@ -40,6 +45,7 @@ export class OpinionRatingComponent implements OnInit {
       case OpinionRatingState.Disliked:
         this.RemoveDislike(); break;
     }
+    this.parent.DislikeOpinion();
   }
 
   private AddLike() : void {
@@ -60,5 +66,12 @@ export class OpinionRatingComponent implements OnInit {
   }
   GetRating() : string {
     return `This opinion has ${this.likes} likes and ${this.dislikes} dislikes.`
+  }
+
+  isLiked() : boolean {
+    return this.ratingState == OpinionRatingState.Liked;
+  }
+  isDisliked() : boolean {
+    return this.ratingState == OpinionRatingState.Disliked;
   }
 }

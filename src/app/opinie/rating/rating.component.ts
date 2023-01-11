@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {CompleteOpinionComponent} from "../complete-opinion/complete-opinion.component";
-import {OpinionCreatorComponent} from "../opinion-creator/opinion-creator.component";
 
 @Component({
   selector: 'app-rating',
@@ -29,6 +28,7 @@ export class RatingComponent implements OnInit {
     return this.name;
   }
 
+  // TODO: fix binding somehow maybe
   OnEdit() { this.parent?.ModifyRating(this.name, this.rating); }
 
 }
