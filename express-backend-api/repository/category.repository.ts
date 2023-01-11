@@ -55,26 +55,33 @@ export class CategoryRepository {
 }
 
 update(category: Category): Promise<void> {
+  //console.log("repository modify category");
     return new Promise<void>(async (resolve, reject) => {
         if (!category.name) {
+          //console.log("if");
           return reject();
         }
         const client = this.createClient();
         try {
+          //console.log("try");
           const db = client.db(DB_NAME);
           const collection = db.collection(CATEGORY_COLLECTION_NAME);
+          //console.log(category.attributes);
           const response = await collection.updateOne(
-            {name: new ObjectId(category.name)},
+            {name: category.name},
             {
               $set: {
-                attribute: category.attribute
+                attributes: category.attributes
               }
             },
             { upsert: false }
           )
+          //console.log("changed?")
           if (response.modifiedCount === 1) {
+            //console.log("second if")
             resolve();
           } else {
+            //console.log("else")
             reject();
           }
         } catch (exception) {

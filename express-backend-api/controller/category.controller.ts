@@ -29,6 +29,7 @@ export class CategoryController {
       }
       
       public updateCategory() {
+        console.log("controller modify");
         return async (request: any, response: any) => {
             let category = request.body;
             try {

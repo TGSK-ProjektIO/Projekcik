@@ -15,6 +15,7 @@ export class CategoryService {
         }
 
     public updateCategory(category: Category): Promise<void>  {
+        console.log("service category modify");
         return this.categoryRepository.update(category);
         }
 
